@@ -1,0 +1,399 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// User model - optional authentication (linked from Student/Instructor)
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  password  String // hashed password
+  name      String
+  role      String // 'student', 'instructor', 'admin'
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relations (optional - can be created from Student/Instructor)
+  studentProfile      Student?
+  instructorProfile   Instructor?
+  courseSubscriptions CourseSubscription[]
+
+  @@map("users")
+}
+
+model Student {
+  id                 String   @id @default(cuid())
+  userId             String?  @unique @map("user_id") // Optional - can exist without User
+  name               String
+  email              String?
+  registrationNumber String   @unique @map("registration_number") // Primary identifier
+  cohortId           String?  @map("cohort_id")
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
+  cohort               Cohort?              @relation(fields: [cohortId], references: [id], onDelete: SetNull)
+  grades              Grade[]
+  gradingSessions     GradingSession[]
+  quizAttempts        QuizAttempt[]
+  exerciseSubmissions ExerciseSubmission[]
+  courseSubscriptions CourseSubscription[]
+
+  @@map("students")
+}
+
+model Instructor {
+  id         String    @id @default(cuid())
+  userId     String?   @unique @map("user_id") // Optional - can exist without User
+  name       String
+  email      String    @unique
+  department String?
+  title      String?
+  isApproved Boolean   @default(false) @map("is_approved")
+  approvedBy String?   @map("approved_by")
+  approvedAt DateTime? @map("approved_at")
+  createdAt  DateTime  @default(now()) @map("created_at")
+  updatedAt  DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user    User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  courses CourseInstructor[]
+
+  @@map("instructors")
+}
+
+model Lesson {
+  id          String   @id @default(cuid())
+  courseId    String   @map("course_id")
+  number      Int      @unique
+  title       String
+  description String?
+  duration    String?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  course          Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  exercises       Exercise[]
+  grades          Grade[]
+  gradingSessions GradingSession[]
+  quizAttempts    QuizAttempt[]
+  quizQuestions   QuizQuestion[]
+
+  @@map("lessons")
+}
+
+model RubricLevel {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  points      Int
+  color       String?
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  rubricMappings RubricLevelMapping[]
+  gradeCriteria  GradeCriteria[]
+
+  @@map("rubric_levels")
+}
+
+model RubricCriteria {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  weight      Int      @default(25)
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  rubricMappings RubricCriteriaMapping[]
+  gradeCriteria  GradeCriteria[]
+
+  @@map("rubric_criteria")
+}
+
+model Rubric {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  totalPoints Int      @default(16) @map("total_points")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  exercises        Exercise[]
+  criteriaMappings RubricCriteriaMapping[]
+  levelMappings    RubricLevelMapping[]
+
+  @@map("rubrics")
+}
+
+model RubricCriteriaMapping {
+  id         String   @id @default(cuid())
+  rubricId   String   @map("rubric_id")
+  criteriaId String   @map("criteria_id")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  rubric   Rubric         @relation(fields: [rubricId], references: [id], onDelete: Cascade)
+  criteria RubricCriteria @relation(fields: [criteriaId], references: [id], onDelete: Cascade)
+
+  @@unique([rubricId, criteriaId])
+  @@map("rubric_criteria_mapping")
+}
+
+model RubricLevelMapping {
+  id        String   @id @default(cuid())
+  rubricId  String   @map("rubric_id")
+  levelId   String   @map("level_id")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  rubric Rubric      @relation(fields: [rubricId], references: [id], onDelete: Cascade)
+  level  RubricLevel @relation(fields: [levelId], references: [id], onDelete: Cascade)
+
+  @@unique([rubricId, levelId])
+  @@map("rubric_levels_mapping")
+}
+
+model Exercise {
+  id          String   @id @default(cuid())
+  lessonId    String   @map("lesson_id")
+  title       String
+  description String?
+  maxPoints   Int      @default(16) @map("max_points")
+  rubricId    String   @map("rubric_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  lesson              Lesson               @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  rubric              Rubric               @relation(fields: [rubricId], references: [id])
+  grades              Grade[]
+  gradingSessions     GradingSession[]
+  exerciseSubmissions ExerciseSubmission[]
+
+  @@map("exercises")
+}
+
+model Grade {
+  id                String   @id @default(cuid())
+  studentId         String   @map("student_id")
+  lessonId          String   @map("lesson_id")
+  exerciseId        String   @map("exercise_id")
+  totalPoints       Int      @default(0) @map("total_points")
+  maxPossiblePoints Int      @default(0) @map("max_possible_points")
+  percentage        Int      @default(0)
+  letterGrade       String   @map("letter_grade")
+  feedback          String?
+  gradedBy          String   @default("Instructor") @map("graded_by")
+  gradedAt          DateTime @default(now()) @map("graded_at")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  student       Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lesson        Lesson          @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  exercise      Exercise        @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  gradeCriteria GradeCriteria[]
+
+  @@unique([studentId, exerciseId])
+  @@map("grades")
+}
+
+model GradeCriteria {
+  id         String   @id @default(cuid())
+  gradeId    String   @map("grade_id")
+  criteriaId String   @map("criteria_id")
+  levelId    String   @map("level_id")
+  points     Int
+  comments   String?
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  grade    Grade          @relation(fields: [gradeId], references: [id], onDelete: Cascade)
+  criteria RubricCriteria @relation(fields: [criteriaId], references: [id], onDelete: Cascade)
+  level    RubricLevel    @relation(fields: [levelId], references: [id], onDelete: Cascade)
+
+  @@map("grade_criteria")
+}
+
+model GradingSession {
+  id                   String    @id @default(cuid())
+  studentId            String    @map("student_id")
+  lessonId             String    @map("lesson_id")
+  exerciseId           String    @map("exercise_id")
+  isCompleted          Boolean   @default(false) @map("is_completed")
+  currentCriteriaIndex Int       @default(0) @map("current_criteria_index")
+  startedAt            DateTime  @default(now()) @map("started_at")
+  completedAt          DateTime? @map("completed_at")
+  createdAt            DateTime  @default(now()) @map("created_at")
+  updatedAt            DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lesson   Lesson   @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@unique([studentId, exerciseId])
+  @@map("grading_sessions")
+}
+
+model QuizQuestion {
+  id             String   @id @default(cuid())
+  lessonId       String   @map("lesson_id")
+  question       String
+  options         Json     // Array of strings
+  correctAnswer   Int      @map("correct_answer")
+  explanation     String?
+  order           Int      @default(0) // Order of question in quiz
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("quiz_questions")
+}
+
+model QuizAttempt {
+  id          String   @id @default(cuid())
+  studentId   String   @map("student_id")
+  lessonId    String   @map("lesson_id")
+  questions   Json // Array of question responses
+  score       Int
+  passed      Boolean
+  completedAt DateTime @default(now()) @map("completed_at")
+  timeSpent   Int      @default(0) @map("time_spent")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  student Student @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lesson  Lesson  @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+
+  @@map("quiz_attempts")
+}
+
+model ExerciseSubmission {
+  id              String   @id @default(cuid())
+  studentId       String   @map("student_id")
+  exerciseId      String   @map("exercise_id")
+  githubUrl       String   @map("github_url")
+  codingStandards Json     @map("coding_standards")
+  status          String   @default("pending")
+  submittedAt     DateTime @default(now()) @map("submitted_at")
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  student  Student  @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  exercise Exercise @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+
+  @@map("exercise_submissions")
+}
+
+model LessonNote {
+  id           String   @id @default(cuid())
+  lessonId     String   @map("lesson_id")
+  lessonNumber Int      @map("lesson_number")
+  lessonTitle  String   @map("lesson_title")
+  title        String
+  content      String
+  section      String // introduction, objectives, content, examples, exercises, summary, resources
+  createdAt    DateTime @default(now()) @map("created_at")
+  updatedAt    DateTime @updatedAt @map("updated_at")
+
+  @@map("lesson_notes")
+}
+
+model PDFResource {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  lessonId    String?  @map("lesson_id")
+  fileUrl     String   @map("file_url")
+  fileName    String   @map("file_name")
+  fileSize    Int      @map("file_size") // in KB
+  uploadedAt  DateTime @default(now()) @map("uploaded_at")
+
+  @@map("pdf_resources")
+}
+
+// Course model - represents a course that users can subscribe to
+model Course {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  price       Decimal? @db.Decimal(10, 2) // Price inclusive of tax
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  subscriptions    CourseSubscription[]
+  lessons          Lesson[]
+  courseInstructors CourseInstructor[]
+
+  @@map("courses")
+}
+
+// Course Instructor - links instructors to courses they manage
+model CourseInstructor {
+  id         String   @id @default(cuid())
+  courseId   String   @map("course_id")
+  instructorId String @map("instructor_id")
+  assignedAt DateTime @default(now()) @map("assigned_at")
+  assignedBy String?  @map("assigned_by") // admin user ID who assigned
+
+  // Relations
+  course     Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  instructor Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
+
+  @@unique([courseId, instructorId])
+  @@map("course_instructors")
+}
+
+// Course Subscription - links users or students to courses
+model CourseSubscription {
+  id           String   @id @default(cuid())
+  userId       String?  @map("user_id") // Optional - for authenticated users
+  studentId    String?  @map("student_id") // Optional - for direct student enrollment
+  courseId     String   @map("course_id")
+  subscribedAt DateTime @default(now()) @map("subscribed_at")
+  status       String   @default("active") // 'active', 'cancelled', 'expired'
+
+  // Relations
+  user    User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  student Student? @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  course  Course   @relation(fields: [courseId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, courseId])
+  @@unique([studentId, courseId])
+  @@index([studentId, courseId])
+  @@map("course_subscriptions")
+}
+
+// Cohort model - represents a student cohort
+model Cohort {
+  id          String   @id @default(cuid())
+  name        String   @unique
+  description String?
+  startDate   DateTime? @map("start_date")
+  endDate     DateTime? @map("end_date")
+  isActive    Boolean  @default(true) @map("is_active")
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  students Student[]
+
+  @@map("cohorts")
+}

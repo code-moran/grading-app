@@ -1,0 +1,9 @@
+{
+  "/not-found": "app/not-found.js",
+  "/instructor/courses/page": "app/instructor/courses/page.js",
+  "/grade/[lessonId]/page": "app/grade/[lessonId]/page.js",
+  "/lessons/page": "app/lessons/page.js",
+  "/instructor/lesson/[lessonId]/page": "app/instructor/lesson/[lessonId]/page.js",
+  "/instructor/courses/[id]/page": "app/instructor/courses/[id]/page.js",
+  "/api/auth/[...nextauth]/route": "app/api/auth/[...nextauth]/route.js"
+}
