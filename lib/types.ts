@@ -64,6 +64,14 @@ export interface Grade {
   maxPossiblePoints: number;
   percentage: number;
   letterGrade: string;
+  // TVETA/CBET Compliance Fields
+  isCompetent?: boolean;
+  competencyStatus?: 'competent' | 'not_competent' | 'needs_improvement';
+  assessorId?: string;
+  verifiedBy?: string;
+  verifiedAt?: Date;
+  moderatedBy?: string;
+  moderatedAt?: Date;
   feedback: string;
   gradedBy: string;
   gradedAt: Date;
@@ -84,17 +92,6 @@ export interface Exercise {
   description: string;
   rubric: Rubric;
   maxPoints: number;
-}
-
-export interface GradingSession {
-  id: string;
-  studentId: string;
-  lessonId: string;
-  exerciseId: string;
-  isCompleted: boolean;
-  currentCriteriaIndex: number;
-  startedAt: Date;
-  completedAt?: Date;
 }
 
 export interface BulkStudentUpload {
@@ -205,4 +202,58 @@ export interface PDFResource {
   fileName: string;
   fileSize: number;
   uploadedAt: Date;
+}
+
+// TVETA/CBET Compliance Types
+
+export interface UnitStandard {
+  id: string;
+  code: string;
+  title: string;
+  description?: string;
+  knqfLevel: number;
+  version: string;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface CompetencyUnit {
+  id: string;
+  unitStandardId: string;
+  code: string;
+  title: string;
+  description?: string;
+  performanceCriteria?: any[];
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+  unitStandard?: UnitStandard;
+}
+
+export interface AssessorAccreditation {
+  id: string;
+  instructorId: string;
+  accreditationType: 'assessor' | 'verifier' | 'moderator';
+  accreditationNumber: string;
+  issuingAuthority: string;
+  issueDate: Date;
+  expiryDate: Date;
+  isActive: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface AssessmentAuditLog {
+  id: string;
+  gradeId: string;
+  action: 'assessed' | 'verified' | 'moderated' | 'updated' | 'exported';
+  performedBy: string;
+  performedByRole: 'instructor' | 'assessor' | 'verifier' | 'moderator' | 'admin';
+  previousValue?: any;
+  newValue?: any;
+  notes?: string;
+  ipAddress?: string;
+  userAgent?: string;
+  createdAt: Date;
 }
