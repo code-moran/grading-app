@@ -3,9 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
-// GET - Get all lessons not assigned to a specific course
-// Since courseId is now required, this endpoint returns all lessons
-// that can be reassigned (for admin) or lessons from other courses (for instructors)
+// GET - Get lessons from other courses that can be reassigned
+// Note: All lessons must be linked to a course (courseId is required).
+// This endpoint returns lessons from OTHER courses that can be moved/reassigned.
 export async function GET(request: NextRequest) {
   try {
     const session = await getServerSession(authOptions);

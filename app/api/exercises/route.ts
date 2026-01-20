@@ -148,15 +148,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if lesson exists
+    // Check if lesson exists and is linked to a valid course
     const lesson = await prisma.lesson.findUnique({
       where: { id: lessonId },
+      include: {
+        course: {
+          select: {
+            id: true,
+            isActive: true,
+          },
+        },
+      },
     });
 
     if (!lesson) {
       return NextResponse.json(
         { error: 'Lesson not found' },
         { status: 404 }
+      );
+    }
+
+    // Ensure lesson is linked to a valid course
+    if (!lesson.course) {
+      return NextResponse.json(
+        { error: 'Lesson is not linked to a valid course. Please assign the lesson to a course first.' },
+        { status: 400 }
       );
     }
 

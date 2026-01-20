@@ -95,14 +95,14 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Verify course exists
+    // Verify course exists and is active
     const course = await prisma.course.findUnique({
       where: { id: courseId },
     });
 
     if (!course) {
       return NextResponse.json(
-        { error: 'Course not found' },
+        { error: 'Course not found. Lessons must be assigned to a valid course.' },
         { status: 404 }
       );
     }
