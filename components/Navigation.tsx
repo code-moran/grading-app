@@ -121,9 +121,7 @@ export default function Navigation() {
                   menuRef={moreMenuRef}
                   pathname={pathname}
                   items={[
-                    { href: '/lessons', icon: BookOpen, label: 'Lessons' },
-                    { href: '/exercises', icon: FileText, label: 'Exercises' },
-                    { href: '/quizzes', icon: HelpCircle, label: 'Quizzes' },
+                    { href: '/instructor/resources', icon: FileText, label: 'Resources' },
                   ]}
                   isActive={isActive}
                 />
@@ -152,9 +150,6 @@ export default function Navigation() {
                   menuRef={moreMenuRef}
                   pathname={pathname}
                   items={[
-                    { href: '/lessons', icon: BookOpen, label: 'Lessons' },
-                    { href: '/exercises', icon: FileText, label: 'Exercises' },
-                    { href: '/quizzes', icon: HelpCircle, label: 'Quizzes' },
                     { href: '/instructor/resources', icon: FileText, label: 'Resources' },
                   ]}
                   isActive={isActive}
@@ -190,11 +185,6 @@ export default function Navigation() {
                 <MobileNavLink href="/students" icon={Users} label="Students" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/cohorts" icon={Users} label="Cohorts" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/instructor/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
-                <div className="border-t border-gray-200 my-2"></div>
-                <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase">More</div>
-                <MobileNavLink href="/lessons" icon={BookOpen} label="Lessons" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/exercises" icon={FileText} label="Exercises" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/quizzes" icon={HelpCircle} label="Quizzes" onClick={() => setMobileMenuOpen(false)} />
               </>
             )}
             {isStudent && (
@@ -214,9 +204,6 @@ export default function Navigation() {
                 <MobileNavLink href="/instructor/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
                 <div className="border-t border-gray-200 my-2"></div>
                 <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase">More</div>
-                <MobileNavLink href="/lessons" icon={BookOpen} label="Lessons" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/exercises" icon={FileText} label="Exercises" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/quizzes" icon={HelpCircle} label="Quizzes" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/instructor/resources" icon={FileText} label="Resources" onClick={() => setMobileMenuOpen(false)} />
               </>
             )}

@@ -2,65 +2,88 @@ import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { Lesson, Exercise, Rubric, RubricCriteria, RubricLevel } from '@/lib/types';
 
-// GET /api/lessons - Get all lessons with their exercises
-export async function GET() {
+// GET /api/lessons - Get all lessons (simplified - used by quizzes/exercises pages)
+// Note: Lessons are primarily accessed through courses in the current workflow
+export async function GET(request: NextRequest) {
   try {
+    const { searchParams } = new URL(request.url);
+    const includeExercises = searchParams.get('includeExercises') === 'true';
+    const courseId = searchParams.get('courseId');
+
+    const whereClause: any = {};
+    if (courseId) {
+      whereClause.courseId = courseId;
+    }
+
     const lessons = await prisma.lesson.findMany({
+      where: whereClause,
       include: {
-        exercises: {
-          include: {
-            rubric: {
-              include: {
-                criteriaMappings: {
-                  include: {
-                    criteria: true,
+        course: {
+          select: {
+            id: true,
+            title: true,
+          },
+        },
+        ...(includeExercises ? {
+          exercises: {
+            include: {
+              rubric: {
+                include: {
+                  criteriaMappings: {
+                    include: {
+                      criteria: true,
+                    },
                   },
-                },
-                levelMappings: {
-                  include: {
-                    level: true,
+                  levelMappings: {
+                    include: {
+                      level: true,
+                    },
                   },
                 },
               },
             },
+            orderBy: { title: 'asc' },
           },
-          orderBy: { title: 'asc' },
-        },
+        } : {}),
       },
       orderBy: { number: 'asc' },
     });
 
-    const formattedLessons: Lesson[] = lessons.map(lesson => ({
+    const formattedLessons = lessons.map(lesson => ({
       id: lesson.id,
       number: lesson.number,
       title: lesson.title,
       description: lesson.description || '',
       duration: lesson.duration || '',
-      exercises: lesson.exercises.map(exercise => ({
-        id: exercise.id,
-        title: exercise.title,
-        description: exercise.description || '',
-        maxPoints: exercise.maxPoints,
-        rubric: {
-          id: exercise.rubric.id,
-          name: exercise.rubric.name,
-          description: exercise.rubric.description || '',
-          totalPoints: exercise.rubric.totalPoints,
-          criteria: exercise.rubric.criteriaMappings.map(mapping => ({
-            id: mapping.criteria.id,
-            name: mapping.criteria.name,
-            description: mapping.criteria.description || '',
-            weight: mapping.criteria.weight,
-          })),
-          levels: exercise.rubric.levelMappings.map(mapping => ({
-            id: mapping.level.id,
-            name: mapping.level.name,
-            description: mapping.level.description || '',
-            points: mapping.level.points,
-            color: mapping.level.color || 'bg-gray-100',
-          })),
-        },
-      })),
+      courseId: lesson.courseId,
+      course: lesson.course,
+      ...(includeExercises ? {
+        exercises: lesson.exercises?.map(exercise => ({
+          id: exercise.id,
+          title: exercise.title,
+          description: exercise.description || '',
+          maxPoints: exercise.maxPoints,
+          rubric: {
+            id: exercise.rubric.id,
+            name: exercise.rubric.name,
+            description: exercise.rubric.description || '',
+            totalPoints: exercise.rubric.totalPoints,
+            criteria: exercise.rubric.criteriaMappings.map(mapping => ({
+              id: mapping.criteria.id,
+              name: mapping.criteria.name,
+              description: mapping.criteria.description || '',
+              weight: mapping.criteria.weight,
+            })),
+            levels: exercise.rubric.levelMappings.map(mapping => ({
+              id: mapping.level.id,
+              name: mapping.level.name,
+              description: mapping.level.description || '',
+              points: mapping.level.points,
+              color: mapping.level.color || 'bg-gray-100',
+            })),
+          },
+        })) || [],
+      } : {}),
     }));
 
     return NextResponse.json({ lessons: formattedLessons });
