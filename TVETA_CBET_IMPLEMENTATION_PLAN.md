@@ -27,33 +27,36 @@ This document outlines the changes needed to make the grading system compliant w
 
 ## Implementation Steps
 
-### Phase 1: Database Schema Updates ✅ (In Progress)
+### Phase 1: Database Schema Updates ✅ (Completed)
 - [x] Remove unused features (test pages, GradingSession model)
-- [ ] Add UnitStandard model
-- [ ] Add CompetencyUnit model  
-- [ ] Add AssessorAccreditation model
-- [ ] Add AssessmentAuditLog model
-- [ ] Update Course model (add KNQF level)
-- [ ] Update Exercise model (link to competency units)
-- [ ] Update Grade model (add competency status)
-- [ ] Update Instructor model (assessor credentials)
+- [x] Add UnitStandard model
+- [x] Add CompetencyUnit model  
+- [x] Add AssessorAccreditation model
+- [x] Add AssessmentAuditLog model
+- [x] Update Course model (add KNQF level)
+- [x] Update Exercise model (link to competency units)
+- [x] Update Grade model (add competency status)
+- [x] Update Instructor model (assessor credentials)
 
-### Phase 2: Backend Logic Updates
-- [ ] Update assessment logic to be competency-based
-- [ ] Add competency validation
-- [ ] Update export functionality
-- [ ] Add audit logging
+### Phase 2: Backend Logic Updates ✅ (Completed)
+- [x] Update assessment logic to be competency-based (>=70% = competent)
+- [x] Add competency validation
+- [x] Update export functionality with TVETA/CBET fields
+- [x] Add audit logging system
+- [x] Create API endpoints for unit standards and competency units
 
-### Phase 3: UI/UX Updates
-- [ ] Update terminology (competency, unit standard, assessment)
-- [ ] Add competency status indicators
-- [ ] Add help text and tooltips
-- [ ] Update filters and exports
+### Phase 3: UI/UX Updates ✅ (Completed)
+- [x] Update terminology (competency, unit standard, assessment)
+- [x] Add competency status indicators in grades table
+- [x] Add help text and tooltips explaining TVETA/CBET
+- [x] Update CSV export headers with compliance fields
+- [x] Display competency status in grade detail modal
 
-### Phase 4: Cleanup & Documentation
-- [ ] Remove deprecated code
-- [ ] Update documentation
-- [ ] Add user guides
+### Phase 4: Cleanup & Documentation (Remaining)
+- [ ] Remove deprecated code references
+- [ ] Update README with TVETA/CBET compliance info
+- [ ] Add user guides for assessors
+- [ ] Create migration guide for existing data
 
 ## Terminology Changes
 - "Grade" → "Assessment" (when referring to competency)
