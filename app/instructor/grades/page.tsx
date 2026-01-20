@@ -31,6 +31,14 @@ interface Grade {
   maxPossiblePoints: number;
   percentage: number;
   letterGrade: string;
+  // TVETA/CBET Compliance Fields
+  isCompetent?: boolean | null;
+  competencyStatus?: 'competent' | 'not_competent' | 'needs_improvement' | null;
+  assessorId?: string | null;
+  verifiedBy?: string | null;
+  verifiedAt?: string | null;
+  moderatedBy?: string | null;
+  moderatedAt?: string | null;
   feedback: string | null;
   gradedBy: string;
   gradedAt: string;
@@ -680,6 +688,17 @@ export default function InstructorGradesPage() {
                       Grade
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <div className="flex items-center space-x-1">
+                        <span>Competency Status</span>
+                        <div className="group relative">
+                          <span className="text-gray-400 cursor-help">ℹ️</span>
+                          <div className="absolute bottom-full left-0 mb-2 w-64 p-2 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
+                            TVETA/CBET: Competency status indicates if student has demonstrated required skills. ≥70% = Competent.
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                       Date
                     </th>
                     <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -723,6 +742,27 @@ export default function InstructorGradesPage() {
                           </span>
                           <span className="text-sm text-gray-600">({grade.percentage}%)</span>
                         </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        {grade.competencyStatus ? (
+                          <span
+                            className={`px-2 py-1 rounded text-xs font-medium ${
+                              grade.competencyStatus === 'competent'
+                                ? 'bg-green-100 text-green-800'
+                                : grade.competencyStatus === 'needs_improvement'
+                                ? 'bg-yellow-100 text-yellow-800'
+                                : 'bg-red-100 text-red-800'
+                            }`}
+                          >
+                            {grade.competencyStatus === 'competent'
+                              ? '✓ Competent'
+                              : grade.competencyStatus === 'needs_improvement'
+                              ? '⚠ Needs Improvement'
+                              : '✗ Not Competent'}
+                          </span>
+                        ) : (
+                          <span className="text-xs text-gray-400">Not assessed</span>
+                        )}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                         {new Date(grade.gradedAt).toLocaleDateString()}
@@ -804,6 +844,24 @@ export default function InstructorGradesPage() {
                     <div className="text-sm text-gray-600 mb-1">Graded By</div>
                     <div className="text-lg font-semibold text-gray-900">{selectedGrade.gradedBy}</div>
                   </div>
+                  {selectedGrade.competencyStatus && (
+                    <div className="bg-gray-50 rounded-lg p-4">
+                      <div className="text-sm text-gray-600 mb-1">Competency Status</div>
+                      <div className={`text-lg font-semibold ${
+                        selectedGrade.competencyStatus === 'competent'
+                          ? 'text-green-600'
+                          : selectedGrade.competencyStatus === 'needs_improvement'
+                          ? 'text-yellow-600'
+                          : 'text-red-600'
+                      }`}>
+                        {selectedGrade.competencyStatus === 'competent'
+                          ? '✓ Competent'
+                          : selectedGrade.competencyStatus === 'needs_improvement'
+                          ? '⚠ Needs Improvement'
+                          : '✗ Not Competent'}
+                      </div>
+                    </div>
+                  )}
                 </div>
                 {selectedGrade.feedback && (
                   <div className="mb-6">
