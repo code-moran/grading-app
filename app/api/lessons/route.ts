@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
-import { Lesson, Exercise, Rubric, RubricCriteria, RubricLevel } from '@/lib/types';
 
 // GET /api/lessons - Get all lessons (simplified - used by quizzes/exercises pages)
 // Note: Lessons are primarily accessed through courses in the current workflow
@@ -153,13 +152,13 @@ export async function POST(request: NextRequest) {
       },
     });
 
-    const formattedLesson: Lesson = {
+    const formattedLesson = {
       id: newLesson.id,
       number: newLesson.number,
       title: newLesson.title,
       description: newLesson.description || '',
       duration: newLesson.duration || '',
-      exercises: []
+      courseId: newLesson.courseId,
     };
 
     return NextResponse.json({ lesson: formattedLesson }, { status: 201 });
