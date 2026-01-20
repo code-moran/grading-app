@@ -241,7 +241,7 @@ export default function AdminDashboard() {
                 </Link>
 
                 <Link
-                  href="/grades"
+                  href="/instructor/grades"
                   className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">

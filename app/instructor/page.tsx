@@ -241,7 +241,7 @@ export default function InstructorDashboard() {
             </Link>
 
             <Link
-              href="/grades"
+              href="/instructor/grades"
               className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 group"
             >
               <div className="flex items-center">
@@ -367,7 +367,7 @@ export default function InstructorDashboard() {
                     </Link>
 
                     <Link
-                      href="/grades"
+                      href="/instructor/grades"
                       className="p-6 border-2 border-gray-200 rounded-xl hover:border-blue-400 hover:bg-blue-50 transition-all duration-200 group"
                     >
                       <div className="flex items-center space-x-3 mb-2">

@@ -14,6 +14,7 @@ import {
   Award,
   Clock,
   Github,
+  Edit,
 } from 'lucide-react';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
@@ -524,7 +525,16 @@ export default function ExerciseGradingPage() {
 
                   {/* Rubric */}
                   <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                    <h3 className="text-lg font-bold text-gray-900 mb-6">Assessment Rubric</h3>
+                    <div className="flex items-center justify-between mb-6">
+                      <h3 className="text-lg font-bold text-gray-900">Assessment Rubric</h3>
+                      <Link
+                        href={`/instructor/rubric/${exercise.rubric.id}/edit`}
+                        className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                      >
+                        <Edit className="h-4 w-4 mr-2" />
+                        Edit Rubric
+                      </Link>
+                    </div>
                     <div className="space-y-6">
                       {exercise.rubric.criteria.map((criteria) => (
                         <div

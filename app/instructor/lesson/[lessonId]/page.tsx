@@ -720,7 +720,16 @@ export default function InstructorLessonDetailPage() {
 
                         {/* Rubric Preview */}
                         <div className="mt-4 pt-4 border-t border-gray-200">
-                          <h4 className="text-sm font-medium text-gray-700 mb-2">Rubric: {exercise.rubric.name}</h4>
+                          <div className="flex items-center justify-between mb-2">
+                            <h4 className="text-sm font-medium text-gray-700">Rubric: {exercise.rubric.name}</h4>
+                            <Link
+                              href={`/instructor/rubric/${exercise.rubric.id}/edit`}
+                              className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center"
+                            >
+                              <Edit className="h-3 w-3 mr-1" />
+                              Edit
+                            </Link>
+                          </div>
                           {exercise.rubric.description && (
                             <p className="text-xs text-gray-600 mb-3">{exercise.rubric.description}</p>
                           )}

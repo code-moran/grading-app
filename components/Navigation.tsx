@@ -114,7 +114,7 @@ export default function Navigation() {
                 <NavLink href="/admin/instructors" icon={Users} label="Instructors" isActive={isActive('/admin/instructors')} />
                 <NavLink href="/students" icon={Users} label="Students" isActive={isActive('/students')} />
                 <NavLink href="/cohorts" icon={Users} label="Cohorts" isActive={isActive('/cohorts')} />
-                <NavLink href="/grades" icon={BarChart3} label="Grades" isActive={isActive('/grades')} />
+                <NavLink href="/instructor/grades" icon={BarChart3} label="Grades" isActive={isActive('/instructor/grades') || isActive('/grades')} />
                 <MoreMenu
                   isOpen={moreMenuOpen}
                   setIsOpen={setMoreMenuOpen}
@@ -145,7 +145,7 @@ export default function Navigation() {
                   pathname={pathname}
                 />
                 <NavLink href="/cohorts" icon={Users} label="Cohorts" isActive={isActive('/cohorts')} />
-                <NavLink href="/grades" icon={BarChart3} label="Grades" isActive={isActive('/grades')} />
+                <NavLink href="/instructor/grades" icon={BarChart3} label="Grades" isActive={isActive('/instructor/grades') || isActive('/grades')} />
                 <MoreMenu
                   isOpen={moreMenuOpen}
                   setIsOpen={setMoreMenuOpen}
@@ -189,7 +189,7 @@ export default function Navigation() {
                 <MobileNavLink href="/admin/instructors" icon={Users} label="Instructors" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/students" icon={Users} label="Students" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/cohorts" icon={Users} label="Cohorts" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
+                <MobileNavLink href="/instructor/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
                 <div className="border-t border-gray-200 my-2"></div>
                 <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase">More</div>
                 <MobileNavLink href="/lessons" icon={BookOpen} label="Lessons" onClick={() => setMobileMenuOpen(false)} />
@@ -211,7 +211,7 @@ export default function Navigation() {
                 <MobileNavLink href="/instructor/students" icon={Users} label="My Students" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/students" icon={Users} label="All Students" onClick={() => setMobileMenuOpen(false)} />
                 <MobileNavLink href="/cohorts" icon={Users} label="Cohorts" onClick={() => setMobileMenuOpen(false)} />
-                <MobileNavLink href="/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
+                <MobileNavLink href="/instructor/grades" icon={BarChart3} label="Grades" onClick={() => setMobileMenuOpen(false)} />
                 <div className="border-t border-gray-200 my-2"></div>
                 <div className="px-2 py-1 text-xs font-semibold text-gray-500 uppercase">More</div>
                 <MobileNavLink href="/lessons" icon={BookOpen} label="Lessons" onClick={() => setMobileMenuOpen(false)} />
