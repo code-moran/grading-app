@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 import { Grade, BulkGradeExport } from '@/lib/types';
+import { createAuditLog } from '@/lib/audit-log';
 
 // GET /api/grades - Get all grades with optional filtering
 export async function GET(request: NextRequest) {
@@ -57,6 +60,14 @@ export async function GET(request: NextRequest) {
       maxPossiblePoints: grade.maxPossiblePoints,
       percentage: grade.percentage,
       letterGrade: grade.letterGrade,
+      // TVETA/CBET Compliance Fields
+      isCompetent: grade.isCompetent,
+      competencyStatus: grade.competencyStatus,
+      assessorId: grade.assessorId,
+      verifiedBy: grade.verifiedBy,
+      verifiedAt: grade.verifiedAt,
+      moderatedBy: grade.moderatedBy,
+      moderatedAt: grade.moderatedAt,
       feedback: grade.feedback,
       gradedBy: grade.gradedBy,
       gradedAt: grade.gradedAt,
@@ -89,6 +100,15 @@ export async function GET(request: NextRequest) {
 // POST /api/grades - Create a new grade
 export async function POST(request: NextRequest) {
   try {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user) {
+      return NextResponse.json(
+        { error: 'Unauthorized' },
+        { status: 401 }
+      );
+    }
+
     const body = await request.json();
     const {
       studentId,
@@ -96,10 +116,16 @@ export async function POST(request: NextRequest) {
       exerciseId,
       criteriaGrades,
       totalPoints,
+      maxPossiblePoints,
       percentage,
       letterGrade,
       feedback,
-      gradedBy
+      gradedBy,
+      isCompetent,
+      competencyStatus,
+      assessorId,
+      verifiedBy,
+      moderatedBy
     } = body;
 
     // Validate required fields
@@ -110,8 +136,40 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Determine competency status if not provided
+    // TVETA/CBET: Typically >= 70% is considered competent
+    let finalCompetencyStatus = competencyStatus;
+    let finalIsCompetent = isCompetent;
+    
+    if (finalCompetencyStatus === undefined) {
+      if (percentage >= 70) {
+        finalCompetencyStatus = 'competent';
+        finalIsCompetent = true;
+      } else if (percentage >= 50) {
+        finalCompetencyStatus = 'needs_improvement';
+        finalIsCompetent = false;
+      } else {
+        finalCompetencyStatus = 'not_competent';
+        finalIsCompetent = false;
+      }
+    }
+
+    // Get assessor ID from session if not provided
+    let finalAssessorId = assessorId;
+    if (!finalAssessorId && (session.user as any).role === 'instructor') {
+      const instructor = await prisma.instructor.findUnique({
+        where: { userId: session.user.id },
+        select: { id: true },
+      });
+      finalAssessorId = instructor?.id || null;
+    }
+
+    // Get client IP and user agent for audit logging
+    const ipAddress = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || 'unknown';
+    const userAgent = request.headers.get('user-agent') || 'unknown';
+
     // Use Prisma transaction
-    const newGrade = await prisma.$transaction(async (tx: any) => {
+    const result = await prisma.$transaction(async (tx: any) => {
       // First, try to find existing grade
       const existingGrade = await tx.grade.findUnique({
         where: {
@@ -122,6 +180,14 @@ export async function POST(request: NextRequest) {
         },
       });
 
+      const previousValue = existingGrade ? {
+        totalPoints: existingGrade.totalPoints,
+        percentage: existingGrade.percentage,
+        letterGrade: existingGrade.letterGrade,
+        competencyStatus: existingGrade.competencyStatus,
+        isCompetent: existingGrade.isCompetent,
+      } : null;
+
       let grade;
       if (existingGrade) {
         // Update existing grade
@@ -129,8 +195,16 @@ export async function POST(request: NextRequest) {
           where: { id: existingGrade.id },
           data: {
             totalPoints,
+            maxPossiblePoints: maxPossiblePoints || existingGrade.maxPossiblePoints,
             percentage,
             letterGrade,
+            isCompetent: finalIsCompetent,
+            competencyStatus: finalCompetencyStatus,
+            assessorId: finalAssessorId || null,
+            verifiedBy: verifiedBy || null,
+            verifiedAt: verifiedBy ? new Date() : null,
+            moderatedBy: moderatedBy || null,
+            moderatedAt: moderatedBy ? new Date() : null,
             feedback: feedback || null,
             gradedBy: gradedBy || 'Instructor',
             gradedAt: new Date(),
@@ -144,8 +218,16 @@ export async function POST(request: NextRequest) {
             lessonId,
             exerciseId,
             totalPoints,
+            maxPossiblePoints: maxPossiblePoints || totalPoints,
             percentage,
             letterGrade,
+            isCompetent: finalIsCompetent,
+            competencyStatus: finalCompetencyStatus,
+            assessorId: finalAssessorId || null,
+            verifiedBy: verifiedBy || null,
+            verifiedAt: verifiedBy ? new Date() : null,
+            moderatedBy: moderatedBy || null,
+            moderatedAt: moderatedBy ? new Date() : null,
             feedback: feedback || null,
             gradedBy: gradedBy || 'Instructor',
           },
@@ -170,7 +252,31 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      return grade;
+      return { grade, previousValue };
+    });
+
+    const { grade: newGrade, previousValue } = result;
+
+    // Create audit log entry
+    const userRole = (session.user as any).role;
+    const auditAction = previousValue ? 'updated' : 'assessed';
+    
+    await createAuditLog({
+      gradeId: newGrade.id,
+      action: auditAction,
+      performedBy: session.user.id,
+      performedByRole: userRole === 'admin' ? 'admin' : 
+                       userRole === 'instructor' ? 'assessor' : 'instructor',
+      previousValue,
+      newValue: {
+        totalPoints: newGrade.totalPoints,
+        percentage: newGrade.percentage,
+        letterGrade: newGrade.letterGrade,
+        competencyStatus: newGrade.competencyStatus,
+        isCompetent: newGrade.isCompetent,
+      },
+      ipAddress: ipAddress as string,
+      userAgent,
     });
 
     const formattedGrade: Grade = {
@@ -183,6 +289,13 @@ export async function POST(request: NextRequest) {
       maxPossiblePoints: newGrade.maxPossiblePoints,
       percentage: newGrade.percentage,
       letterGrade: newGrade.letterGrade,
+      isCompetent: newGrade.isCompetent,
+      competencyStatus: newGrade.competencyStatus,
+      assessorId: newGrade.assessorId,
+      verifiedBy: newGrade.verifiedBy,
+      verifiedAt: newGrade.verifiedAt,
+      moderatedBy: newGrade.moderatedBy,
+      moderatedAt: newGrade.moderatedAt,
       feedback: newGrade.feedback,
       gradedBy: newGrade.gradedBy,
       gradedAt: newGrade.gradedAt

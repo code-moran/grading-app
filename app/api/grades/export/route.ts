@@ -107,6 +107,36 @@ export async function GET(request: NextRequest) {
             },
           },
         },
+        assessor: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            accreditationNumber: true,
+          },
+        },
+        exercise: {
+          select: {
+            id: true,
+            title: true,
+            maxPoints: true,
+            competencyUnit: {
+              select: {
+                id: true,
+                code: true,
+                title: true,
+                unitStandard: {
+                  select: {
+                    id: true,
+                    code: true,
+                    title: true,
+                    knqfLevel: true,
+                  },
+                },
+              },
+            },
+          },
+        },
         lesson: {
           select: {
             id: true,
@@ -117,15 +147,18 @@ export async function GET(request: NextRequest) {
               select: {
                 id: true,
                 title: true,
+                knqfLevel: true,
+                qualificationCode: true,
+                unitStandard: {
+                  select: {
+                    id: true,
+                    code: true,
+                    title: true,
+                    knqfLevel: true,
+                  },
+                },
               },
             },
-          },
-        },
-        exercise: {
-          select: {
-            id: true,
-            title: true,
-            maxPoints: true,
           },
         },
       },
@@ -158,17 +191,38 @@ export async function GET(request: NextRequest) {
         studentGradesMap.set(studentId, []);
       }
       
+      // Get unit standard and competency unit information
+      const unitStandard = grade.exercise?.competencyUnit?.unitStandard;
+      const competencyUnit = grade.exercise?.competencyUnit;
+      const course = grade.lesson?.course;
+      
       studentGradesMap.get(studentId)!.push({
         lessonId: grade.lessonId,
         lessonTitle: `Lesson ${grade.lesson.number}: ${grade.lesson.title}`,
         courseId: grade.lesson.courseId,
-        courseTitle: grade.lesson.course?.title || 'Unknown Course',
+        courseTitle: course?.title || 'Unknown Course',
+        knqfLevel: course?.knqfLevel || course?.unitStandard?.knqfLevel || null,
+        qualificationCode: course?.qualificationCode || null,
+        unitStandardCode: unitStandard?.code || null,
+        unitStandardTitle: unitStandard?.title || null,
+        competencyUnitCode: competencyUnit?.code || null,
+        competencyUnitTitle: competencyUnit?.title || null,
         exerciseId: grade.exerciseId,
         exerciseTitle: grade.exercise?.title || 'Unknown Exercise',
         points: grade.totalPoints,
         maxPoints: grade.exercise?.maxPoints || grade.maxPossiblePoints,
         percentage: grade.percentage,
         letterGrade: grade.letterGrade,
+        // TVETA/CBET Compliance Fields
+        isCompetent: grade.isCompetent,
+        competencyStatus: grade.competencyStatus || (grade.isCompetent ? 'competent' : 'not_competent'),
+        assessorName: grade.assessor?.name || grade.gradedBy,
+        assessorEmail: grade.assessor?.email || null,
+        assessorAccreditation: grade.assessor?.accreditationNumber || null,
+        verifiedBy: grade.verifiedBy || null,
+        verifiedAt: grade.verifiedAt || null,
+        moderatedBy: grade.moderatedBy || null,
+        moderatedAt: grade.moderatedAt || null,
         feedback: grade.feedback,
         gradedBy: grade.gradedBy,
         gradedAt: grade.gradedAt,
