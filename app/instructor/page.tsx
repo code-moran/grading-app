@@ -222,7 +222,7 @@ export default function InstructorDashboard() {
             </Link>
 
             <Link
-              href="/lessons"
+              href="/instructor/courses"
               className="bg-white rounded-xl shadow-md p-6 hover:shadow-xl transition-all duration-300 border border-gray-100 group"
             >
               <div className="flex items-center">
