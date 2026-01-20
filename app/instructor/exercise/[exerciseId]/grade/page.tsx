@@ -321,21 +321,25 @@ export default function ExerciseGradingPage() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4">
               <div className="flex items-center space-x-4">
-                <Link
-                  href="/exercises"
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4 mr-2" />
-                  <span className="hidden sm:inline">Back to Exercises</span>
-                  <span className="sm:hidden">Back</span>
-                </Link>
-                <div className="h-6 w-px bg-gray-300" />
+                {exercise && (
+                  <Link
+                    href={`/instructor/lesson/${exercise.lesson.id}`}
+                    className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                  >
+                    <ArrowLeft className="h-4 w-4 mr-2" />
+                    <span className="hidden sm:inline">Back to Lesson</span>
+                    <span className="sm:hidden">Back</span>
+                  </Link>
+                )}
+                {exercise && <div className="h-6 w-px bg-gray-300" />}
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">{exercise.title}</h1>
-                  <p className="text-sm text-gray-600">
-                    {exercise.lesson.course.title} • Lesson {exercise.lesson.number}:{' '}
-                    {exercise.lesson.title}
-                  </p>
+                  <h1 className="text-xl font-bold text-gray-900">{exercise?.title || 'Loading...'}</h1>
+                  {exercise && (
+                    <p className="text-sm text-gray-600">
+                      {exercise.lesson.course.title} • Lesson {exercise.lesson.number}:{' '}
+                      {exercise.lesson.title}
+                    </p>
+                  )}
                 </div>
               </div>
               {selectedStudent && (
