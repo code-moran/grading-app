@@ -824,7 +824,7 @@ export default function CourseDetailPage() {
                         </div>
                         <div className="flex items-center space-x-2">
                           <Link
-                            href={`/lessons?lesson=${lesson.id}`}
+                            href={`/instructor/lesson/${lesson.id}`}
                             className="text-blue-600 hover:text-blue-700 text-sm font-medium"
                           >
                             View
