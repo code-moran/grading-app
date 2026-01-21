@@ -18,7 +18,6 @@ export async function GET(
           select: {
             id: true,
             name: true,
-            studentId: true,
             registrationNumber: true,
             email: true,
           },

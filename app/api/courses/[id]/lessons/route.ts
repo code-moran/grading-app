@@ -114,17 +114,14 @@ export async function DELETE(
       );
     }
 
-    // Unassign lesson from course
-    const updatedLesson = await prisma.lesson.update({
+    // Delete lesson (lessons must always be linked to a course, so we delete instead of unassigning)
+    // This will cascade delete exercises, quiz questions, quiz attempts, and grades
+    await prisma.lesson.delete({
       where: { id: lessonId },
-      data: {
-        courseId: null,
-      },
     });
 
     return NextResponse.json({
-      message: 'Lesson unassigned from course successfully',
-      lesson: updatedLesson,
+      message: 'Lesson deleted successfully',
     });
   } catch (error: any) {
     console.error('Error unassigning lesson:', error);

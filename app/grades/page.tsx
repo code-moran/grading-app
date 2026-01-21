@@ -64,7 +64,7 @@ export default function GradesPage() {
         studentId: student.id,
         studentName: student.name,
         registrationNumber: student.registrationNumber,
-        class: student.class,
+        class: student.cohort?.name || '',
         bestGrade,
         bestPercentage,
         bestLetterGrade,
@@ -212,7 +212,7 @@ export default function GradesPage() {
                 <option value="all">All Students</option>
                     {students.map(student => (
                   <option key={student.id} value={student.id}>
-                    {student.name} ({student.studentId})
+                    {student.name} ({student.registrationNumber})
                   </option>
                 ))}
               </select>

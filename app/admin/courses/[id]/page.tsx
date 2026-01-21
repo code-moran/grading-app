@@ -1069,6 +1069,9 @@ export default function CourseDetailPage() {
                       const subscriber = isUserSubscription
                         ? subscription.user
                         : subscription.student;
+                      const subscriberRole = isUserSubscription
+                        ? subscription.user!.role
+                        : 'student';
                       
                       if (!subscriber) return null;
 
@@ -1095,12 +1098,12 @@ export default function CourseDetailPage() {
                           </div>
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-medium ${
-                              (isUserSubscription && subscriber.role === 'student') || !isUserSubscription
+                              subscriberRole === 'student'
                                 ? 'bg-green-100 text-green-700'
                                 : 'bg-purple-100 text-purple-700'
                             }`}
                           >
-                            {isUserSubscription ? subscriber.role : 'student'}
+                            {subscriberRole}
                           </span>
                         </div>
                       );

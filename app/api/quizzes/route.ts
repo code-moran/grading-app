@@ -47,11 +47,6 @@ export async function GET(request: NextRequest) {
             },
           },
         },
-        _count: {
-          select: {
-            lesson: true, // This will be 1, but we can use it to verify existence
-          },
-        },
       },
       orderBy: [
         { lessonId: 'asc' },

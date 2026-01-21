@@ -107,7 +107,7 @@ export async function GET(request: NextRequest) {
         // Handle subscriptions via user (with studentProfile)
         if (subscription.user?.studentProfile && subscription.user.role === 'student') {
           const user = subscription.user;
-          const studentId = user.studentProfile.id;
+          const studentId = user.studentProfile!.id;
 
           if (!studentMap.has(studentId)) {
             // Get student's grades for this instructor's courses
@@ -157,15 +157,15 @@ export async function GET(request: NextRequest) {
               totalMaxPoints > 0 ? Math.round((totalPoints / totalMaxPoints) * 100) : 0;
 
             studentMap.set(studentId, {
-              id: user.studentProfile.id,
+              id: user.studentProfile!.id,
               userId: user.id,
-              name: user.studentProfile.name,
-              email: user.studentProfile.email || user.email,
-              registrationNumber: user.studentProfile.registrationNumber,
-              cohortId: user.studentProfile.cohortId || undefined,
-              cohort: user.studentProfile.cohort ? {
-                id: user.studentProfile.cohort.id,
-                name: user.studentProfile.cohort.name,
+              name: user.studentProfile!.name,
+              email: user.studentProfile!.email || user.email,
+              registrationNumber: user.studentProfile!.registrationNumber,
+              cohortId: user.studentProfile!.cohortId || undefined,
+              cohort: user.studentProfile!.cohort ? {
+                id: user.studentProfile!.cohort.id,
+                name: user.studentProfile!.cohort.name,
               } : undefined,
               courses: [
                 {
@@ -175,9 +175,9 @@ export async function GET(request: NextRequest) {
                 },
               ],
               stats: {
-                totalGrades: user.studentProfile._count.grades,
-                totalQuizAttempts: user.studentProfile._count.quizAttempts,
-                totalSubmissions: user.studentProfile._count.exerciseSubmissions,
+                totalGrades: user.studentProfile!._count.grades,
+                totalQuizAttempts: user.studentProfile!._count.quizAttempts,
+                totalSubmissions: user.studentProfile!._count.exerciseSubmissions,
                 averageGrade,
               },
               recentGrades: studentGrades.slice(0, 5),

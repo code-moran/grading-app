@@ -154,8 +154,8 @@ export async function POST(request: NextRequest) {
         });
       }
 
-      result.summary.deletedLessons = orphanedLessons.length;
-      result.summary.deletedExercises = orphanedExercises.length + exercisesWithInvalidLessons.length;
+      (result.summary as any).deletedLessons = orphanedLessons.length;
+      (result.summary as any).deletedExercises = orphanedExercises.length + exercisesWithInvalidLessons.length;
     }
 
     return NextResponse.json({

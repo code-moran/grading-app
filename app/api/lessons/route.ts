@@ -48,42 +48,50 @@ export async function GET(request: NextRequest) {
       orderBy: { number: 'asc' },
     });
 
-    const formattedLessons = lessons.map(lesson => ({
-      id: lesson.id,
-      number: lesson.number,
-      title: lesson.title,
-      description: lesson.description || '',
-      duration: lesson.duration || '',
-      courseId: lesson.courseId,
-      course: lesson.course,
-      ...(includeExercises ? {
-        exercises: lesson.exercises?.map(exercise => ({
-          id: exercise.id,
-          title: exercise.title,
-          description: exercise.description || '',
-          maxPoints: exercise.maxPoints,
-          rubric: {
-            id: exercise.rubric.id,
-            name: exercise.rubric.name,
-            description: exercise.rubric.description || '',
-            totalPoints: exercise.rubric.totalPoints,
-            criteria: exercise.rubric.criteriaMappings.map(mapping => ({
-              id: mapping.criteria.id,
-              name: mapping.criteria.name,
-              description: mapping.criteria.description || '',
-              weight: mapping.criteria.weight,
-            })),
-            levels: exercise.rubric.levelMappings.map(mapping => ({
-              id: mapping.level.id,
-              name: mapping.level.name,
-              description: mapping.level.description || '',
-              points: mapping.level.points,
-              color: mapping.level.color || 'bg-gray-100',
-            })),
-          },
-        })) || [],
-      } : {}),
-    }));
+    const formattedLessons = lessons.map(lesson => {
+      const baseLesson = {
+        id: lesson.id,
+        number: lesson.number,
+        title: lesson.title,
+        description: lesson.description || '',
+        duration: lesson.duration || '',
+        courseId: lesson.courseId,
+        course: lesson.course,
+      };
+
+      if (includeExercises && 'exercises' in lesson && lesson.exercises) {
+        return {
+          ...baseLesson,
+          exercises: lesson.exercises.map((exercise: any) => ({
+            id: exercise.id,
+            title: exercise.title,
+            description: exercise.description || '',
+            maxPoints: exercise.maxPoints,
+            rubric: {
+              id: exercise.rubric.id,
+              name: exercise.rubric.name,
+              description: exercise.rubric.description || '',
+              totalPoints: exercise.rubric.totalPoints,
+              criteria: exercise.rubric.criteriaMappings.map((mapping: any) => ({
+                id: mapping.criteria.id,
+                name: mapping.criteria.name,
+                description: mapping.criteria.description || '',
+                weight: mapping.criteria.weight,
+              })),
+              levels: exercise.rubric.levelMappings.map((mapping: any) => ({
+                id: mapping.level.id,
+                name: mapping.level.name,
+                description: mapping.level.description || '',
+                points: mapping.level.points,
+                color: mapping.level.color || 'bg-gray-100',
+              })),
+            },
+          })),
+        };
+      }
+
+      return baseLesson;
+    });
 
     return NextResponse.json({ lessons: formattedLessons });
   } catch (error) {

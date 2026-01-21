@@ -50,7 +50,6 @@ export default function GradingPage() {
   // Filter students based on search term
   const filteredStudents = students.filter(student =>
     student.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    student.studentId.toLowerCase().includes(searchTerm.toLowerCase()) ||
     student.registrationNumber.toLowerCase().includes(searchTerm.toLowerCase()) ||
     (student.email && student.email.toLowerCase().includes(searchTerm.toLowerCase()))
   );
@@ -306,7 +305,7 @@ export default function GradingPage() {
                         }`}
                       >
                         <div className="font-medium">{student.name}</div>
-                        <div className="text-sm text-gray-600">{student.studentId}</div>
+                        <div className="text-sm text-gray-600">{student.registrationNumber}</div>
                         {student.registrationNumber && (
                           <div className="text-xs text-gray-500">Reg: {student.registrationNumber}</div>
                         )}
@@ -356,7 +355,7 @@ export default function GradingPage() {
                       <h2 className="text-xl font-bold text-gray-900">
                         Grading: {selectedStudent.name}
                       </h2>
-                      <p className="text-sm text-gray-500">{selectedStudent.studentId}</p>
+                      <p className="text-sm text-gray-500">{selectedStudent.registrationNumber}</p>
                     </div>
                   </div>
                   <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
