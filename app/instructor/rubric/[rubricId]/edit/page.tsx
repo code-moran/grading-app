@@ -390,7 +390,7 @@ export default function EditRubricPage() {
 
   if (loading) {
     return (
-      <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+      <ProtectedRoute requiredRole={['instructor', 'admin']}>
         <div className="min-h-screen bg-gray-50">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -405,7 +405,7 @@ export default function EditRubricPage() {
 
   if (!rubric) {
     return (
-      <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+      <ProtectedRoute requiredRole={['instructor', 'admin']}>
         <div className="min-h-screen bg-gray-50">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -419,7 +419,7 @@ export default function EditRubricPage() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+    <ProtectedRoute requiredRole={['instructor', 'admin']}>
       <div className="min-h-screen bg-gray-50">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">

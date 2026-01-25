@@ -189,7 +189,7 @@ export default function StudentGradesPage() {
 
         // Group grades by course and lesson
         const grouped: { [courseId: string]: GradeGroup } = {};
-        gradesWithDetails.forEach((grade) => {
+        gradesWithDetails.forEach((grade: Grade) => {
           if (!grade.lesson?.courseId || !grade.lesson?.course) return;
 
           const courseId = grade.lesson.courseId;

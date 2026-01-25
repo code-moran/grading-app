@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import {
   ArrowLeft,
   Save,
@@ -102,6 +102,7 @@ interface Student {
 export default function ExerciseGradingPage() {
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
   const exerciseId = params.exerciseId as string;
 
   const [exercise, setExercise] = useState<Exercise | null>(null);
@@ -121,6 +122,18 @@ export default function ExerciseGradingPage() {
     fetchExercise();
     fetchStudents();
   }, [exerciseId]);
+
+  // Handle student selection from URL parameter
+  useEffect(() => {
+    const studentIdFromUrl = searchParams.get('studentId');
+    if (studentIdFromUrl && students.length > 0) {
+      const studentToSelect = students.find((s) => s.id === studentIdFromUrl);
+      // Only update if the student from URL is different from currently selected
+      if (studentToSelect && selectedStudent?.id !== studentIdFromUrl) {
+        setSelectedStudent(studentToSelect);
+      }
+    }
+  }, [students, searchParams]);
 
   const fetchExercise = async () => {
     try {

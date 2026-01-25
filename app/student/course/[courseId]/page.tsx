@@ -197,7 +197,7 @@ export default function StudentCoursePage() {
     }
 
     // Find the previous lesson in the same course
-    const previousLesson = course.lessons.find((l) => l.number === lesson.number - 1);
+    const previousLesson = course?.lessons?.find((l) => l.number === lesson.number - 1);
 
     if (!previousLesson) {
       // If previous lesson doesn't exist, unlock it (shouldn't happen, but be safe)

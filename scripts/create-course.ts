@@ -27,22 +27,9 @@ async function createCourse() {
     console.log(`Title: ${course.title}`);
     console.log(`ID: ${course.id}`);
 
-    // Link existing lessons to this course
-    const lessons = await prisma.lesson.findMany({
-      orderBy: { number: 'asc' },
-    });
-
-    if (lessons.length > 0) {
-      await prisma.lesson.updateMany({
-        where: {
-          courseId: null,
-        },
-        data: {
-          courseId: course.id,
-        },
-      });
-      console.log(`Linked ${lessons.length} lessons to the course`);
-    }
+    // Note: All lessons must have a courseId (required field)
+    // This script creates a course but doesn't automatically link lessons
+    // Lessons should be linked to courses when they are created
   } catch (error) {
     console.error('Error creating course:', error);
     throw error;

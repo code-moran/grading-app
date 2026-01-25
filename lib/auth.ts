@@ -53,7 +53,7 @@ export const authOptions: NextAuthOptions = {
           let registrationNumber = null;
 
           if (user.role === 'student' && user.studentProfile) {
-            studentId = user.studentProfile.studentId;
+            studentId = user.studentProfile.id;
             registrationNumber = user.studentProfile.registrationNumber;
           }
 
@@ -90,9 +90,9 @@ export const authOptions: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.sub!;
-        session.user.role = token.role as string;
-        session.user.studentId = token.studentId as string;
-        session.user.registrationNumber = token.registrationNumber as string;
+        session.user.role = token.role as "student" | "instructor" | "admin" | undefined;
+        session.user.studentId = token.studentId as string | undefined;
+        session.user.registrationNumber = token.registrationNumber as string | undefined;
       }
       return session;
     },

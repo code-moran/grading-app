@@ -77,11 +77,12 @@ export async function GET(
         subscriptions: {
           include: {
             user: {
-              select: {
-                id: true,
-                name: true,
-                email: true,
-                role: true,
+              include: {
+                studentProfile: {
+                  select: {
+                    id: true,
+                  },
+                },
               },
             },
             student: {
@@ -135,7 +136,8 @@ export async function GET(
           // Handle subscriptions via user (authenticated users)
           if (sub.user) {
             return {
-              id: sub.user.id,
+              id: sub.user.studentProfile?.id || sub.user.id,
+              userId: sub.user.id,
               name: sub.user.name,
               email: sub.user.email,
               role: sub.user.role,
@@ -146,6 +148,7 @@ export async function GET(
           else if (sub.student) {
             return {
               id: sub.student.id,
+              userId: null,
               name: sub.student.name,
               email: sub.student.email || '',
               role: 'student',

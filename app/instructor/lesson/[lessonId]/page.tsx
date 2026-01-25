@@ -185,7 +185,7 @@ export default function InstructorLessonDetailPage() {
       setNewExercise({ title: '', description: '', maxPoints: 16, rubricId: '' });
       setShowExerciseForm(false);
       setSuccess('Exercise added successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -218,7 +218,7 @@ export default function InstructorLessonDetailPage() {
       await fetchLesson();
       setEditingExercise(null);
       setSuccess('Exercise updated successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -242,7 +242,7 @@ export default function InstructorLessonDetailPage() {
 
       await fetchLesson();
       setSuccess('Exercise deleted successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -281,7 +281,7 @@ export default function InstructorLessonDetailPage() {
       setNewQuestion({ question: '', options: ['', ''], correctAnswer: 0, explanation: '', order: 0 });
       setShowQuizForm(false);
       setSuccess('Quiz question added successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -315,7 +315,7 @@ export default function InstructorLessonDetailPage() {
       await fetchLesson();
       setEditingQuestion(null);
       setSuccess('Quiz question updated successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }
@@ -339,7 +339,7 @@ export default function InstructorLessonDetailPage() {
 
       await fetchLesson();
       setSuccess('Quiz question deleted successfully');
-      setTimeout(() => setSuccess(null), 3000);
+      setTimeout(() => setSuccess(''), 3000);
     } catch (error: any) {
       setError(error.message);
     }

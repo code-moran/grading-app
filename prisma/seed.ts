@@ -9,7 +9,6 @@ async function main() {
   // Clear existing data
   await prisma.gradeCriteria.deleteMany();
   await prisma.grade.deleteMany();
-  await prisma.gradingSession.deleteMany();
   await prisma.exercise.deleteMany();
   await prisma.lesson.deleteMany();
   await prisma.rubricCriteriaMapping.deleteMany();
@@ -19,6 +18,17 @@ async function main() {
   await prisma.rubric.deleteMany();
 
   console.log('🧹 Cleared existing data');
+
+  // Create a default course for seeding lessons
+  const defaultCourse = await prisma.course.upsert({
+    where: { id: 'seed-default-course' },
+    update: {},
+    create: {
+      id: 'seed-default-course',
+      title: 'Default Course (Seed)',
+      description: 'Default course created for seeding lessons',
+    },
+  });
 
   // Store created levels and criteria for reuse
   const createdLevels = new Map<string, any>();
@@ -32,6 +42,7 @@ async function main() {
     const lesson = await prisma.lesson.create({
       data: {
         id: lessonData.id,
+        courseId: defaultCourse.id,
         number: lessonData.number,
         title: lessonData.title,
         description: lessonData.description,

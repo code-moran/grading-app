@@ -436,7 +436,7 @@ export default function InstructorGradesPage() {
 
   if (loading) {
     return (
-      <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+      <ProtectedRoute requiredRole={['instructor', 'admin']}>
         <div className="min-h-screen bg-gray-50">
           <Navigation />
           <div className="flex items-center justify-center py-12">
@@ -449,7 +449,7 @@ export default function InstructorGradesPage() {
   }
 
   return (
-    <ProtectedRoute allowedRoles={['instructor', 'admin']}>
+    <ProtectedRoute requiredRole={['instructor', 'admin']}>
       <div className="min-h-screen bg-gray-50">
         <Navigation />
 

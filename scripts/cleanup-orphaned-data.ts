@@ -50,8 +50,6 @@ async function cleanupOrphanedData() {
           id: true,
           title: true,
           lessonId: true,
-        },
-        include: {
           _count: {
             select: {
               grades: true,
