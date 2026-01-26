@@ -57,12 +57,25 @@ npm run db:push
 
 #### Course Detail (`/instructor/courses/[id]`)
 - View course information and statistics
-- Manage lessons:
+- **Tabbed Interface**:
+  - **Lessons Tab**: Manage course lessons
+  - **Subscribers Tab**: View enrolled students
+  - **Cohorts Tab**: Manage enrolled cohorts
+- **Manage Lessons**:
   - View all assigned lessons
   - Add lessons from other courses (reassign)
+  - **Create new lessons** directly from course page
   - Bulk assign multiple lessons
-- View subscribers
-- See course analytics
+  - Search and filter lessons
+- **View Subscribers**:
+  - See all enrolled students
+  - Click on students to view detailed information
+  - Search students by name or email
+- **Manage Cohorts**:
+  - View enrolled cohorts
+  - Enroll new cohorts
+  - Unenroll cohorts
+  - Click on cohorts to view detailed cohort information and export grades
 
 **Note:** Instructors can only manage courses they are assigned to.
 
@@ -110,11 +123,25 @@ npm run db:push
 
 1. Navigate to `/instructor/courses`
 2. Click on a course card
-3. Click "Add Lessons" button
-4. Select lessons from other courses (or create new ones with courseId)
-5. Click "Assign Selected" or assign individually
+3. Click "Add Lessons" button to assign existing lessons
+4. OR Click "Create New Lesson" to create a lesson from scratch
+5. Select lessons from other courses (or create new ones)
+6. Click "Assign Selected" or assign individually
 
 ### Creating Lessons
+
+#### Via UI (Recommended)
+1. Navigate to course detail page
+2. Click "Create New Lesson" button
+3. Fill in the form:
+   - Lesson number (auto-suggested)
+   - Title (required)
+   - Description (optional)
+   - Duration (optional)
+4. Click "Create Lesson"
+5. Lesson is automatically assigned to the current course
+
+#### Via API
 
 **Important:** All new lessons must include a `courseId`:
 
@@ -128,6 +155,28 @@ POST /api/lessons
   "courseId": "course-id-here" // REQUIRED
 }
 ```
+
+### Viewing Student Details
+
+1. Navigate to course detail page
+2. Click on "Subscribers" tab
+3. Click on any student card
+4. View student information in modal with tabs:
+   - Overview: Statistics and progress
+   - Grades: All grades (clickable to navigate to grading)
+   - Quizzes: Quiz attempts
+   - Submissions: Exercise submissions (clickable to navigate to grading)
+
+### Viewing Cohort Details
+
+1. Navigate to course detail page
+2. Click on "Cohorts" tab
+3. Click on any cohort card
+4. View cohort information:
+   - Statistics cards
+   - Students table with grades
+   - Recent grades
+5. Click "Download Grades CSV" to export cohort grades
 
 ## Permissions
 

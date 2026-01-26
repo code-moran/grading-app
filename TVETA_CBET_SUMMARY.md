@@ -78,11 +78,27 @@ This document summarizes the changes made to bring the grading system into compl
 - Tracks who performed actions, when, and what changed
 - IP address and user agent logging for security
 
+## Recent Enhancements
+
+### Student & Cohort Management
+- **Student Details Modal**: Comprehensive view with tabbed interface (Overview, Grades, Quizzes, Submissions)
+- **Clickable Navigation**: Grades and submissions navigate directly to grading pages
+- **Cohort Details Modal**: View cohort statistics, student table, and recent grades
+- **CSV Export**: Pivot table format with one column per exercise
+- **Create Lesson**: Instructors can create lessons directly from course pages
+
+### UI/UX Improvements
+- Progressive disclosure with collapsible sections
+- Skeleton loaders for better perceived performance
+- Tabbed interfaces for organized content
+- Color-coded status indicators
+- Responsive design improvements
+
 ## Remaining Tasks
 
 ### Phase 4: Cleanup & Documentation
-- [ ] Remove any remaining deprecated code references
-- [ ] Update README with TVETA/CBET compliance information
+- [x] Update README with TVETA/CBET compliance information
+- [x] Create comprehensive features documentation
 - [ ] Create user guides for assessors and administrators
 - [ ] Document migration process for existing data
 - [ ] Add validation for assessor accreditation expiry

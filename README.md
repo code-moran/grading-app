@@ -4,6 +4,7 @@ A comprehensive Next.js application for grading practical exercises in web desig
 
 ## Features
 
+### Core Features
 - **Comprehensive Lesson Coverage**: Includes all 22 enhanced lesson plans from the web design curriculum
 - **Rubric-Based Grading**: Detailed assessment criteria for each practical exercise
 - **Student Management**: Add, edit, and manage student information
@@ -13,6 +14,48 @@ A comprehensive Next.js application for grading practical exercises in web desig
 - **Bulk Grade Export**: Download all grades with best grade selection converted to 100%
 - **Real-time Feedback**: Provide detailed feedback for each assessment criteria
 - **Grade Analytics**: Visual representation of grade distribution and performance trends
+
+### Course Management
+- **Instructor Course Dashboard**: Manage courses assigned to instructors
+- **Course Detail Pages**: Tabbed interface for lessons, subscribers, and cohorts
+- **Create Lessons**: Create new lessons directly from course pages
+- **Lesson Assignment**: Assign existing lessons to courses or create new ones
+- **Student Enrollment**: Track student subscriptions and enrollment dates
+
+### Student Tracking
+- **Student Details Modal**: Comprehensive view of student progress with tabbed interface
+  - Overview: Student info, statistics, and progress
+  - Grades: All grades with clickable navigation to grading page
+  - Quizzes: Quiz attempts and scores
+  - Submissions: Exercise submissions with clickable navigation
+- **Clickable Navigation**: Click grades or submissions to navigate directly to grading page
+- **Progress Tracking**: Visual progress bars and completion statistics
+
+### Cohort Management
+- **Cohort Details Modal**: View detailed cohort information
+  - Student statistics table
+  - Average grades and completion rates
+  - Recent grades for all students
+- **CSV Export**: Export cohort grades in pivot table format
+  - One column per exercise
+  - Includes all students (even without grades)
+  - Only exercises with grades are included
+  - Summary columns for averages and totals
+
+### TVETA/CBET Compliance
+- **Competency-Based Assessment**: Automatic competency calculation (≥70% = Competent)
+- **Unit Standards**: Link courses to TVETA unit standards
+- **KNQF Alignment**: Track Kenya National Qualifications Framework levels
+- **Assessor Credentials**: Track assessor, verifier, and moderator roles
+- **Audit Logging**: Complete audit trail for all assessment actions
+- **Compliance Export**: CSV exports include all TVETA/CBET required fields
+
+### User Interface
+- **Modern UI/UX**: Progressive disclosure, skeleton loaders, smooth transitions
+- **Tabbed Interfaces**: Organized content with tabs for better navigation
+- **Responsive Design**: Works seamlessly on desktop, tablet, and mobile
+- **Color-Coded Status**: Visual indicators for grades, competency, and status
+- **Search & Filter**: Advanced filtering throughout the application
 
 ## Technology Stack
 
@@ -268,13 +311,19 @@ For questions or issues:
 3. Create an issue in the repository
 4. Contact the development team
 
+## Documentation
+
+For detailed feature documentation, see:
+- [FEATURES.md](./FEATURES.md) - Complete features documentation
+- [TVETA_CBET_SUMMARY.md](./TVETA_CBET_SUMMARY.md) - TVETA/CBET compliance details
+- [INSTRUCTOR_COURSE_MANAGEMENT.md](./INSTRUCTOR_COURSE_MANAGEMENT.md) - Course management guide
+
 ## Future Enhancements
 
-- **Authentication System**: User login and role management
-- **Database Integration**: Persistent data storage
-- **Export Features**: PDF reports and CSV exports
-- **Advanced Analytics**: Performance trends and insights
-- **Mobile Responsiveness**: Optimized mobile interface
+- **PDF Reports**: Generate PDF reports for grades and assessments
+- **Advanced Analytics**: Performance trends and predictive insights
 - **Bulk Operations**: Mass grading and import features
 - **Integration**: LMS and gradebook integration
-- **Notifications**: Email alerts and reminders
+- **Notifications**: Email alerts and reminders for grades
+- **Mobile App**: Native mobile application support
+- **Real-time Collaboration**: Live collaboration features for instructors
