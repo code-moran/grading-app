@@ -80,57 +80,57 @@ export default function CoursesPage() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               Available Courses
             </h1>
-            <p className="text-gray-600">Browse and subscribe to courses</p>
+            <p className="text-gray-600 dark:text-gray-300">Browse and subscribe to courses</p>
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 dark:bg-red-900/20 dark:bg-red-900/20 border border-red-400 dark:border-red-800 text-red-700 dark:text-red-400 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
 
           {loading ? (
             <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 dark:border-blue-400"></div>
             </div>
           ) : courses.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
-              <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">No Courses Available</h3>
-              <p className="text-gray-600">Check back later for new courses</p>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
+              <BookOpen className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Courses Available</h3>
+              <p className="text-gray-600 dark:text-gray-300">Check back later for new courses</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {courses.map((course) => (
                 <div
                   key={course.id}
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="bg-blue-100 p-3 rounded-lg">
-                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                      <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     {course.isSubscribed && (
-                      <div className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-xs font-medium flex items-center">
+                      <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-xs font-medium flex items-center">
                         <CheckCircle className="h-3 w-3 mr-1" />
                         Subscribed
                       </div>
                     )}
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{course.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{course.title}</h3>
                   {course.description && (
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{course.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">{course.description}</p>
                   )}
 
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                     <div className="flex items-center">
                       <BookOpen className="h-4 w-4 mr-1" />
                       {course.lessonCount} lessons

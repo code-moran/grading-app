@@ -268,11 +268,11 @@ export default function StudentCoursePage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading course...</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading course...</span>
           </div>
         </div>
       </ProtectedRoute>
@@ -282,10 +282,10 @@ export default function StudentCoursePage() {
   if (error || !course) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error || 'Course not found'}
             </div>
@@ -305,26 +305,26 @@ export default function StudentCoursePage() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         {/* Header */}
-        <div className="bg-white shadow-sm border-b">
+        <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4">
               <div className="flex items-center space-x-4">
                 <Link
                   href="/student"
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Dashboard
                 </Link>
                 <div className="h-6 w-px bg-gray-300" />
                 <div>
-                  <h1 className="text-xl font-semibold text-gray-900">{course.title}</h1>
+                  <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{course.title}</h1>
                   {course.description && (
-                    <p className="text-sm text-gray-600 mt-1">{course.description}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{course.description}</p>
                   )}
                 </div>
               </div>
@@ -334,51 +334,51 @@ export default function StudentCoursePage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Course Info */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               <div className="flex items-center">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <BookOpen className="h-6 w-6 text-blue-600" />
+                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                  <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{course.lessonCount}</div>
-                  <div className="text-sm text-gray-600">Total Lessons</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{course.lessonCount}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Lessons</div>
                 </div>
               </div>
               {courseStats && (
                 <>
                   <div className="flex items-center">
-                    <div className="bg-green-100 p-3 rounded-lg">
-                      <CheckCircle className="h-6 w-6 text-green-600" />
+                    <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                      <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {courseStats.completedLessons}
                       </div>
-                      <div className="text-sm text-gray-600">Completed</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Completed</div>
                     </div>
                   </div>
                   <div className="flex items-center">
-                    <div className="bg-yellow-100 p-3 rounded-lg">
-                      <Trophy className="h-6 w-6 text-yellow-600" />
+                    <div className="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg">
+                      <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {courseStats.averageGrade}%
                       </div>
-                      <div className="text-sm text-gray-600">Average Grade</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Average Grade</div>
                     </div>
                   </div>
                 </>
               )}
               {course.instructors.length > 0 && (
                 <div className="flex items-center">
-                  <div className="bg-purple-100 p-3 rounded-lg">
-                    <Users className="h-6 w-6 text-purple-600" />
+                  <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                    <Users className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                   </div>
                   <div className="ml-4">
-                    <div className="text-sm font-semibold text-gray-900">Instructors</div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm font-semibold text-gray-900 dark:text-white">Instructors</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
                       {course.instructors.map((i) => i.name).join(', ')}
                     </div>
                   </div>
@@ -389,17 +389,17 @@ export default function StudentCoursePage() {
 
           {/* Progress Bar */}
           {courseStats && courseStats.totalLessons > 0 && (
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
-                  <Target className="h-5 w-5 text-blue-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">Course Progress</h3>
+                  <Target className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Course Progress</h3>
                 </div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   {courseStats.completionPercentage}%
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-500"
                   style={{ width: `${courseStats.completionPercentage}%` }}
@@ -409,15 +409,15 @@ export default function StudentCoursePage() {
           )}
 
           {/* Tabs */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 mb-6">
+            <div className="border-b border-gray-200 dark:border-gray-700">
               <nav className="flex space-x-8 px-6" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('overview')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'overview'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Overview
@@ -426,8 +426,8 @@ export default function StudentCoursePage() {
                   onClick={() => setActiveTab('lessons')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'lessons'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Lessons ({course.lessons.length})
@@ -436,8 +436,8 @@ export default function StudentCoursePage() {
                   onClick={() => setActiveTab('grades')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'grades'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Grades ({grades.filter((g) => course.lessons.some((l) => l.id === g.lessonId)).length})
@@ -450,9 +450,9 @@ export default function StudentCoursePage() {
                 <div className="space-y-6">
                   {/* Course Description */}
                   {course.description && (
-                    <div className="bg-gray-50 rounded-lg p-6 border border-gray-200">
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">About This Course</h3>
-                      <p className="text-gray-700 leading-relaxed">{course.description}</p>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">About This Course</h3>
+                      <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{course.description}</p>
                     </div>
                   )}
 
@@ -462,48 +462,48 @@ export default function StudentCoursePage() {
                       <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-sm text-blue-600 font-medium">Lessons Completed</div>
+                            <div className="text-sm text-blue-600 dark:text-blue-400 font-medium">Lessons Completed</div>
                             <div className="text-2xl font-bold text-blue-900">
                               {courseStats.completedLessons} / {courseStats.totalLessons}
                             </div>
                           </div>
-                          <CheckCircle className="h-8 w-8 text-blue-600" />
+                          <CheckCircle className="h-8 w-8 text-blue-600 dark:text-blue-400" />
                         </div>
                       </div>
 
                       <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-sm text-green-600 font-medium">Average Grade</div>
+                            <div className="text-sm text-green-600 dark:text-green-400 font-medium">Average Grade</div>
                             <div className="text-2xl font-bold text-green-900">
                               {courseStats.averageGrade}%
                             </div>
                           </div>
-                          <Trophy className="h-8 w-8 text-green-600" />
+                          <Trophy className="h-8 w-8 text-green-600 dark:text-green-400" />
                         </div>
                       </div>
 
                       <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-sm text-purple-600 font-medium">Exercises Submitted</div>
+                            <div className="text-sm text-purple-600 dark:text-purple-400 font-medium">Exercises Submitted</div>
                             <div className="text-2xl font-bold text-purple-900">
                               {courseStats.totalSubmissions}
                             </div>
                           </div>
-                          <Code className="h-8 w-8 text-purple-600" />
+                          <Code className="h-8 w-8 text-purple-600 dark:text-purple-400" />
                         </div>
                       </div>
 
                       <div className="bg-yellow-50 rounded-lg p-4 border border-yellow-200">
                         <div className="flex items-center justify-between">
                           <div>
-                            <div className="text-sm text-yellow-600 font-medium">Quiz Attempts</div>
+                            <div className="text-sm text-yellow-600 dark:text-yellow-400 font-medium">Quiz Attempts</div>
                             <div className="text-2xl font-bold text-yellow-900">
                               {courseStats.totalQuizAttempts}
                             </div>
                           </div>
-                          <HelpCircle className="h-8 w-8 text-yellow-600" />
+                          <HelpCircle className="h-8 w-8 text-yellow-600 dark:text-yellow-400" />
                         </div>
                       </div>
                     </div>
@@ -511,7 +511,7 @@ export default function StudentCoursePage() {
 
                   {/* Recent Activity */}
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Recent Activity</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Recent Activity</h3>
                     <div className="space-y-3">
                       {grades
                         .filter((g) => course.lessons.some((l) => l.id === g.lessonId))
@@ -521,29 +521,29 @@ export default function StudentCoursePage() {
                           return (
                             <div
                               key={grade.id}
-                              className="flex items-center justify-between p-4 bg-gray-50 rounded-lg border border-gray-200"
+                              className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700"
                             >
                               <div className="flex items-center space-x-3">
-                                <Award className="h-5 w-5 text-yellow-600" />
+                                <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                                 <div>
-                                  <div className="font-medium text-gray-900">
+                                  <div className="font-medium text-gray-900 dark:text-white">
                                     {lesson?.title || 'Lesson'} - Exercise Graded
                                   </div>
-                                  <div className="text-sm text-gray-600">
+                                  <div className="text-sm text-gray-600 dark:text-gray-300">
                                     {new Date(grade.gradedAt || new Date()).toLocaleDateString()}
                                   </div>
                                 </div>
                               </div>
                               <div className="text-right">
-                                <div className="font-bold text-gray-900">{grade.percentage}%</div>
-                                <div className="text-sm text-gray-600">{grade.letterGrade}</div>
+                                <div className="font-bold text-gray-900 dark:text-white">{grade.percentage}%</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-300">{grade.letterGrade}</div>
                               </div>
                             </div>
                           );
                         })}
                       {grades.filter((g) => course.lessons.some((l) => l.id === g.lessonId)).length ===
                         0 && (
-                        <div className="text-center py-8 text-gray-500">
+                        <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
                           No recent activity. Complete lessons and submit exercises to see your progress!
                         </div>
                       )}
@@ -552,12 +552,12 @@ export default function StudentCoursePage() {
                 </div>
               ) : activeTab === 'lessons' ? (
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Lessons</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Lessons</h2>
                   {course.lessons.length === 0 ? (
                     <div className="text-center py-12">
-                      <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No lessons available</h3>
-                      <p className="text-gray-600">Lessons for this course haven't been added yet.</p>
+                      <BookOpen className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No lessons available</h3>
+                      <p className="text-gray-600 dark:text-gray-300">Lessons for this course haven't been added yet.</p>
                     </div>
                   ) : (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -574,8 +574,8 @@ export default function StudentCoursePage() {
                             key={lesson.id}
                             className={`rounded-xl border-2 p-6 transition-all duration-300 ${
                               isUnlocked
-                                ? 'border-gray-200 hover:border-blue-400 hover:shadow-xl bg-white'
-                                : 'border-gray-100 bg-gray-50 opacity-75'
+                                ? 'border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:shadow-xl bg-white dark:bg-gray-800'
+                                : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 opacity-75'
                             }`}
                           >
                             <div className="flex items-start justify-between mb-4">
@@ -584,37 +584,37 @@ export default function StudentCoursePage() {
                                   className={`p-2 rounded-lg ${
                                     isUnlocked
                                       ? hasPassed
-                                        ? 'bg-green-100'
-                                        : 'bg-blue-100'
-                                      : 'bg-gray-200'
+                                        ? 'bg-green-100 dark:bg-green-900/30'
+                                        : 'bg-blue-100 dark:bg-blue-900/30'
+                                      : 'bg-gray-200 dark:bg-gray-700'
                                   }`}
                                 >
                                   {isUnlocked ? (
                                     hasPassed ? (
-                                      <CheckCircle className="h-5 w-5 text-green-600" />
+                                      <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                                     ) : (
-                                      <BookOpen className="h-5 w-5 text-blue-600" />
+                                      <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                                     )
                                   ) : (
-                                    <Lock className="h-5 w-5 text-gray-400" />
+                                    <Lock className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                                   )}
                                 </div>
                                 <div>
-                                  <div className="text-xs font-medium text-gray-500 mb-1">
+                                  <div className="text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1">
                                     Lesson {lesson.number}
                                   </div>
-                                  <h3 className="font-semibold text-gray-900 text-sm">{lesson.title}</h3>
+                                  <h3 className="font-semibold text-gray-900 dark:text-white text-sm">{lesson.title}</h3>
                                 </div>
                               </div>
                             </div>
 
                             {lesson.description && (
-                              <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                              <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                                 {lesson.description}
                               </p>
                             )}
 
-                            <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                            <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                               {lesson.duration && (
                                 <div className="flex items-center">
                                   <Clock className="h-3 w-3 mr-1" />
@@ -630,7 +630,7 @@ export default function StudentCoursePage() {
                             </div>
 
                             {lessonSubmissions.length > 0 && (
-                              <div className="mb-2 text-xs text-gray-600 flex items-center">
+                              <div className="mb-2 text-xs text-gray-600 dark:text-gray-300 flex items-center">
                                 <Code className="h-3 w-3 mr-1" />
                                 {lessonSubmissions.length} exercise{lessonSubmissions.length !== 1 ? 's' : ''} submitted
                               </div>
@@ -656,7 +656,7 @@ export default function StudentCoursePage() {
                                   )}
                                 </>
                               ) : (
-                                <div className="w-full bg-gray-200 text-gray-500 py-2.5 px-4 rounded-lg text-center text-sm">
+                                <div className="w-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 dark:text-gray-500 py-2.5 px-4 rounded-lg text-center text-sm">
                                   Complete Previous Lesson
                                 </div>
                               )}
@@ -669,13 +669,13 @@ export default function StudentCoursePage() {
                 </div>
               ) : (
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900 mb-6">Course Grades</h2>
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Course Grades</h2>
                   {grades.filter((g) => course.lessons.some((l) => l.id === g.lessonId)).length ===
                   0 ? (
                     <div className="text-center py-12">
-                      <Trophy className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No grades yet</h3>
-                      <p className="text-gray-600">
+                      <Trophy className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No grades yet</h3>
+                      <p className="text-gray-600 dark:text-gray-300">
                         Submit exercises to receive grades from your instructor.
                       </p>
                     </div>
@@ -688,11 +688,11 @@ export default function StudentCoursePage() {
                         return (
                           <div
                             key={lesson.id}
-                            className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
+                            className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 transition-colors"
                           >
                             <div className="flex items-center justify-between mb-3">
                               <div>
-                                <h4 className="font-semibold text-gray-900">
+                                <h4 className="font-semibold text-gray-900 dark:text-white">
                                   Lesson {lesson.number}: {lesson.title}
                                 </h4>
                               </div>
@@ -701,31 +701,31 @@ export default function StudentCoursePage() {
                               {lessonGrades.map((grade) => (
                                 <div
                                   key={grade.id}
-                                  className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                                  className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
                                 >
                                   <div className="flex items-center space-x-3">
-                                    <Award className="h-5 w-5 text-yellow-600" />
+                                    <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                                     <div>
-                                      <div className="font-medium text-gray-900">Exercise</div>
-                                      <div className="text-sm text-gray-600">
+                                      <div className="font-medium text-gray-900 dark:text-white">Exercise</div>
+                                      <div className="text-sm text-gray-600 dark:text-gray-300">
                                         {new Date(grade.gradedAt || new Date()).toLocaleDateString()}
                                       </div>
                                     </div>
                                   </div>
                                   <div className="flex items-center space-x-4">
                                     <div className="text-right">
-                                      <div className="text-sm text-gray-600">Score</div>
-                                      <div className="font-semibold text-gray-900">
+                                      <div className="text-sm text-gray-600 dark:text-gray-300">Score</div>
+                                      <div className="font-semibold text-gray-900 dark:text-white">
                                         {grade.totalPoints} / {grade.maxPossiblePoints}
                                       </div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="text-sm text-gray-600">Grade</div>
-                                      <div className="font-bold text-blue-600">{grade.percentage}%</div>
+                                      <div className="text-sm text-gray-600 dark:text-gray-300">Grade</div>
+                                      <div className="font-bold text-blue-600 dark:text-blue-400">{grade.percentage}%</div>
                                     </div>
                                     <div className="text-right">
-                                      <div className="text-sm text-gray-600">Letter</div>
-                                      <div className="font-bold text-green-600">
+                                      <div className="text-sm text-gray-600 dark:text-gray-300">Letter</div>
+                                      <div className="font-bold text-green-600 dark:text-green-400">
                                         {grade.letterGrade}
                                       </div>
                                     </div>
@@ -744,13 +744,13 @@ export default function StudentCoursePage() {
           </div>
 
           {/* Lessons */}
-          <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">Lessons</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">Lessons</h2>
             {course.lessons.length === 0 ? (
               <div className="text-center py-12">
-                <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No lessons available</h3>
-                <p className="text-gray-600">Lessons for this course haven't been added yet.</p>
+                <BookOpen className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No lessons available</h3>
+                <p className="text-gray-600 dark:text-gray-300">Lessons for this course haven't been added yet.</p>
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -764,8 +764,8 @@ export default function StudentCoursePage() {
                       key={lesson.id}
                       className={`rounded-xl border-2 p-6 transition-all duration-300 ${
                         isUnlocked
-                          ? 'border-gray-200 hover:border-blue-400 hover:shadow-xl bg-white'
-                          : 'border-gray-100 bg-gray-50 opacity-75'
+                          ? 'border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:shadow-xl bg-white dark:bg-gray-800'
+                          : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 opacity-75'
                       }`}
                     >
                       <div className="flex items-start justify-between mb-4">
@@ -774,37 +774,37 @@ export default function StudentCoursePage() {
                             className={`p-2 rounded-lg ${
                               isUnlocked
                                 ? hasPassed
-                                  ? 'bg-green-100'
-                                  : 'bg-blue-100'
-                                : 'bg-gray-200'
+                                  ? 'bg-green-100 dark:bg-green-900/30'
+                                  : 'bg-blue-100 dark:bg-blue-900/30'
+                                : 'bg-gray-200 dark:bg-gray-700'
                             }`}
                           >
                             {isUnlocked ? (
                               hasPassed ? (
-                                <CheckCircle className="h-5 w-5 text-green-600" />
+                                <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                               ) : (
-                                <BookOpen className="h-5 w-5 text-blue-600" />
+                                <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                               )
                             ) : (
-                              <Lock className="h-5 w-5 text-gray-400" />
+                              <Lock className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                             )}
                           </div>
                           <div>
-                            <div className="text-xs font-medium text-gray-500 mb-1">
+                            <div className="text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-1">
                               Lesson {lesson.number}
                             </div>
-                            <h3 className="font-semibold text-gray-900 text-sm">{lesson.title}</h3>
+                            <h3 className="font-semibold text-gray-900 dark:text-white text-sm">{lesson.title}</h3>
                           </div>
                         </div>
                       </div>
 
                       {lesson.description && (
-                        <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                           {lesson.description}
                         </p>
                       )}
 
-                      <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                      <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                         {lesson.duration && (
                           <div className="flex items-center">
                             <Clock className="h-3 w-3 mr-1" />
@@ -839,7 +839,7 @@ export default function StudentCoursePage() {
                             )}
                           </>
                         ) : (
-                          <div className="w-full bg-gray-200 text-gray-500 py-2.5 px-4 rounded-lg text-center text-sm">
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 dark:text-gray-500 py-2.5 px-4 rounded-lg text-center text-sm">
                             Complete Previous Lesson
                           </div>
                         )}

@@ -101,9 +101,18 @@ Or use an online generator: https://generate-secret.vercel.app/32
 
 ## Step 5: Run Database Migrations
 
-After deployment, you need to run Prisma migrations:
+**Important:** Database migrations are now automatically run during the build process via the `vercel-build` script. This ensures your database schema is always up to date with your code.
 
-### Option A: Via Vercel CLI
+The build command runs:
+1. `prisma migrate deploy` - Applies pending migrations (safe for production)
+2. `prisma generate` - Generates Prisma Client
+3. `next build` - Builds the Next.js application
+
+### Manual Migration (If Needed)
+
+If you need to run migrations manually (e.g., if automatic migration fails):
+
+#### Option A: Via Vercel CLI
 
 ```bash
 # Set environment variables locally
@@ -113,23 +122,18 @@ export DATABASE_URL="your-production-database-url"
 npx prisma migrate deploy
 ```
 
-### Option B: Via Vercel Build Command
-
-Add to your `package.json`:
-
-```json
-{
-  "scripts": {
-    "build": "prisma migrate deploy && prisma generate && next build"
-  }
-}
-```
-
-**Note:** This runs migrations on every build. Use with caution.
-
-### Option C: Via Database Provider Console
+#### Option B: Via Database Provider Console
 
 Some providers (like Supabase) allow running SQL migrations directly in their console.
+
+### Troubleshooting Migrations
+
+If migrations fail during build:
+1. Check the build logs in Vercel dashboard
+2. Verify `DATABASE_URL` is correctly set
+3. Ensure database allows connections from Vercel
+4. Check if there are conflicting migrations
+5. Run migrations manually using Option A above
 
 ## Step 6: Seed Database (Optional)
 
@@ -177,9 +181,12 @@ DATABASE_URL=your-production-database-url
 
 The project is configured with:
 
-- **Build Command**: `prisma generate && next build`
+- **Build Command**: `npm run vercel-build` (runs migrations, generates Prisma Client, and builds the app)
+- **Vercel Build Script**: `prisma migrate deploy && prisma generate && next build`
 - **Postinstall Script**: Automatically runs `prisma generate` after `npm install`
 - **Framework**: Next.js 14 (detected automatically)
+
+**Note:** The `vercel-build` script automatically runs database migrations during deployment. This ensures your production database schema stays in sync with your code.
 
 ## Database Connection Pooling
 
@@ -223,10 +230,32 @@ For production, consider using connection pooling:
 
 ### Migration Errors
 
-**Solution:** Run migrations manually:
+**Common Issues:**
+
+1. **Migrations fail during build:**
+   - Check that `DATABASE_URL` is set in Vercel environment variables
+   - Verify database allows connections from Vercel IPs
+   - Check build logs for specific error messages
+   - Ensure SSL is enabled if required (add `?sslmode=require` to connection string)
+
+2. **"No migrations found" error:**
+   - Ensure `prisma/migrations` folder is committed to your repository
+   - Verify migrations exist in the project
+
+3. **"Migration already applied" warning:**
+   - This is normal and safe to ignore
+   - `prisma migrate deploy` only applies pending migrations
+
+**Solution:** If automatic migrations fail, run manually:
 ```bash
+# Set production DATABASE_URL
+export DATABASE_URL="your-production-database-url"
+
+# Run migrations
 npx prisma migrate deploy
 ```
+
+**Note:** After fixing migration issues, you may need to redeploy or trigger a new build in Vercel.
 
 ## Performance Optimization
 

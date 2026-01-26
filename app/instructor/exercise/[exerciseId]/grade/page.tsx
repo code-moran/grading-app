@@ -313,8 +313,8 @@ export default function ExerciseGradingPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900">Exercise not found</h2>
-          <p className="text-gray-600">The requested exercise could not be found.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Exercise not found</h2>
+          <p className="text-gray-600 dark:text-gray-300">The requested exercise could not be found.</p>
         </div>
       </div>
     );
@@ -326,18 +326,18 @@ export default function ExerciseGradingPage() {
 
   return (
     <ProtectedRoute requiredRole={['instructor', 'admin']}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         {/* Header */}
-        <div className="bg-white shadow-sm border-b">
+        <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4">
               <div className="flex items-center space-x-4">
                 {exercise && (
                   <Link
                     href={`/instructor/lesson/${exercise.lesson.id}`}
-                    className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                    className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors"
                   >
                     <ArrowLeft className="h-4 w-4 mr-2" />
                     <span className="hidden sm:inline">Back to Lesson</span>
@@ -346,9 +346,9 @@ export default function ExerciseGradingPage() {
                 )}
                 {exercise && <div className="h-6 w-px bg-gray-300" />}
                 <div>
-                  <h1 className="text-xl font-bold text-gray-900">{exercise?.title || 'Loading...'}</h1>
+                  <h1 className="text-xl font-bold text-gray-900 dark:text-white">{exercise?.title || 'Loading...'}</h1>
                   {exercise && (
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-600 dark:text-gray-300">
                       {exercise.lesson.course.title} • Lesson {exercise.lesson.number}:{' '}
                       {exercise.lesson.title}
                     </p>
@@ -358,7 +358,7 @@ export default function ExerciseGradingPage() {
               {selectedStudent && (
                 <div className="flex items-center space-x-4">
                   {isSaved && (
-                    <div className="flex items-center text-green-600 bg-green-50 px-3 py-2 rounded-lg">
+                    <div className="flex items-center text-green-600 dark:text-green-400 bg-green-50 px-3 py-2 rounded-lg">
                       <CheckCircle className="h-4 w-4 mr-2" />
                       <span className="text-sm font-medium">Saved!</span>
                     </div>
@@ -381,27 +381,27 @@ export default function ExerciseGradingPage() {
           <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
             {/* Student Selection */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center space-x-2 mb-4">
-                  <User className="h-5 w-5 text-blue-600" />
-                  <h3 className="text-lg font-bold text-gray-900">Students</h3>
+                  <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white">Students</h3>
                 </div>
 
                 {/* Search Input */}
                 <div className="relative mb-4">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                   <input
                     type="text"
                     placeholder="Search students..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                   />
                 </div>
 
                 {/* Error Message */}
                 {error && (
-                  <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4 text-sm">
+                  <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-3 py-2 rounded mb-4 text-sm">
                     {error}
                   </div>
                 )}
@@ -410,7 +410,7 @@ export default function ExerciseGradingPage() {
                 {loading && (
                   <div className="flex justify-center items-center py-8">
                     <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                    <span className="ml-2 text-gray-600 text-sm">Loading students...</span>
+                    <span className="ml-2 text-gray-600 dark:text-gray-300 text-sm">Loading students...</span>
                   </div>
                 )}
 
@@ -418,7 +418,7 @@ export default function ExerciseGradingPage() {
                 {!loading && !error && (
                   <div className="space-y-3 max-h-96 overflow-y-auto">
                     {filteredStudents.length === 0 ? (
-                      <div className="text-center py-4 text-gray-500 text-sm">
+                      <div className="text-center py-4 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm">
                         {searchTerm
                           ? 'No students found matching your search.'
                           : 'No students enrolled.'}
@@ -431,21 +431,21 @@ export default function ExerciseGradingPage() {
                           className={`w-full text-left p-3 rounded-md border transition-colors duration-200 ${
                             selectedStudent?.id === student.id
                               ? 'border-blue-500 bg-blue-50 text-blue-900'
-                              : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                              : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:bg-gray-800'
                           }`}
                         >
                           <div className="font-medium">{student.name}</div>
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-gray-600 dark:text-gray-300">
                             {student.registrationNumber}
                           </div>
                           <div className="flex items-center gap-2 mt-1">
                             {student.submission && (
-                              <span className="text-xs bg-green-100 text-green-700 px-2 py-0.5 rounded">
+                              <span className="text-xs bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-0.5 rounded">
                                 Submitted
                               </span>
                             )}
                             {student.grade && (
-                              <span className="text-xs bg-blue-100 text-blue-700 px-2 py-0.5 rounded">
+                              <span className="text-xs bg-blue-100 dark:bg-blue-900/30 text-blue-700 px-2 py-0.5 rounded">
                                 Graded
                               </span>
                             )}
@@ -463,17 +463,17 @@ export default function ExerciseGradingPage() {
               {selectedStudent ? (
                 <div className="space-y-6">
                   {/* Student Info */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center space-x-3">
-                        <div className="bg-blue-100 p-2 rounded-lg">
-                          <User className="h-5 w-5 text-blue-600" />
+                        <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                          <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div>
-                          <h2 className="text-xl font-bold text-gray-900">
+                          <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                             {selectedStudent.name}
                           </h2>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                             {selectedStudent.registrationNumber}
                             {selectedStudent.cohort && ` • ${selectedStudent.cohort.name}`}
                           </p>
@@ -481,10 +481,10 @@ export default function ExerciseGradingPage() {
                       </div>
                       {selectedStudent.grade && (
                         <div className="text-right">
-                          <div className="text-2xl font-bold text-blue-600">
+                          <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                             {selectedStudent.grade.letterGrade}
                           </div>
-                          <div className="text-sm text-gray-600">
+                          <div className="text-sm text-gray-600 dark:text-gray-300">
                             {selectedStudent.grade.totalPoints}/{exercise.maxPoints} points
                           </div>
                         </div>
@@ -492,10 +492,10 @@ export default function ExerciseGradingPage() {
                     </div>
 
                     {/* Exercise Description */}
-                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200 mb-4">
-                      <p className="font-medium text-gray-900 mb-1">{exercise.title}</p>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700 mb-4">
+                      <p className="font-medium text-gray-900 dark:text-white mb-1">{exercise.title}</p>
                       {exercise.description && (
-                        <p className="text-sm text-gray-600">{exercise.description}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300">{exercise.description}</p>
                       )}
                     </div>
 
@@ -505,19 +505,19 @@ export default function ExerciseGradingPage() {
                         <div className="flex items-center justify-between">
                           <div>
                             <div className="flex items-center space-x-2 mb-2">
-                              <Github className="h-4 w-4 text-blue-600" />
-                              <span className="font-medium text-gray-900">Submission</span>
+                              <Github className="h-4 w-4 text-blue-600 dark:text-blue-400" />
+                              <span className="font-medium text-gray-900 dark:text-white">Submission</span>
                             </div>
                             <a
                               href={selectedStudent.submission.githubUrl}
                               target="_blank"
                               rel="noopener noreferrer"
-                              className="text-blue-600 hover:text-blue-800 text-sm flex items-center space-x-1"
+                              className="text-blue-600 dark:text-blue-400 hover:text-blue-800 text-sm flex items-center space-x-1"
                             >
                               <span>View on GitHub</span>
                               <ExternalLink className="h-3 w-3" />
                             </a>
-                            <div className="text-xs text-gray-500 mt-1">
+                            <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                               Submitted:{' '}
                               {new Date(selectedStudent.submission.submittedAt).toLocaleDateString()}
                             </div>
@@ -525,12 +525,12 @@ export default function ExerciseGradingPage() {
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-medium ${
                               selectedStudent.submission.status === 'approved'
-                                ? 'bg-green-100 text-green-700'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
                                 : selectedStudent.submission.status === 'needs_revision'
-                                ? 'bg-yellow-100 text-yellow-700'
+                                ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700'
                                 : selectedStudent.submission.status === 'rejected'
-                                ? 'bg-red-100 text-red-700'
-                                : 'bg-gray-100 text-gray-700'
+                                ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
+                                : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                             }`}
                           >
                             {selectedStudent.submission.status}
@@ -541,12 +541,12 @@ export default function ExerciseGradingPage() {
                   </div>
 
                   {/* Rubric */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                     <div className="flex items-center justify-between mb-6">
-                      <h3 className="text-lg font-bold text-gray-900">Assessment Rubric</h3>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Assessment Rubric</h3>
                       <Link
                         href={`/instructor/rubric/${exercise.rubric.id}/edit`}
-                        className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors"
+                        className="inline-flex items-center px-3 py-1.5 text-sm font-medium text-blue-600 dark:text-blue-400 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 rounded-lg transition-colors"
                       >
                         <Edit className="h-4 w-4 mr-2" />
                         Edit Rubric
@@ -556,19 +556,19 @@ export default function ExerciseGradingPage() {
                       {exercise.rubric.criteria.map((criteria) => (
                         <div
                           key={criteria.id}
-                          className="border-2 border-gray-200 rounded-xl p-5 hover:border-blue-300 transition-colors"
+                          className="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 hover:border-blue-300 transition-colors"
                         >
                           <div className="mb-4">
                             <div className="flex items-center justify-between mb-2">
-                              <h4 className="font-semibold text-gray-900 text-lg">
+                              <h4 className="font-semibold text-gray-900 dark:text-white text-lg">
                                 {criteria.name}
                               </h4>
-                              <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
+                              <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
                                 {criteria.weight}% weight
                               </span>
                             </div>
                             {criteria.description && (
-                              <p className="text-sm text-gray-600">{criteria.description}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300">{criteria.description}</p>
                             )}
                           </div>
 
@@ -587,12 +587,12 @@ export default function ExerciseGradingPage() {
                                       ? level.color
                                         ? `${level.color} border-current shadow-md scale-105`
                                         : 'bg-blue-50 text-blue-800 border-blue-500 shadow-md scale-105'
-                                      : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:shadow-sm'
+                                      : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:bg-gray-800 hover:shadow-sm'
                                   }`}
                                 >
                                   <div className="font-semibold text-sm mb-1">{level.name}</div>
                                   {level.description && (
-                                    <div className="text-xs text-gray-600 mb-2">
+                                    <div className="text-xs text-gray-600 dark:text-gray-300 mb-2">
                                       {level.description}
                                     </div>
                                   )}
@@ -606,13 +606,13 @@ export default function ExerciseGradingPage() {
 
                           {/* Comments */}
                           <div>
-                            <label className="block text-sm font-semibold text-gray-700 mb-2">
+                            <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                               Feedback Comments
                             </label>
                             <textarea
                               value={grades[criteria.id]?.comments || ''}
                               onChange={(e) => handleCommentsChange(criteria.id, e.target.value)}
-                              className="w-full p-3 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                              className="w-full p-3 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                               rows={3}
                               placeholder="Add specific feedback for this criteria..."
                             />
@@ -623,12 +623,12 @@ export default function ExerciseGradingPage() {
                   </div>
 
                   {/* Overall Feedback */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                    <h3 className="text-lg font-bold text-gray-900 mb-4">Overall Feedback</h3>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Overall Feedback</h3>
                     <textarea
                       value={feedback}
                       onChange={(e) => setFeedback(e.target.value)}
-                      className="w-full p-4 border-2 border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                      className="w-full p-4 border-2 border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                       rows={4}
                       placeholder="Provide overall feedback for the student's work..."
                     />
@@ -638,19 +638,19 @@ export default function ExerciseGradingPage() {
                   <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
                     <h3 className="text-lg font-bold mb-6">Grade Summary</h3>
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                      <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                      <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                         <div className="text-3xl font-bold">{totalPoints}</div>
                         <div className="text-sm opacity-90 mt-1">Points Earned</div>
                       </div>
-                      <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                      <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                         <div className="text-3xl font-bold">{exercise.maxPoints}</div>
                         <div className="text-sm opacity-90 mt-1">Max Points</div>
                       </div>
-                      <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                      <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                         <div className="text-3xl font-bold">{percentage}%</div>
                         <div className="text-sm opacity-90 mt-1">Percentage</div>
                       </div>
-                      <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                      <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                         <div className="text-3xl font-bold">{letterGrade}</div>
                         <div className="text-sm opacity-90 mt-1">Letter Grade</div>
                       </div>
@@ -658,12 +658,12 @@ export default function ExerciseGradingPage() {
                   </div>
                 </div>
               ) : (
-                <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
-                  <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <User className="h-8 w-8 text-gray-400" />
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
+                  <div className="bg-gray-100 dark:bg-gray-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <User className="h-8 w-8 text-gray-400 dark:text-gray-500" />
                   </div>
-                  <h3 className="text-lg font-bold text-gray-900 mb-2">Select a Student</h3>
-                  <p className="text-gray-600">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Select a Student</h3>
+                  <p className="text-gray-600 dark:text-gray-300">
                     Choose a student from the sidebar to begin grading.
                   </p>
                 </div>

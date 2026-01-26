@@ -269,11 +269,11 @@ export default function StudentLessonPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-gray-600">Loading lesson...</span>
+        <span className="ml-2 text-gray-600 dark:text-gray-300">Loading lesson...</span>
       </div>
         </div>
       </ProtectedRoute>
@@ -283,10 +283,10 @@ export default function StudentLessonPage() {
   if (error || !lesson) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error || 'Lesson not found'}
             </div>
@@ -307,13 +307,13 @@ export default function StudentLessonPage() {
   if (isLocked) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-white rounded-xl shadow-md p-8 border border-gray-100 text-center">
-              <Lock className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <h2 className="text-2xl font-bold text-gray-900 mb-2">Lesson Locked</h2>
-              <p className="text-gray-600 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 border border-gray-100 dark:border-gray-700 text-center">
+              <Lock className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Lesson Locked</h2>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 You need to complete the previous lesson's quiz to unlock this lesson.
               </p>
               <div className="space-x-4">
@@ -341,27 +341,27 @@ export default function StudentLessonPage() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center space-x-4">
                 <Link
                   href="/student"
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors"
                 >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Dashboard
               </Link>
               <div className="h-6 w-px bg-gray-300" />
               <div>
-                <h1 className="text-xl font-semibold text-gray-900">
+                <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                   Lesson {lesson.number}: {lesson.title}
                 </h1>
-                  <div className="flex items-center space-x-4 text-sm text-gray-600 mt-1">
+                  <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-300 mt-1">
                     {lesson.duration && (
                       <div className="flex items-center">
                         <Clock className="h-4 w-4 mr-1" />
@@ -377,7 +377,7 @@ export default function StudentLessonPage() {
             </div>
             <div className="flex items-center space-x-4">
               {hasPassedQuiz() ? (
-                  <div className="flex items-center text-green-600 bg-green-50 px-3 py-2 rounded-lg">
+                  <div className="flex items-center text-green-600 dark:text-green-400 bg-green-50 px-3 py-2 rounded-lg">
                   <CheckCircle className="h-4 w-4 mr-2" />
                     <span className="text-sm font-medium">Quiz Passed</span>
                 </div>
@@ -399,20 +399,20 @@ export default function StudentLessonPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Sidebar */}
           <div className="lg:col-span-1">
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Lesson Navigation</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Lesson Navigation</h3>
               
               {/* Quiz Status */}
-                <div className="mb-6 p-4 rounded-lg border border-gray-200 bg-gray-50">
+                <div className="mb-6 p-4 rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800">
                 <div className="flex items-center mb-2">
                   {hasPassedQuiz() ? (
                     <CheckCircle className="h-5 w-5 text-green-500 mr-2" />
                   ) : (
-                    <Lock className="h-5 w-5 text-gray-400 mr-2" />
+                    <Lock className="h-5 w-5 text-gray-400 dark:text-gray-500 mr-2" />
                   )}
-                  <span className="font-medium text-gray-900">Quiz Status</span>
+                  <span className="font-medium text-gray-900 dark:text-white">Quiz Status</span>
                 </div>
-                <p className="text-sm text-gray-600">
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                   {hasPassedQuiz() 
                     ? 'You have passed the quiz and can access all content.'
                       : 'Complete the quiz to unlock all lesson content.'}
@@ -426,7 +426,7 @@ export default function StudentLessonPage() {
                   className={`w-full text-left p-3 rounded-md transition-colors duration-200 ${
                     activeTab === 'content'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-800'
                   }`}
                 >
                   <div className="flex items-center">
@@ -440,7 +440,7 @@ export default function StudentLessonPage() {
                   className={`w-full text-left p-3 rounded-md transition-colors duration-200 ${
                     activeTab === 'notes'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-800'
                   }`}
                 >
                     <div className="flex items-center justify-between">
@@ -449,7 +449,7 @@ export default function StudentLessonPage() {
                     Online Notes
                       </div>
                     {lessonNotes.length > 0 && (
-                        <span className="bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                        <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-800 text-xs px-2 py-1 rounded-full">
                         {lessonNotes.length}
                       </span>
                     )}
@@ -461,14 +461,14 @@ export default function StudentLessonPage() {
                   className={`w-full text-left p-3 rounded-md transition-colors duration-200 ${
                     activeTab === 'exercise'
                       ? 'bg-blue-50 text-blue-700 border border-blue-200'
-                      : 'text-gray-600 hover:bg-gray-50'
+                      : 'text-gray-600 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-800'
                   }`}
                 >
                   <div className="flex items-center">
                     <Code className="h-4 w-4 mr-2" />
                     Practical Exercise
                       {lesson.exercises.length > 0 && (
-                        <span className="ml-auto bg-blue-100 text-blue-800 text-xs px-2 py-1 rounded-full">
+                        <span className="ml-auto bg-blue-100 dark:bg-blue-900/30 text-blue-800 text-xs px-2 py-1 rounded-full">
                           {lesson.exercises.length}
                         </span>
                       )}
@@ -483,34 +483,34 @@ export default function StudentLessonPage() {
             {activeTab === 'content' ? (
               <div className="space-y-6">
                 {/* Lesson Overview */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Lesson Overview</h2>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Lesson Overview</h2>
                     {lesson.description ? (
-                  <p className="text-gray-700 leading-relaxed">{lesson.description}</p>
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">{lesson.description}</p>
                     ) : (
-                      <p className="text-gray-500 italic">No description available for this lesson.</p>
+                      <p className="text-gray-500 dark:text-gray-400 dark:text-gray-500 italic">No description available for this lesson.</p>
                     )}
                 </div>
 
                 {/* Learning Objectives */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-4">Learning Objectives</h3>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Learning Objectives</h3>
                   <ul className="space-y-2">
                     <li className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">
+                        <span className="text-gray-700 dark:text-gray-300">
                           Understand the fundamental concepts and principles covered in this lesson
                         </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">
+                        <span className="text-gray-700 dark:text-gray-300">
                           Apply knowledge through hands-on practice and exercises
                         </span>
                     </li>
                     <li className="flex items-start">
                       <CheckCircle className="h-5 w-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
-                        <span className="text-gray-700">
+                        <span className="text-gray-700 dark:text-gray-300">
                           Demonstrate competency through quiz assessment
                         </span>
                     </li>
@@ -519,36 +519,36 @@ export default function StudentLessonPage() {
 
                   {/* Lesson Stats */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                    <div className="bg-white rounded-xl shadow-md p-4 border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 border border-gray-100 dark:border-gray-700">
                       <div className="flex items-center">
-                        <Code className="h-5 w-5 text-blue-600 mr-2" />
+                        <Code className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
                         <div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {lesson.stats.exerciseCount}
                           </div>
-                          <div className="text-sm text-gray-600">Exercises</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Exercises</div>
                     </div>
                     </div>
                     </div>
-                    <div className="bg-white rounded-xl shadow-md p-4 border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 border border-gray-100 dark:border-gray-700">
                       <div className="flex items-center">
-                        <HelpCircle className="h-5 w-5 text-purple-600 mr-2" />
+                        <HelpCircle className="h-5 w-5 text-purple-600 dark:text-purple-400 mr-2" />
                         <div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {lesson.stats.quizQuestionCount}
                   </div>
-                          <div className="text-sm text-gray-600">Quiz Questions</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Quiz Questions</div>
                 </div>
                       </div>
                     </div>
-                    <div className="bg-white rounded-xl shadow-md p-4 border border-gray-100">
+                    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 border border-gray-100 dark:border-gray-700">
                       <div className="flex items-center">
-                        <Award className="h-5 w-5 text-green-600 mr-2" />
+                        <Award className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
                       <div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {quizAttempts.length}
                           </div>
-                          <div className="text-sm text-gray-600">Your Attempts</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Your Attempts</div>
                         </div>
                       </div>
                     </div>
@@ -557,14 +557,14 @@ export default function StudentLessonPage() {
             ) : activeTab === 'notes' ? (
               <div className="space-y-6">
                 {/* Online Notes */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4">Online Notes</h2>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Online Notes</h2>
                   
                   {lessonNotes.length === 0 ? (
                     <div className="text-center py-8">
-                      <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No notes available</h3>
-                        <p className="text-gray-600">
+                      <FileText className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No notes available</h3>
+                        <p className="text-gray-600 dark:text-gray-300">
                           Instructor notes for this lesson haven't been added yet.
                         </p>
                     </div>
@@ -587,14 +587,14 @@ export default function StudentLessonPage() {
 
                         return (
                           <div key={section} className="border-l-4 border-blue-500 pl-4">
-                            <h3 className="text-lg font-semibold text-gray-900 mb-3">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
                                   {sectionTitles[section]}
                             </h3>
                             <div className="space-y-4">
                                   {sectionNotes.map((note) => (
-                                <div key={note.id} className="bg-gray-50 rounded-lg p-4">
-                                  <h4 className="font-medium text-gray-900 mb-2">{note.title}</h4>
-                                      <div className="text-gray-700 markdown-content">
+                                <div key={note.id} className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                                  <h4 className="font-medium text-gray-900 dark:text-white mb-2">{note.title}</h4>
+                                      <div className="text-gray-700 dark:text-gray-300 markdown-content">
                                         <ReactMarkdown remarkPlugins={[remarkGfm]}>
                                           {note.content}
                                         </ReactMarkdown>
@@ -613,44 +613,44 @@ export default function StudentLessonPage() {
             ) : (
               <div className="space-y-6">
                 {/* Exercise Overview */}
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                    <h2 className="text-2xl font-bold text-gray-900 mb-4">Practical Exercises</h2>
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Practical Exercises</h2>
                     {lesson.exercises.length === 0 ? (
                       <div className="text-center py-8">
-                        <Code className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h3 className="text-lg font-semibold text-gray-900 mb-2">No exercises available</h3>
-                        <p className="text-gray-600">Exercises for this lesson haven't been added yet.</p>
+                        <Code className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                        <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No exercises available</h3>
+                        <p className="text-gray-600 dark:text-gray-300">Exercises for this lesson haven't been added yet.</p>
                       </div>
                     ) : (
                       lesson.exercises.map((exercise, index) => (
-                        <div key={exercise.id} className="mb-6 pb-6 border-b border-gray-200 last:border-0 last:mb-0 last:pb-0">
+                        <div key={exercise.id} className="mb-6 pb-6 border-b border-gray-200 dark:border-gray-700 last:border-0 last:mb-0 last:pb-0">
                           <div className="flex items-start justify-between mb-3">
                             <div className="flex-1">
-                      <h3 className="text-xl font-semibold text-gray-900 mb-2">
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
                         Exercise {index + 1}: {exercise.title}
                       </h3>
                               {exercise.description && (
-                      <p className="text-gray-700 mb-4">{exercise.description}</p>
+                      <p className="text-gray-700 dark:text-gray-300 mb-4">{exercise.description}</p>
                               )}
                             </div>
                             <div className="ml-4 flex items-center space-x-2">
-                              <div className="bg-blue-100 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
+                              <div className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 px-3 py-1 rounded-full text-sm font-medium">
                                 <Award className="h-4 w-4 inline mr-1" />
                                 {exercise.maxPoints} points
                               </div>
                             </div>
                           </div>
                       
-                      <div className="bg-gray-50 rounded-lg p-4 mb-4">
-                            <h4 className="font-semibold text-gray-900 mb-2">Rubric: {exercise.rubric.name}</h4>
+                      <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 mb-4">
+                            <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Rubric: {exercise.rubric.name}</h4>
                             {exercise.rubric.description && (
-                              <p className="text-sm text-gray-600 mb-3">{exercise.rubric.description}</p>
+                              <p className="text-sm text-gray-600 dark:text-gray-300 mb-3">{exercise.rubric.description}</p>
                             )}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                               {exercise.rubric.criteria.slice(0, 4).map((criteria) => (
                                 <div key={criteria.id} className="text-xs">
-                                  <span className="font-medium text-gray-900">{criteria.name}</span>
-                                  <span className="text-gray-600 ml-1">({criteria.weight}% weight)</span>
+                                  <span className="font-medium text-gray-900 dark:text-white">{criteria.name}</span>
+                                  <span className="text-gray-600 dark:text-gray-300 ml-1">({criteria.weight}% weight)</span>
                                 </div>
                               ))}
                             </div>

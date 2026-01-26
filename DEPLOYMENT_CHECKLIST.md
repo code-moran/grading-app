@@ -43,10 +43,11 @@ Use this checklist to ensure your application is ready for Vercel deployment.
 
 ### 2. Configure Build Settings
 - [ ] Framework: Next.js (auto-detected)
-- [ ] Build Command: `prisma generate && next build` (or default)
+- [ ] Build Command: `npm run vercel-build` (automatically runs migrations)
 - [ ] Output Directory: `.next` (default)
 - [ ] Install Command: `npm install` (default)
 - [ ] Root Directory: `./` (default)
+- [ ] Note: The `vercel-build` script runs `prisma migrate deploy` automatically
 
 ### 3. Set Environment Variables
 - [ ] Add `DATABASE_URL` (Production, Preview, Development)
@@ -59,10 +60,11 @@ Use this checklist to ensure your application is ready for Vercel deployment.
 - [ ] Monitor build logs
 - [ ] Wait for deployment to complete
 
-### 5. Run Database Migrations
-- [ ] Connect to production database
-- [ ] Run `npx prisma migrate deploy`
-- [ ] Verify migrations completed successfully
+### 5. Verify Database Migrations
+- [ ] Check build logs to confirm migrations ran successfully
+- [ ] If migrations failed, run manually: `npx prisma migrate deploy`
+- [ ] Verify database schema matches Prisma schema
+- [ ] Note: Migrations run automatically during build via `vercel-build` script
 
 ### 6. Seed Database (Optional)
 - [ ] Run seed script if needed: `npm run db:seed`

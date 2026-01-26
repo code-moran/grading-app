@@ -76,21 +76,21 @@ export default function AdminDashboard() {
 
   return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               Admin Dashboard
             </h1>
-            <p className="text-gray-600">
+            <p className="text-gray-600 dark:text-gray-300">
               Welcome back, <span className="font-semibold">{session?.user?.name}</span>. Manage your platform from here.
             </p>
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
@@ -103,50 +103,50 @@ export default function AdminDashboard() {
             <>
               {/* Statistics Cards */}
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-blue-100 p-3 rounded-lg">
-                      <Users className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                      <Users className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{stats?.totalUsers || 0}</div>
-                      <div className="text-sm text-gray-600">Total Users</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats?.totalUsers || 0}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Users</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-green-100 p-3 rounded-lg">
-                      <GraduationCap className="h-6 w-6 text-green-600" />
+                    <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                      <GraduationCap className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{stats?.totalStudents || 0}</div>
-                      <div className="text-sm text-gray-600">Students</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats?.totalStudents || 0}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Students</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
                     <div className="bg-purple-100 p-3 rounded-lg">
                       <UserPlus className="h-6 w-6 text-purple-600" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{stats?.totalInstructors || 0}</div>
-                      <div className="text-sm text-gray-600">Instructors</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats?.totalInstructors || 0}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Instructors</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
                     <div className="bg-indigo-100 p-3 rounded-lg">
                       <BookOpen className="h-6 w-6 text-indigo-600" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{stats?.activeCourses || 0}</div>
-                      <div className="text-sm text-gray-600">Active Courses</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats?.activeCourses || 0}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Active Courses</div>
                     </div>
                   </div>
                 </div>
@@ -179,15 +179,15 @@ export default function AdminDashboard() {
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
                 <Link
                   href="/admin/instructors"
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">
                     <div className="bg-purple-100 p-3 rounded-lg group-hover:scale-110 transition-transform">
                       <CheckCircle className="h-6 w-6 text-purple-600" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">Instructor Approvals</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Instructor Approvals</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         {stats?.pendingInstructors || 0} pending
                       </p>
                     </div>
@@ -200,20 +200,20 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/courses"
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">
-                    <div className="bg-blue-100 p-3 rounded-lg group-hover:scale-110 transition-transform">
-                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                      <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">Course Management</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Course Management</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         {stats?.activeCourses || 0} active courses
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center text-blue-600 text-sm font-medium">
+                  <div className="flex items-center text-blue-600 dark:text-blue-400 text-sm font-medium">
                     Manage courses
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -221,20 +221,20 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/students"
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">
-                    <div className="bg-green-100 p-3 rounded-lg group-hover:scale-110 transition-transform">
-                      <Users className="h-6 w-6 text-green-600" />
+                    <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                      <Users className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">Student Management</h3>
-                      <p className="text-sm text-gray-600">
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Student Management</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">
                         {stats?.totalStudents || 0} students
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center text-green-600 text-sm font-medium">
+                  <div className="flex items-center text-green-600 dark:text-green-400 text-sm font-medium">
                     Manage students
                     <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -242,15 +242,15 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/instructor/grades"
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">
                     <div className="bg-indigo-100 p-3 rounded-lg group-hover:scale-110 transition-transform">
                       <BarChart3 className="h-6 w-6 text-indigo-600" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">Grade Reports</h3>
-                      <p className="text-sm text-gray-600">View all grades</p>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Grade Reports</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">View all grades</p>
                     </div>
                   </div>
                   <div className="flex items-center text-indigo-600 text-sm font-medium">
@@ -261,15 +261,15 @@ export default function AdminDashboard() {
 
                 <Link
                   href="/admin/courses"
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all duration-300 group"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
                 >
                   <div className="flex items-center mb-4">
                     <div className="bg-orange-100 p-3 rounded-lg group-hover:scale-110 transition-transform">
                       <BookOpen className="h-6 w-6 text-orange-600" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">Lesson Management</h3>
-                      <p className="text-sm text-gray-600">Manage course content</p>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Lesson Management</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Manage course content</p>
                     </div>
                   </div>
                   <div className="flex items-center text-orange-600 text-sm font-medium">
@@ -278,78 +278,78 @@ export default function AdminDashboard() {
                   </div>
                 </Link>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center mb-4">
-                    <div className="bg-gray-100 p-3 rounded-lg">
-                      <Settings className="h-6 w-6 text-gray-600" />
+                    <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
+                      <Settings className="h-6 w-6 text-gray-600 dark:text-gray-300" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900">System Settings</h3>
-                      <p className="text-sm text-gray-600">Platform configuration</p>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">System Settings</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Platform configuration</p>
                     </div>
                   </div>
-                  <div className="text-gray-500 text-sm font-medium">
+                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">
                     Coming soon
                   </div>
                 </div>
               </div>
 
               {/* Recent Registrations */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Recent Registrations</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Recent Registrations</h2>
                   <Link
                     href="/admin/users"
-                    className="text-sm text-blue-600 hover:text-blue-700 font-medium"
+                    className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium"
                   >
                     View All
                   </Link>
                 </div>
                 {recentRegistrations.length === 0 ? (
-                  <p className="text-gray-500 text-center py-4">No recent registrations</p>
+                  <p className="text-gray-500 dark:text-gray-400 text-center py-4">No recent registrations</p>
                 ) : (
                   <div className="space-y-3">
                     {recentRegistrations.map((user) => (
                       <div
                         key={user.id}
-                        className="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                       >
                         <div className="flex items-center space-x-3">
                           <div
                             className={`p-2 rounded-lg ${
                               user.role === 'student'
-                                ? 'bg-green-100'
+                                ? 'bg-green-100 dark:bg-green-900/30'
                                 : user.role === 'instructor'
                                 ? 'bg-purple-100'
-                                : 'bg-blue-100'
+                                : 'bg-blue-100 dark:bg-blue-900/30'
                             }`}
                           >
                             {user.role === 'student' ? (
-                              <GraduationCap className="h-4 w-4 text-green-600" />
+                              <GraduationCap className="h-4 w-4 text-green-600 dark:text-green-400" />
                             ) : user.role === 'instructor' ? (
                               <UserPlus className="h-4 w-4 text-purple-600" />
                             ) : (
-                              <Settings className="h-4 w-4 text-blue-600" />
+                              <Settings className="h-4 w-4 text-blue-600 dark:text-blue-400" />
                             )}
                           </div>
                           <div>
-                            <div className="font-medium text-gray-900">{user.name}</div>
-                            <div className="text-sm text-gray-500">{user.email}</div>
+                            <div className="font-medium text-gray-900 dark:text-white">{user.name}</div>
+                            <div className="text-sm text-gray-500 dark:text-gray-400">{user.email}</div>
                           </div>
                         </div>
                         <div className="flex items-center space-x-4">
                           <span
                             className={`px-2 py-1 rounded-full text-xs font-medium ${
                               user.role === 'student'
-                                ? 'bg-green-100 text-green-700'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-700'
                                 : user.role === 'instructor'
                                 ? 'bg-purple-100 text-purple-700'
-                                : 'bg-blue-100 text-blue-700'
+                                : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                             }`}
                           >
                             {user.role}
                           </span>
-                          <span className="text-xs text-gray-500">
+                          <span className="text-xs text-gray-500 dark:text-gray-400">
                             {new Date(user.createdAt).toLocaleDateString()}
                           </span>
                         </div>

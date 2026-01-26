@@ -198,8 +198,8 @@ export default function GradingPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-          <h2 className="text-xl font-semibold text-gray-900">Lesson not found</h2>
-          <p className="text-gray-600">The requested lesson could not be found.</p>
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Lesson not found</h2>
+          <p className="text-gray-600 dark:text-gray-300">The requested lesson could not be found.</p>
         </div>
       </div>
     );
@@ -211,28 +211,28 @@ export default function GradingPage() {
   const letterGrade = getLetterGrade(percentage);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       <Navigation />
       
       {/* Header */}
-      <div className="bg-white shadow-sm border-b">
+      <div className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between py-4 gap-4">
             <div className="flex items-center space-x-4">
-              <Link href="/instructor" className="flex items-center text-gray-600 hover:text-blue-600 transition-colors">
+              <Link href="/instructor" className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors">
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 <span className="hidden sm:inline">Back to Dashboard</span>
                 <span className="sm:hidden">Back</span>
               </Link>
               <div className="h-6 w-px bg-gray-300" />
               <div>
-                <h1 className="text-xl font-bold text-gray-900">{lesson.title}</h1>
-                <p className="text-sm text-gray-600">Lesson {lesson.number} • {lesson.duration}</p>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">{lesson.title}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300">Lesson {lesson.number} • {lesson.duration}</p>
               </div>
             </div>
             <div className="flex items-center space-x-4">
               {isSaved && (
-                <div className="flex items-center text-green-600 bg-green-50 px-3 py-2 rounded-lg">
+                <div className="flex items-center text-green-600 dark:text-green-400 bg-green-50 px-3 py-2 rounded-lg">
                   <CheckCircle className="h-4 w-4 mr-2" />
                   <span className="text-sm font-medium">Saved!</span>
                 </div>
@@ -253,15 +253,15 @@ export default function GradingPage() {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
           {/* Student Selection */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center space-x-2 mb-4">
-                <User className="h-5 w-5 text-blue-600" />
-                <h3 className="text-lg font-bold text-gray-900">Student Selection</h3>
+                <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Student Selection</h3>
               </div>
               
               {/* Search Input */}
               <div className="relative mb-4">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                 <input
                   type="text"
                   placeholder="Search students..."
@@ -273,7 +273,7 @@ export default function GradingPage() {
 
               {/* Error Message */}
               {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-3 py-2 rounded mb-4 text-sm">
+                <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-3 py-2 rounded mb-4 text-sm">
                   {error}
                 </div>
               )}
@@ -282,7 +282,7 @@ export default function GradingPage() {
               {loading && (
                 <div className="flex justify-center items-center py-8">
                   <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                  <span className="ml-2 text-gray-600 text-sm">Loading students...</span>
+                  <span className="ml-2 text-gray-600 dark:text-gray-300 text-sm">Loading students...</span>
                 </div>
               )}
 
@@ -290,7 +290,7 @@ export default function GradingPage() {
               {!loading && !error && (
                 <div className="space-y-3 max-h-96 overflow-y-auto">
                   {filteredStudents.length === 0 ? (
-                    <div className="text-center py-4 text-gray-500 text-sm">
+                    <div className="text-center py-4 text-gray-500 dark:text-gray-400 dark:text-gray-500 text-sm">
                       {searchTerm ? 'No students found matching your search.' : 'No students available.'}
                     </div>
                   ) : (
@@ -301,13 +301,13 @@ export default function GradingPage() {
                         className={`w-full text-left p-3 rounded-md border transition-colors duration-200 ${
                           selectedStudent?.id === student.id
                             ? 'border-blue-500 bg-blue-50 text-blue-900'
-                            : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                            : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:bg-gray-800'
                         }`}
                       >
                         <div className="font-medium">{student.name}</div>
-                        <div className="text-sm text-gray-600">{student.registrationNumber}</div>
+                        <div className="text-sm text-gray-600 dark:text-gray-300">{student.registrationNumber}</div>
                         {student.registrationNumber && (
-                          <div className="text-xs text-gray-500">Reg: {student.registrationNumber}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">Reg: {student.registrationNumber}</div>
                         )}
                       </button>
                     ))
@@ -317,10 +317,10 @@ export default function GradingPage() {
             </div>
 
             {/* Exercise Selection */}
-            <div className="bg-white rounded-xl shadow-md p-6 mt-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mt-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center space-x-2 mb-4">
-                <FileText className="h-5 w-5 text-blue-600" />
-                <h3 className="text-lg font-bold text-gray-900">Exercise</h3>
+                <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">Exercise</h3>
               </div>
               <div className="space-y-2">
                 {lesson.exercises.map((exercise, index) => (
@@ -330,11 +330,11 @@ export default function GradingPage() {
                     className={`w-full text-left p-4 rounded-lg border-2 transition-all duration-200 ${
                       selectedExercise === index
                         ? 'border-blue-500 bg-blue-50 text-blue-900 shadow-md'
-                        : 'border-gray-200 hover:border-blue-300 hover:bg-gray-50'
+                        : 'border-gray-200 dark:border-gray-700 hover:border-blue-300 hover:bg-gray-50 dark:bg-gray-800'
                     }`}
                   >
                     <div className="font-semibold mb-1">{exercise.title}</div>
-                    <div className="text-sm text-gray-600">Max: {exercise.maxPoints} points</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">Max: {exercise.maxPoints} points</div>
                   </button>
                 ))}
               </div>
@@ -346,38 +346,38 @@ export default function GradingPage() {
             {selectedStudent ? (
               <div className="space-y-6">
                 {/* Student Info */}
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center space-x-3 mb-3">
-                    <div className="bg-blue-100 p-2 rounded-lg">
-                      <User className="h-5 w-5 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                      <User className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold text-gray-900">
+                      <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                         Grading: {selectedStudent.name}
                       </h2>
-                      <p className="text-sm text-gray-500">{selectedStudent.registrationNumber}</p>
+                      <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">{selectedStudent.registrationNumber}</p>
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                    <p className="font-medium text-gray-900 mb-1">{exercise.title}</p>
-                    <p className="text-sm text-gray-600">{exercise.description}</p>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                    <p className="font-medium text-gray-900 dark:text-white mb-1">{exercise.title}</p>
+                    <p className="text-sm text-gray-600 dark:text-gray-300">{exercise.description}</p>
                   </div>
                 </div>
 
                 {/* Rubric */}
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900 mb-6">Assessment Rubric</h3>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-6">Assessment Rubric</h3>
                   <div className="space-y-6">
                     {exercise.rubric.criteria.map((criteria) => (
-                      <div key={criteria.id} className="border-2 border-gray-200 rounded-xl p-5 hover:border-blue-300 transition-colors">
+                      <div key={criteria.id} className="border-2 border-gray-200 dark:border-gray-700 rounded-xl p-5 hover:border-blue-300 transition-colors">
                         <div className="mb-4">
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="font-semibold text-gray-900 text-lg">{criteria.name}</h4>
-                            <span className="bg-blue-100 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
+                            <h4 className="font-semibold text-gray-900 dark:text-white text-lg">{criteria.name}</h4>
+                            <span className="bg-blue-100 dark:bg-blue-900/30 text-blue-700 text-xs font-medium px-2 py-1 rounded-full">
                               {criteria.weight}% weight
                             </span>
                           </div>
-                          <p className="text-sm text-gray-600">{criteria.description}</p>
+                          <p className="text-sm text-gray-600 dark:text-gray-300">{criteria.description}</p>
                         </div>
 
                         {/* Rating Levels */}
@@ -389,11 +389,11 @@ export default function GradingPage() {
                               className={`p-4 rounded-lg border-2 text-left transition-all duration-200 ${
                                 grades[criteria.id]?.levelId === level.id
                                   ? `${level.color} border-current shadow-md scale-105`
-                                  : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50 hover:shadow-sm'
+                                  : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 hover:bg-gray-50 dark:bg-gray-800 hover:shadow-sm'
                               }`}
                             >
                               <div className="font-semibold text-sm mb-1">{level.name}</div>
-                              <div className="text-xs text-gray-600 mb-2">{level.description}</div>
+                              <div className="text-xs text-gray-600 dark:text-gray-300 mb-2">{level.description}</div>
                               <div className="text-xs font-medium opacity-75">{level.points} points</div>
                             </button>
                           ))}
@@ -401,7 +401,7 @@ export default function GradingPage() {
 
                         {/* Comments */}
                         <div>
-                          <label className="block text-sm font-semibold text-gray-700 mb-2">
+                          <label className="block text-sm font-semibold text-gray-700 dark:text-gray-300 mb-2">
                             Feedback Comments
                           </label>
                           <textarea
@@ -418,8 +418,8 @@ export default function GradingPage() {
                 </div>
 
                 {/* Overall Feedback */}
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h3 className="text-lg font-bold text-gray-900 mb-4">Overall Feedback</h3>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-4">Overall Feedback</h3>
                   <textarea
                     value={feedback}
                     onChange={(e) => setFeedback(e.target.value)}
@@ -433,19 +433,19 @@ export default function GradingPage() {
                 <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
                   <h3 className="text-lg font-bold mb-6">Grade Summary</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                       <div className="text-3xl font-bold">{totalPoints}</div>
                       <div className="text-sm opacity-90 mt-1">Points Earned</div>
                     </div>
-                    <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                       <div className="text-3xl font-bold">{exercise.maxPoints}</div>
                       <div className="text-sm opacity-90 mt-1">Max Points</div>
                     </div>
-                    <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                       <div className="text-3xl font-bold">{percentage}%</div>
                       <div className="text-sm opacity-90 mt-1">Percentage</div>
                     </div>
-                    <div className="text-center bg-white/10 rounded-lg p-4 backdrop-blur-sm">
+                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
                       <div className="text-3xl font-bold">{letterGrade}</div>
                       <div className="text-sm opacity-90 mt-1">Letter Grade</div>
                     </div>
@@ -453,12 +453,12 @@ export default function GradingPage() {
                 </div>
               </div>
             ) : (
-              <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
-                <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <User className="h-8 w-8 text-gray-400" />
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
+                <div className="bg-gray-100 dark:bg-gray-700 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <User className="h-8 w-8 text-gray-400 dark:text-gray-500" />
                 </div>
-                <h3 className="text-lg font-bold text-gray-900 mb-2">Select a Student</h3>
-                <p className="text-gray-600">Choose a student from the sidebar to begin grading.</p>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">Select a Student</h3>
+                <p className="text-gray-600 dark:text-gray-300">Choose a student from the sidebar to begin grading.</p>
               </div>
             )}
           </div>

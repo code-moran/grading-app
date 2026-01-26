@@ -131,7 +131,7 @@ export default function AdminCoursesPage() {
 
   return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
@@ -139,13 +139,13 @@ export default function AdminCoursesPage() {
               <div>
                 <Link
                   href="/admin"
-                  className="flex items-center text-gray-600 hover:text-blue-600 mb-2 transition-colors"
+                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 mb-2 transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Dashboard
                 </Link>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900">Course Management</h1>
-                <p className="text-gray-600 mt-1">Create and manage courses</p>
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">Course Management</h1>
+                <p className="text-gray-600 dark:text-gray-300 mt-1">Create and manage courses</p>
               </div>
               <button
                 onClick={() => setShowCreateForm(!showCreateForm)}
@@ -158,31 +158,31 @@ export default function AdminCoursesPage() {
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
 
           {/* Search and Filter */}
           {!loading && courses.length > 0 && (
-            <div className="bg-white rounded-xl shadow-md p-4 mb-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-4 mb-6 border border-gray-100 dark:border-gray-700">
               <div className="flex flex-col md:flex-row gap-4">
                 <div className="flex-1 relative">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <input
                     type="text"
                     placeholder="Search courses..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                   />
                 </div>
                 <div className="flex items-center space-x-2">
-                  <Filter className="h-5 w-5 text-gray-400" />
+                  <Filter className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                   <select
                     value={filterStatus}
                     onChange={(e) => setFilterStatus(e.target.value as 'all' | 'active' | 'inactive')}
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                   >
                     <option value="all">All Courses</option>
                     <option value="active">Active Only</option>
@@ -191,7 +191,7 @@ export default function AdminCoursesPage() {
                 </div>
               </div>
               {filteredCourses.length !== courses.length && (
-                <div className="mt-3 text-sm text-gray-600">
+                <div className="mt-3 text-sm text-gray-600 dark:text-gray-300">
                   Showing {filteredCourses.length} of {courses.length} courses
                 </div>
               )}
@@ -199,11 +199,11 @@ export default function AdminCoursesPage() {
           )}
 
           {showCreateForm && (
-            <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
-              <h2 className="text-xl font-bold text-gray-900 mb-4">Create New Course</h2>
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
+              <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Create New Course</h2>
               <form onSubmit={handleCreateCourse} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Course Title *
                   </label>
                   <input
@@ -211,39 +211,39 @@ export default function AdminCoursesPage() {
                     required
                     value={formData.title}
                     onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder="Web Design Fundamentals"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Description
                   </label>
                   <textarea
                     value={formData.description}
                     onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                    className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     rows={3}
                     placeholder="Course description..."
                   />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Base Price (before tax)
                   </label>
                   <div className="relative">
-                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                    <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 dark:text-gray-500">$</span>
                     <input
                       type="number"
                       step="0.01"
                       min="0"
                       value={formData.basePrice}
                       onChange={(e) => setFormData({ ...formData, basePrice: e.target.value })}
-                      className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="0.00"
                     />
                   </div>
-                  <p className="mt-1 text-xs text-gray-500">
+                  <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                     Price will be stored inclusive of tax (10% tax rate)
                   </p>
                 </div>
@@ -260,7 +260,7 @@ export default function AdminCoursesPage() {
                       setShowCreateForm(false);
                       setFormData({ title: '', description: '', basePrice: '' });
                     }}
-                    className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                    className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
                   >
                     Cancel
                   </button>
@@ -274,12 +274,12 @@ export default function AdminCoursesPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredCourses.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
-              <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
+              <BookOpen className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {courses.length === 0 ? 'No Courses' : 'No Courses Found'}
               </h3>
-              <p className="text-gray-600 mb-4">
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {courses.length === 0
                   ? 'Create your first course to get started'
                   : 'Try adjusting your search or filter criteria'}
@@ -298,20 +298,20 @@ export default function AdminCoursesPage() {
               {filteredCourses.map((course) => (
                 <div
                   key={course.id}
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-xl transition-all"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <div className="bg-blue-100 p-3 rounded-lg">
-                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                      <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="flex items-center space-x-2">
                       {course.isActive ? (
-                        <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                        <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                           <CheckCircle className="h-3 w-3 mr-1" />
                           Active
                         </span>
                       ) : (
-                        <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                        <span className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                           <XCircle className="h-3 w-3 mr-1" />
                           Inactive
                         </span>
@@ -319,20 +319,20 @@ export default function AdminCoursesPage() {
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 mb-2">{course.title}</h3>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">{course.title}</h3>
                   {course.description && (
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">{course.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">{course.description}</p>
                   )}
                   {course.price !== null && course.price !== undefined && (
                     <div className="mb-3">
-                      <span className="text-2xl font-bold text-blue-600">
+                      <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                         ${parseFloat(course.price.toString()).toFixed(2)}
                       </span>
-                      <span className="text-xs text-gray-500 ml-1">(incl. tax)</span>
+                      <span className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 ml-1">(incl. tax)</span>
                     </div>
                   )}
 
-                  <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                  <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                     <div className="flex items-center">
                       <BookOpen className="h-4 w-4 mr-1" />
                       {course.lessonCount} lessons
@@ -354,8 +354,8 @@ export default function AdminCoursesPage() {
                       onClick={() => handleToggleActive(course.id, course.isActive)}
                       className={`px-4 py-2 rounded-lg font-medium text-sm transition-colors ${
                         course.isActive
-                          ? 'bg-yellow-100 text-yellow-700 hover:bg-yellow-200'
-                          : 'bg-green-100 text-green-700 hover:bg-green-200'
+                          ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 hover:bg-yellow-200'
+                          : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 hover:bg-green-200'
                       }`}
                     >
                       {course.isActive ? 'Deactivate' : 'Activate'}

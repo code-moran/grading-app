@@ -214,10 +214,10 @@ export default function InstructorGradesPage() {
   });
 
   const getGradeColor = (percentage: number) => {
-    if (percentage >= 90) return 'text-green-600 bg-green-50';
-    if (percentage >= 80) return 'text-blue-600 bg-blue-50';
-    if (percentage >= 70) return 'text-yellow-600 bg-yellow-50';
-    if (percentage >= 60) return 'text-orange-600 bg-orange-50';
+    if (percentage >= 90) return 'text-green-600 dark:text-green-400 bg-green-50';
+    if (percentage >= 80) return 'text-blue-600 dark:text-blue-400 bg-blue-50';
+    if (percentage >= 70) return 'text-yellow-600 dark:text-yellow-400 bg-yellow-50';
+    if (percentage >= 60) return 'text-orange-600 dark:text-orange-400 bg-orange-50';
     return 'text-red-600 bg-red-50';
   };
 
@@ -437,11 +437,11 @@ export default function InstructorGradesPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole={['instructor', 'admin']}>
-        <div className="min-h-screen bg-gray-50">
+        <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
           <Navigation />
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading grades...</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading grades...</span>
           </div>
         </div>
       </ProtectedRoute>
@@ -450,7 +450,7 @@ export default function InstructorGradesPage() {
 
   return (
     <ProtectedRoute requiredRole={['instructor', 'admin']}>
-      <div className="min-h-screen bg-gray-50">
+      <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
         <Navigation />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -458,20 +458,20 @@ export default function InstructorGradesPage() {
           <div className="mb-6">
             <Link
               href="/instructor"
-              className="flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-4"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Dashboard
             </Link>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl font-bold text-gray-900">Grades Management</h1>
-                <p className="text-gray-600 mt-1">View and analyze student performance</p>
+                <h1 className="text-3xl font-bold text-gray-900 dark:text-white">Grades Management</h1>
+                <p className="text-gray-600 dark:text-gray-300 mt-1">View and analyze student performance</p>
               </div>
               <div className="flex items-center gap-3">
                 <button
                   onClick={() => setShowFilters(!showFilters)}
-                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors"
+                  className="inline-flex items-center px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
                 >
                   <Filter className="h-4 w-4 mr-2" />
                   Filters
@@ -488,19 +488,19 @@ export default function InstructorGradesPage() {
           </div>
 
           {error && (
-            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="mb-6 bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
               {error}
             </div>
           )}
 
           {/* Filters */}
           {showFilters && (
-            <div className="mb-6 bg-white rounded-lg shadow-md p-6">
+            <div className="mb-6 bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
               <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Search</label>
                   <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                     <input
                       type="text"
                       value={searchTerm}
@@ -511,7 +511,7 @@ export default function InstructorGradesPage() {
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Course</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Course</label>
                   <select
                     value={selectedCourse}
                     onChange={(e) => setSelectedCourse(e.target.value)}
@@ -526,7 +526,7 @@ export default function InstructorGradesPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Lesson</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lesson</label>
                   <select
                     value={selectedLesson}
                     onChange={(e) => setSelectedLesson(e.target.value)}
@@ -537,7 +537,7 @@ export default function InstructorGradesPage() {
                   </select>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Student</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Student</label>
                   <select
                     value={selectedStudent}
                     onChange={(e) => setSelectedStudent(e.target.value)}
@@ -555,54 +555,54 @@ export default function InstructorGradesPage() {
           {analytics && (
             <>
               <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-blue-100 p-3 rounded-lg">
-                      <FileText className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                      <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{analytics.totalGrades}</div>
-                      <div className="text-sm text-gray-600">Total Grades</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{analytics.totalGrades}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Grades</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-green-100 p-3 rounded-lg">
-                      <TrendingUp className="h-6 w-6 text-green-600" />
+                    <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                      <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{analytics.averagePercentage}%</div>
-                      <div className="text-sm text-gray-600">Average Grade</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{analytics.averagePercentage}%</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Average Grade</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-purple-100 p-3 rounded-lg">
-                      <Award className="h-6 w-6 text-purple-600" />
+                    <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                      <Award className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {analytics.totalPoints} / {analytics.maxPossiblePoints}
                       </div>
-                      <div className="text-sm text-gray-600">Total Points</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Points</div>
                     </div>
                   </div>
                 </div>
 
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-yellow-100 p-3 rounded-lg">
-                      <Users className="h-6 w-6 text-yellow-600" />
+                    <div className="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg">
+                      <Users className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {new Set(grades.map((g) => g.studentId)).size}
                       </div>
-                      <div className="text-sm text-gray-600">Students Graded</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Students Graded</div>
                     </div>
                   </div>
                 </div>
@@ -610,8 +610,8 @@ export default function InstructorGradesPage() {
 
               {/* Grade Distribution Chart */}
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                     <PieChart className="h-5 w-5 mr-2" />
                     Grade Distribution
                   </h3>
@@ -624,8 +624,8 @@ export default function InstructorGradesPage() {
                           <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full text-xl font-bold ${getGradeColor(grade === 'A' ? 95 : grade === 'B' ? 85 : grade === 'C' ? 75 : grade === 'D' ? 65 : 50)}`}>
                             {grade}
                           </div>
-                          <div className="mt-2 text-sm font-semibold text-gray-900">{count}</div>
-                          <div className="text-xs text-gray-500">{percentage}%</div>
+                          <div className="mt-2 text-sm font-semibold text-gray-900 dark:text-white">{count}</div>
+                          <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{percentage}%</div>
                         </div>
                       );
                     })}
@@ -634,8 +634,8 @@ export default function InstructorGradesPage() {
 
                 {/* Course Statistics */}
                 {analytics.courseStats.length > 0 && (
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4 flex items-center">
                       <BarChart3 className="h-5 w-5 mr-2" />
                       Course Performance
                     </h3>
@@ -643,10 +643,10 @@ export default function InstructorGradesPage() {
                       {analytics.courseStats.slice(0, 5).map((course) => (
                         <div key={course.courseId}>
                           <div className="flex items-center justify-between mb-1">
-                            <span className="text-sm font-medium text-gray-900 truncate">{course.courseName}</span>
-                            <span className="text-sm font-semibold text-gray-700">{course.averagePercentage}%</span>
+                            <span className="text-sm font-medium text-gray-900 dark:text-white truncate">{course.courseName}</span>
+                            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{course.averagePercentage}%</span>
                           </div>
-                          <div className="w-full bg-gray-200 rounded-full h-2">
+                          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                             <div
                               className="bg-blue-600 h-2 rounded-full"
                               style={{ width: `${course.averagePercentage}%` }}
@@ -662,76 +662,76 @@ export default function InstructorGradesPage() {
           )}
 
           {/* Grades Table */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
-            <div className="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-gray-900">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden">
+            <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                 Grades ({filteredGrades.length})
               </h3>
             </div>
             <div className="overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
+                <thead className="bg-gray-50 dark:bg-gray-800">
                   <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Student
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Course / Lesson
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Exercise
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Points
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Grade
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       <div className="flex items-center space-x-1">
                         <span>Competency Status</span>
                         <div className="group relative">
-                          <span className="text-gray-400 cursor-help">ℹ️</span>
+                          <span className="text-gray-400 dark:text-gray-500 cursor-help">ℹ️</span>
                           <div className="absolute bottom-full left-0 mb-2 w-64 p-2 bg-gray-900 text-white text-xs rounded opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-10">
                             TVETA/CBET: Competency status indicates if student has demonstrated required skills. ≥70% = Competent.
                           </div>
                         </div>
                       </div>
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Date
                     </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                       Actions
                     </th>
                   </tr>
                 </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
+                <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                   {filteredGrades.map((grade) => (
-                    <tr key={grade.id} className="hover:bg-gray-50">
+                    <tr key={grade.id} className="hover:bg-gray-50 dark:bg-gray-800">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">
                           {grade.student?.name || 'Unknown'}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                           {grade.student?.registrationNumber || ''}
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm font-medium text-gray-900">
+                        <div className="text-sm font-medium text-gray-900 dark:text-white">
                           {grade.lesson?.course?.title || 'Unknown Course'}
                         </div>
-                        <div className="text-sm text-gray-500">
+                        <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                           Lesson {grade.lesson?.number}: {grade.lesson?.title || 'Unknown'}
                         </div>
                       </td>
                       <td className="px-6 py-4">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {grade.exercise?.title || 'Unknown Exercise'}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-gray-900">
+                        <div className="text-sm text-gray-900 dark:text-white">
                           {grade.totalPoints} / {grade.exercise?.maxPoints || grade.maxPossiblePoints}
                         </div>
                       </td>
@@ -740,7 +740,7 @@ export default function InstructorGradesPage() {
                           <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeColor(grade.percentage)}`}>
                             {grade.letterGrade}
                           </span>
-                          <span className="text-sm text-gray-600">({grade.percentage}%)</span>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">({grade.percentage}%)</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
@@ -748,10 +748,10 @@ export default function InstructorGradesPage() {
                           <span
                             className={`px-2 py-1 rounded text-xs font-medium ${
                               grade.competencyStatus === 'competent'
-                                ? 'bg-green-100 text-green-800'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
                                 : grade.competencyStatus === 'needs_improvement'
-                                ? 'bg-yellow-100 text-yellow-800'
-                                : 'bg-red-100 text-red-800'
+                                ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800'
+                                : 'bg-red-100 dark:bg-red-900/20 text-red-800'
                             }`}
                           >
                             {grade.competencyStatus === 'competent'
@@ -761,16 +761,16 @@ export default function InstructorGradesPage() {
                               : '✗ Not Competent'}
                           </span>
                         ) : (
-                          <span className="text-xs text-gray-400">Not assessed</span>
+                          <span className="text-xs text-gray-400 dark:text-gray-500">Not assessed</span>
                         )}
                       </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                         {new Date(grade.gradedAt).toLocaleDateString()}
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm">
                         <button
                           onClick={() => setSelectedGrade(grade)}
-                          className="text-blue-600 hover:text-blue-800"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-800"
                         >
                           View Details
                         </button>
@@ -782,9 +782,9 @@ export default function InstructorGradesPage() {
             </div>
             {filteredGrades.length === 0 && (
               <div className="text-center py-12">
-                <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">No grades found</h3>
-                <p className="text-gray-600">Try adjusting your filters or search terms.</p>
+                <BarChart3 className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No grades found</h3>
+                <p className="text-gray-600 dark:text-gray-300">Try adjusting your filters or search terms.</p>
               </div>
             )}
           </div>
@@ -797,61 +797,61 @@ export default function InstructorGradesPage() {
             onClick={() => setSelectedGrade(null)}
           >
             <div
-              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">Grade Details</h2>
+              <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Grade Details</h2>
                 <button
                   onClick={() => setSelectedGrade(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300"
                 >
                   <X className="h-6 w-6" />
                 </button>
               </div>
               <div className="p-6">
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {selectedGrade.exercise?.title || 'Exercise'}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     {selectedGrade.lesson?.course?.title} • Lesson {selectedGrade.lesson?.number}: {selectedGrade.lesson?.title}
                   </p>
-                  <p className="text-sm text-gray-600 mt-1">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                     Student: {selectedGrade.student?.name} ({selectedGrade.student?.registrationNumber})
                   </p>
                 </div>
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Total Points</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Total Points</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">
                       {selectedGrade.totalPoints} / {selectedGrade.exercise?.maxPoints || selectedGrade.maxPossiblePoints}
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Percentage</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Percentage</div>
                     <div className={`text-2xl font-bold ${getGradeColor(selectedGrade.percentage).split(' ')[0]}`}>
                       {selectedGrade.percentage}%
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Letter Grade</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Letter Grade</div>
                     <div className={`text-2xl font-bold ${getGradeColor(selectedGrade.percentage).split(' ')[0]}`}>
                       {selectedGrade.letterGrade}
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Graded By</div>
-                    <div className="text-lg font-semibold text-gray-900">{selectedGrade.gradedBy}</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Graded By</div>
+                    <div className="text-lg font-semibold text-gray-900 dark:text-white">{selectedGrade.gradedBy}</div>
                   </div>
                   {selectedGrade.competencyStatus && (
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <div className="text-sm text-gray-600 mb-1">Competency Status</div>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                      <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Competency Status</div>
                       <div className={`text-lg font-semibold ${
                         selectedGrade.competencyStatus === 'competent'
-                          ? 'text-green-600'
+                          ? 'text-green-600 dark:text-green-400'
                           : selectedGrade.competencyStatus === 'needs_improvement'
-                          ? 'text-yellow-600'
+                          ? 'text-yellow-600 dark:text-yellow-400'
                           : 'text-red-600'
                       }`}>
                         {selectedGrade.competencyStatus === 'competent'
@@ -865,13 +865,13 @@ export default function InstructorGradesPage() {
                 </div>
                 {selectedGrade.feedback && (
                   <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Feedback</h4>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <p className="text-gray-700 whitespace-pre-wrap">{selectedGrade.feedback}</p>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Feedback</h4>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{selectedGrade.feedback}</p>
                     </div>
                   </div>
                 )}
-                <div className="text-sm text-gray-500 flex items-center">
+                <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 flex items-center">
                   <Calendar className="h-4 w-4 mr-1" />
                   Graded on {new Date(selectedGrade.gradedAt).toLocaleString()}
                 </div>
@@ -887,14 +887,14 @@ export default function InstructorGradesPage() {
             onClick={() => !exporting && setShowExportModal(false)}
           >
             <div
-              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">Export Grades</h2>
+              <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Export Grades</h2>
                 <button
                   onClick={() => !exporting && setShowExportModal(false)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300"
                   disabled={exporting}
                 >
                   <X className="h-6 w-6" />
@@ -903,14 +903,14 @@ export default function InstructorGradesPage() {
 
               <div className="p-6">
                 <div className="flex items-center justify-between mb-6">
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Configure filters to export specific grades. Leave filters empty to export all grades.
                   </p>
                   <div className="flex gap-2">
                     <button
                       onClick={handleUseCurrentFilters}
                       disabled={exporting}
-                      className="px-3 py-1.5 text-xs font-medium text-blue-600 bg-blue-50 hover:bg-blue-100 rounded-lg transition-colors disabled:opacity-50"
+                      className="px-3 py-1.5 text-xs font-medium text-blue-600 dark:text-blue-400 bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 rounded-lg transition-colors disabled:opacity-50"
                     >
                       Use Current Filters
                     </button>
@@ -930,7 +930,7 @@ export default function InstructorGradesPage() {
                         });
                       }}
                       disabled={exporting}
-                      className="px-3 py-1.5 text-xs font-medium text-gray-600 bg-gray-50 hover:bg-gray-100 rounded-lg transition-colors disabled:opacity-50"
+                      className="px-3 py-1.5 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-50 dark:bg-gray-800 hover:bg-gray-100 dark:bg-gray-700 rounded-lg transition-colors disabled:opacity-50"
                     >
                       Clear All
                     </button>
@@ -940,7 +940,7 @@ export default function InstructorGradesPage() {
                 <div className="space-y-4">
                   {/* Course Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Course
                     </label>
                     <select
@@ -962,7 +962,7 @@ export default function InstructorGradesPage() {
 
                   {/* Lesson Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Lesson
                     </label>
                     <select
@@ -984,7 +984,7 @@ export default function InstructorGradesPage() {
 
                   {/* Exercise Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Exercise
                     </label>
                     <select
@@ -1006,7 +1006,7 @@ export default function InstructorGradesPage() {
 
                   {/* Student Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Student
                     </label>
                     <select
@@ -1026,7 +1026,7 @@ export default function InstructorGradesPage() {
 
                   {/* Cohort Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Cohort
                     </label>
                     <select
@@ -1049,7 +1049,7 @@ export default function InstructorGradesPage() {
                   {/* Date Range */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Start Date
                       </label>
                       <input
@@ -1061,7 +1061,7 @@ export default function InstructorGradesPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         End Date
                       </label>
                       <input
@@ -1077,7 +1077,7 @@ export default function InstructorGradesPage() {
                   {/* Percentage Range */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Min Percentage
                       </label>
                       <input
@@ -1092,7 +1092,7 @@ export default function InstructorGradesPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Max Percentage
                       </label>
                       <input
@@ -1110,7 +1110,7 @@ export default function InstructorGradesPage() {
 
                   {/* Letter Grade Filter */}
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Letter Grade
                     </label>
                     <select
@@ -1130,11 +1130,11 @@ export default function InstructorGradesPage() {
                 </div>
 
                 {/* Actions */}
-                <div className="flex items-center justify-end gap-4 mt-6 pt-6 border-t border-gray-200">
+                <div className="flex items-center justify-end gap-4 mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
                   <button
                     onClick={() => setShowExportModal(false)}
                     disabled={exporting}
-                    className="px-4 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors disabled:opacity-50"
+                    className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors disabled:opacity-50"
                   >
                     Cancel
                   </button>

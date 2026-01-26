@@ -460,14 +460,14 @@ export default function CourseDetailPage() {
 
   return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
             <Link
               href="/admin/courses"
-              className="flex items-center text-gray-600 hover:text-blue-600 mb-4 transition-colors"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 mb-4 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Courses
@@ -476,37 +476,37 @@ export default function CourseDetailPage() {
             {loading ? (
               <div className="flex items-center space-x-3">
                 <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-                <span className="text-gray-600">Loading course...</span>
+                <span className="text-gray-600 dark:text-gray-300">Loading course...</span>
               </div>
             ) : course ? (
               <div className="flex items-start justify-between">
                 <div className="flex-1">
                   <div className="flex items-center space-x-3 mb-2">
-                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900">{course.title}</h1>
+                    <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">{course.title}</h1>
                     {course.isActive ? (
-                      <span className="bg-green-100 text-green-700 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                      <span className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                         <CheckCircle className="h-4 w-4 mr-1" />
                         Active
                       </span>
                     ) : (
-                      <span className="bg-gray-100 text-gray-700 px-3 py-1 rounded-full text-sm font-medium flex items-center">
+                      <span className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1 rounded-full text-sm font-medium flex items-center">
                         <XCircle className="h-4 w-4 mr-1" />
                         Inactive
                       </span>
                     )}
                   </div>
                   {course.description && (
-                    <p className="text-gray-600 text-lg mb-4">{course.description}</p>
+                    <p className="text-gray-600 dark:text-gray-300 text-lg mb-4">{course.description}</p>
                   )}
                   {course.price !== null && course.price !== undefined && (
                     <div className="mb-4">
-                      <span className="text-3xl font-bold text-blue-600">
+                      <span className="text-3xl font-bold text-blue-600 dark:text-blue-400">
                         ${parseFloat(course.price.toString()).toFixed(2)}
                       </span>
-                      <span className="text-sm text-gray-500 ml-2">(price inclusive of tax)</span>
+                      <span className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 ml-2">(price inclusive of tax)</span>
                     </div>
                   )}
-                  <div className="flex items-center space-x-6 text-sm text-gray-500">
+                  <div className="flex items-center space-x-6 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                     <div className="flex items-center">
                       <BookOpen className="h-4 w-4 mr-1" />
                       {course._count.lessons} lessons
@@ -541,13 +541,13 @@ export default function CourseDetailPage() {
               </div>
             ) : (
               <div className="text-center py-12">
-                <p className="text-gray-600">Course not found</p>
+                <p className="text-gray-600 dark:text-gray-300">Course not found</p>
               </div>
             )}
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
@@ -556,11 +556,11 @@ export default function CourseDetailPage() {
             <>
               {/* Edit Form */}
               {showEditForm && (
-                <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
-                  <h2 className="text-xl font-bold text-gray-900 mb-4">Edit Course</h2>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-4">Edit Course</h2>
                   <form onSubmit={handleUpdateCourse} className="space-y-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Course Title *
                       </label>
                       <input
@@ -568,37 +568,37 @@ export default function CourseDetailPage() {
                         required
                         value={editFormData.title}
                         onChange={(e) => setEditFormData({ ...editFormData, title: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Description
                       </label>
                       <textarea
                         value={editFormData.description}
                         onChange={(e) => setEditFormData({ ...editFormData, description: e.target.value })}
-                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                        className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         rows={4}
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Base Price (before tax)
                       </label>
                       <div className="relative">
-                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500">$</span>
+                        <span className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-gray-400 dark:text-gray-500">$</span>
                         <input
                           type="number"
                           step="0.01"
                           min="0"
                           value={editFormData.basePrice}
                           onChange={(e) => setEditFormData({ ...editFormData, basePrice: e.target.value })}
-                          className="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                          className="w-full pl-8 pr-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                           placeholder="0.00"
                         />
                       </div>
-                      <p className="mt-1 text-xs text-gray-500">
+                      <p className="mt-1 text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                         Price will be stored inclusive of tax (10% tax rate)
                       </p>
                     </div>
@@ -622,7 +622,7 @@ export default function CourseDetailPage() {
                             basePrice: basePrice,
                           });
                         }}
-                        className="bg-gray-200 text-gray-700 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
+                        className="bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-6 py-2 rounded-lg font-medium hover:bg-gray-300 transition-colors"
                       >
                         Cancel
                       </button>
@@ -674,41 +674,41 @@ export default function CourseDetailPage() {
               {/* Additional Analytics */}
               {analytics && (
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                     <div className="flex items-center mb-2">
                       <BarChart3 className="h-5 w-5 text-indigo-600 mr-2" />
-                      <span className="text-sm font-medium text-gray-600">Submissions</span>
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Submissions</span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900">{analytics.totalSubmissions}</div>
-                    <div className="text-xs text-gray-500 mt-1">Total exercise submissions</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">{analytics.totalSubmissions}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">Total exercise submissions</div>
                   </div>
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                     <div className="flex items-center mb-2">
-                      <Award className="h-5 w-5 text-yellow-600 mr-2" />
-                      <span className="text-sm font-medium text-gray-600">Quiz Attempts</span>
+                      <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-400 mr-2" />
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Quiz Attempts</span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900">{analytics.totalQuizAttempts}</div>
-                    <div className="text-xs text-gray-500 mt-1">Total quiz attempts</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">{analytics.totalQuizAttempts}</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">Total quiz attempts</div>
                   </div>
-                  <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                  <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                     <div className="flex items-center mb-2">
-                      <TrendingUp className="h-5 w-5 text-green-600 mr-2" />
-                      <span className="text-sm font-medium text-gray-600">Engagement</span>
+                      <TrendingUp className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
+                      <span className="text-sm font-medium text-gray-600 dark:text-gray-300">Engagement</span>
                     </div>
-                    <div className="text-2xl font-bold text-gray-900">
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">
                       {course._count.subscriptions > 0
                         ? Math.round((analytics.totalSubmissions / course._count.subscriptions) * 10) / 10
                         : 0}
                     </div>
-                    <div className="text-xs text-gray-500 mt-1">Avg submissions per student</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">Avg submissions per student</div>
                   </div>
                 </div>
               )}
 
               {/* Lessons Section */}
-              <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Course Lessons</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Course Lessons</h2>
                   <button
                     onClick={() => setShowAddLessons(!showAddLessons)}
                     className="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center"
@@ -721,7 +721,7 @@ export default function CourseDetailPage() {
                 {showAddLessons && unassignedLessons.length > 0 && (
                   <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
                     <div className="flex items-center justify-between mb-3">
-                      <h3 className="font-semibold text-gray-900">
+                      <h3 className="font-semibold text-gray-900 dark:text-white">
                         Available Lessons ({unassignedLessons.length})
                       </h3>
                       {selectedLessons.size > 0 && (
@@ -748,10 +748,10 @@ export default function CourseDetailPage() {
                       {unassignedLessons.map((lesson) => (
                         <div
                           key={lesson.id}
-                          className={`flex items-center justify-between p-3 bg-white rounded-lg border-2 transition-all ${
+                          className={`flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border-2 transition-all ${
                             selectedLessons.has(lesson.id)
                               ? 'border-blue-500 bg-blue-50'
-                              : 'border-gray-200 hover:border-gray-300'
+                              : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600'
                           }`}
                         >
                           <div className="flex items-center space-x-3 flex-1">
@@ -759,13 +759,13 @@ export default function CourseDetailPage() {
                               type="checkbox"
                               checked={selectedLessons.has(lesson.id)}
                               onChange={() => toggleLessonSelection(lesson.id)}
-                              className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                              className="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                             />
                             <div className="flex-1">
-                              <div className="font-medium text-gray-900">
+                              <div className="font-medium text-gray-900 dark:text-white">
                                 Lesson {lesson.number}: {lesson.title}
                               </div>
-                              <div className="text-sm text-gray-500">
+                              <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                 {lesson._count.exercises} exercises
                               </div>
                             </div>
@@ -784,13 +784,13 @@ export default function CourseDetailPage() {
                 )}
 
                 {course.lessons.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                    <BookOpen className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                     <p>No lessons assigned to this course</p>
                     {unassignedLessons.length > 0 && (
                       <button
                         onClick={() => setShowAddLessons(true)}
-                        className="mt-4 text-blue-600 hover:text-blue-700 font-medium"
+                        className="mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium"
                       >
                         Add lessons now
                       </button>
@@ -801,22 +801,22 @@ export default function CourseDetailPage() {
                     {course.lessons.map((lesson) => (
                       <div
                         key={lesson.id}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                       >
                         <div className="flex items-center space-x-4 flex-1">
-                          <div className="bg-blue-100 p-2 rounded-lg">
-                            <BookOpen className="h-5 w-5 text-blue-600" />
+                          <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                            <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                           </div>
                           <div className="flex-1">
-                            <div className="font-semibold text-gray-900">
+                            <div className="font-semibold text-gray-900 dark:text-white">
                               Lesson {lesson.number}: {lesson.title}
                             </div>
                             {lesson.description && (
-                              <div className="text-sm text-gray-600 line-clamp-1">
+                              <div className="text-sm text-gray-600 dark:text-gray-300 line-clamp-1">
                                 {lesson.description}
                               </div>
                             )}
-                            <div className="flex items-center space-x-4 text-xs text-gray-500 mt-1">
+                            <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                               <span>{lesson._count.exercises} exercises</span>
                               {lesson.duration && <span>{lesson.duration}</span>}
                             </div>
@@ -825,13 +825,13 @@ export default function CourseDetailPage() {
                         <div className="flex items-center space-x-2">
                           <Link
                             href={`/instructor/lesson/${lesson.id}`}
-                            className="text-blue-600 hover:text-blue-700 text-sm font-medium"
+                            className="text-blue-600 dark:text-blue-400 hover:text-blue-700 text-sm font-medium"
                           >
                             View
                           </Link>
                           <button
                             onClick={() => handleUnassignLesson(lesson.id)}
-                            className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center"
+                            className="text-red-600 hover:text-red-700 dark:text-red-400 text-sm font-medium flex items-center"
                           >
                             <Unlink className="h-3 w-3 mr-1" />
                             Remove
@@ -844,9 +844,9 @@ export default function CourseDetailPage() {
               </div>
 
               {/* Instructors Section */}
-              <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">
                     Assigned Instructors ({assignedInstructors.length})
                   </h2>
                   <button
@@ -865,20 +865,20 @@ export default function CourseDetailPage() {
 
                 {showAssignInstructor && availableInstructors.length > 0 && (
                   <div className="mb-6 p-4 bg-blue-50 rounded-lg border border-blue-200">
-                    <h3 className="font-semibold text-gray-900 mb-3">
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-3">
                       Available Instructors ({availableInstructors.length})
                     </h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                       {availableInstructors.map((instructor) => (
                         <div
                           key={instructor.id}
-                          className="flex items-center justify-between p-3 bg-white rounded-lg border border-gray-200 hover:border-blue-300"
+                          className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-300"
                         >
                           <div>
-                            <div className="font-medium text-gray-900">{instructor.name}</div>
-                            <div className="text-sm text-gray-600">{instructor.email}</div>
+                            <div className="font-medium text-gray-900 dark:text-white">{instructor.name}</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-300">{instructor.email}</div>
                             {instructor.department && (
-                              <div className="text-xs text-gray-500">{instructor.department}</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{instructor.department}</div>
                             )}
                           </div>
                           <button
@@ -895,14 +895,14 @@ export default function CourseDetailPage() {
                 )}
 
                 {showAssignInstructor && availableInstructors.length === 0 && (
-                  <div className="mb-6 p-4 bg-gray-50 rounded-lg border border-gray-200 text-center">
-                    <p className="text-gray-600">All approved instructors are already assigned</p>
+                  <div className="mb-6 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center">
+                    <p className="text-gray-600 dark:text-gray-300">All approved instructors are already assigned</p>
                   </div>
                 )}
 
                 {assignedInstructors.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <Users className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                    <Users className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                     <p>No instructors assigned to this course</p>
                   </div>
                 ) : (
@@ -910,26 +910,26 @@ export default function CourseDetailPage() {
                     {assignedInstructors.map((instructor) => (
                       <div
                         key={instructor.id}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                       >
                         <div className="flex items-center space-x-4">
-                          <div className="bg-purple-100 p-2 rounded-lg">
-                            <Users className="h-5 w-5 text-purple-600" />
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg">
+                            <Users className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                           </div>
                           <div>
-                            <div className="font-semibold text-gray-900">{instructor.name}</div>
-                            <div className="text-sm text-gray-600">{instructor.email}</div>
+                            <div className="font-semibold text-gray-900 dark:text-white">{instructor.name}</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-300">{instructor.email}</div>
                             {instructor.department && (
-                              <div className="text-xs text-gray-500">{instructor.department}</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{instructor.department}</div>
                             )}
-                            <div className="text-xs text-gray-500 mt-1">
+                            <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                               Assigned {new Date(instructor.assignedAt).toLocaleDateString()}
                             </div>
                           </div>
                         </div>
                         <button
                           onClick={() => handleUnassignInstructor(instructor.id)}
-                          className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center"
+                          className="text-red-600 hover:text-red-700 dark:text-red-400 text-sm font-medium flex items-center"
                         >
                           <Unlink className="h-3 w-3 mr-1" />
                           Unassign
@@ -941,9 +941,9 @@ export default function CourseDetailPage() {
               </div>
 
               {/* Cohort Enrollment Section */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex items-center justify-between mb-6">
-                  <h2 className="text-xl font-bold text-gray-900">Enrolled Cohorts ({enrolledCohorts.length})</h2>
+                  <h2 className="text-xl font-bold text-gray-900 dark:text-white">Enrolled Cohorts ({enrolledCohorts.length})</h2>
                   <button
                     onClick={() => setShowEnrollCohort(!showEnrollCohort)}
                     className="bg-purple-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-purple-700 transition-colors flex items-center"
@@ -955,9 +955,9 @@ export default function CourseDetailPage() {
 
                 {showEnrollCohort && (
                   <div className="mb-6 p-4 bg-purple-50 rounded-lg border border-purple-200">
-                    <h3 className="font-semibold text-gray-900 mb-3">Available Cohorts</h3>
+                    <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Available Cohorts</h3>
                     {cohorts.length === 0 ? (
-                      <p className="text-gray-600 text-sm">No cohorts available.</p>
+                      <p className="text-gray-600 dark:text-gray-300 text-sm">No cohorts available.</p>
                     ) : (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                         {cohorts
@@ -965,11 +965,11 @@ export default function CourseDetailPage() {
                           .map((cohort) => (
                             <div
                               key={cohort.id}
-                              className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200"
+                              className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700"
                             >
                               <div>
-                                <div className="font-medium text-gray-900">{cohort.name}</div>
-                                <div className="text-sm text-gray-500">
+                                <div className="font-medium text-gray-900 dark:text-white">{cohort.name}</div>
+                                <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                   {cohort._count?.students || 0} students
                                 </div>
                               </div>
@@ -998,13 +998,13 @@ export default function CourseDetailPage() {
                 )}
 
                 {enrolledCohorts.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <GraduationCap className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                    <GraduationCap className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                     <p>No cohorts enrolled in this course</p>
                     {cohorts.length > 0 && (
                       <button
                         onClick={() => setShowEnrollCohort(true)}
-                        className="mt-4 text-purple-600 hover:text-purple-700 font-medium"
+                        className="mt-4 text-purple-600 dark:text-purple-400 hover:text-purple-700 font-medium"
                       >
                         Enroll cohorts now
                       </button>
@@ -1015,26 +1015,26 @@ export default function CourseDetailPage() {
                     {enrolledCohorts.map((cohort) => (
                       <div
                         key={cohort.id}
-                        className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                       >
                         <div className="flex items-center space-x-4 flex-1">
-                          <div className="bg-purple-100 p-2 rounded-lg">
-                            <GraduationCap className="h-5 w-5 text-purple-600" />
+                          <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg">
+                            <GraduationCap className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                           </div>
                           <div className="flex-1">
-                            <div className="font-semibold text-gray-900">{cohort.name}</div>
-                            <div className="text-sm text-gray-600">
+                            <div className="font-semibold text-gray-900 dark:text-white">{cohort.name}</div>
+                            <div className="text-sm text-gray-600 dark:text-gray-300">
                               {cohort.enrolledStudents} of {cohort.totalStudents} students enrolled
                             </div>
                             {cohort.description && (
-                              <div className="text-xs text-gray-500 mt-1">{cohort.description}</div>
+                              <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">{cohort.description}</div>
                             )}
                           </div>
                         </div>
                         <button
                           onClick={() => handleUnenrollCohort(cohort.id)}
                           disabled={enrollingCohort === cohort.id}
-                          className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center disabled:opacity-50"
+                          className="text-red-600 hover:text-red-700 dark:text-red-400 text-sm font-medium flex items-center disabled:opacity-50"
                         >
                           {enrollingCohort === cohort.id ? (
                             <>
@@ -1055,11 +1055,11 @@ export default function CourseDetailPage() {
               </div>
 
               {/* Subscribers Section */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                <h2 className="text-xl font-bold text-gray-900 mb-6">Subscribers ({course.subscriptions.length})</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white mb-6">Subscribers ({course.subscriptions.length})</h2>
                 {course.subscriptions.length === 0 ? (
-                  <div className="text-center py-8 text-gray-500">
-                    <Users className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                  <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                    <Users className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                     <p>No subscribers yet</p>
                   </div>
                 ) : (
@@ -1078,20 +1078,20 @@ export default function CourseDetailPage() {
                       return (
                         <div
                           key={subscription.id}
-                          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"
+                          className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg"
                         >
                           <div className="flex items-center space-x-4">
-                            <div className="bg-green-100 p-2 rounded-lg">
-                              <Users className="h-5 w-5 text-green-600" />
+                            <div className="bg-green-100 dark:bg-green-900/30 p-2 rounded-lg">
+                              <Users className="h-5 w-5 text-green-600 dark:text-green-400" />
                             </div>
                             <div>
-                              <div className="font-semibold text-gray-900">{subscriber.name}</div>
-                              <div className="text-sm text-gray-600">
+                              <div className="font-semibold text-gray-900 dark:text-white">{subscriber.name}</div>
+                              <div className="text-sm text-gray-600 dark:text-gray-300">
                                 {isUserSubscription
                                   ? subscriber.email
                                   : `${subscriber.email || ''} (Reg: ${(subscriber as any).registrationNumber})`}
                               </div>
-                              <div className="text-xs text-gray-500 mt-1">
+                              <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                                 Subscribed {new Date(subscription.subscribedAt).toLocaleDateString()}
                               </div>
                             </div>
@@ -1099,8 +1099,8 @@ export default function CourseDetailPage() {
                           <span
                             className={`px-3 py-1 rounded-full text-xs font-medium ${
                               subscriberRole === 'student'
-                                ? 'bg-green-100 text-green-700'
-                                : 'bg-purple-100 text-purple-700'
+                                ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                                : 'bg-purple-100 dark:bg-purple-900/30 text-purple-700'
                             }`}
                           >
                             {subscriberRole}

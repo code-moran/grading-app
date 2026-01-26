@@ -282,11 +282,11 @@ export default function StudentExercisePage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-gray-600">Loading exercise...</span>
+        <span className="ml-2 text-gray-600 dark:text-gray-300">Loading exercise...</span>
       </div>
         </div>
       </ProtectedRoute>
@@ -296,10 +296,10 @@ export default function StudentExercisePage() {
   if (error && !exercise) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error}
             </div>
@@ -323,25 +323,25 @@ export default function StudentExercisePage() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between py-4">
             <div className="flex items-center space-x-4">
                 <Link
                   href={`/student/lesson/${exercise.lesson.id}`}
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors"
                 >
                 <ArrowLeft className="h-4 w-4 mr-2" />
                 Back to Lesson
               </Link>
               <div className="h-6 w-px bg-gray-300" />
               <div>
-                  <h1 className="text-xl font-semibold text-gray-900">{exercise.title}</h1>
-                <p className="text-sm text-gray-600">
+                  <h1 className="text-xl font-semibold text-gray-900 dark:text-white">{exercise.title}</h1>
+                <p className="text-sm text-gray-600 dark:text-gray-300">
                     Lesson {exercise.lesson.number}: {exercise.lesson.title} • {exercise.lesson.course.title}
                 </p>
               </div>
@@ -351,12 +351,12 @@ export default function StudentExercisePage() {
                   <div
                     className={`flex items-center px-3 py-1 rounded-full text-sm font-medium ${
                       exercise.submission.status === 'approved'
-                    ? 'bg-green-100 text-green-800'
+                    ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
                         : exercise.submission.status === 'needs_revision'
-                    ? 'bg-yellow-100 text-yellow-800'
+                    ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800'
                         : exercise.submission.status === 'rejected'
-                        ? 'bg-red-100 text-red-800'
-                    : 'bg-gray-100 text-gray-800'
+                        ? 'bg-red-100 dark:bg-red-900/20 text-red-800'
+                    : 'bg-gray-100 dark:bg-gray-700 text-gray-800'
                     }`}
                   >
                     {exercise.submission.status === 'approved' && (
@@ -373,7 +373,7 @@ export default function StudentExercisePage() {
                   </div>
                 )}
                 {exercise.grade && (
-                  <div className="flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 text-yellow-800">
+                  <div className="flex items-center px-3 py-1 rounded-full text-sm font-medium bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800">
                     <Trophy className="h-4 w-4 mr-1" />
                     {exercise.grade.percentage}% ({exercise.grade.letterGrade})
                 </div>
@@ -388,9 +388,9 @@ export default function StudentExercisePage() {
           {/* Main Content */}
           <div className="lg:col-span-2 space-y-6">
             {/* Exercise Description */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-              <h2 className="text-2xl font-bold text-gray-900 mb-4">Exercise Description</h2>
-                <p className="text-gray-700 leading-relaxed mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Exercise Description</h2>
+                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
                   {exercise.description || 'No description provided for this exercise.'}
                 </p>
               
@@ -409,37 +409,37 @@ export default function StudentExercisePage() {
 
               {/* Grade Display */}
               {exercise.grade && (
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                  <h2 className="text-2xl font-bold text-gray-900 mb-4 flex items-center">
-                    <Award className="h-6 w-6 mr-2 text-yellow-600" />
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 flex items-center">
+                    <Award className="h-6 w-6 mr-2 text-yellow-600 dark:text-yellow-400" />
                     Your Grade
                   </h2>
                   <div className="space-y-4">
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-gray-700">Score</span>
-                      <span className="text-2xl font-bold text-gray-900">
+                      <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Score</span>
+                      <span className="text-2xl font-bold text-gray-900 dark:text-white">
                         {exercise.grade.totalPoints} / {exercise.grade.maxPossiblePoints} points
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-gray-700">Percentage</span>
-                      <span className="text-2xl font-bold text-blue-600">
+                      <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Percentage</span>
+                      <span className="text-2xl font-bold text-blue-600 dark:text-blue-400">
                         {exercise.grade.percentage}%
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-lg font-semibold text-gray-700">Letter Grade</span>
-                      <span className="text-2xl font-bold text-green-600">
+                      <span className="text-lg font-semibold text-gray-700 dark:text-gray-300">Letter Grade</span>
+                      <span className="text-2xl font-bold text-green-600 dark:text-green-400">
                         {exercise.grade.letterGrade}
                       </span>
                     </div>
                     {exercise.grade.feedback && (
-                      <div className="mt-4 p-4 bg-gray-50 rounded-lg">
-                        <h4 className="font-semibold text-gray-900 mb-2">Instructor Feedback</h4>
-                        <p className="text-gray-700">{exercise.grade.feedback}</p>
+                      <div className="mt-4 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+                        <h4 className="font-semibold text-gray-900 dark:text-white mb-2">Instructor Feedback</h4>
+                        <p className="text-gray-700 dark:text-gray-300">{exercise.grade.feedback}</p>
                       </div>
                     )}
-                    <div className="text-sm text-gray-500 flex items-center">
+                    <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
                       Graded on {new Date(exercise.grade.gradedAt).toLocaleDateString()}
                     </div>
@@ -448,23 +448,23 @@ export default function StudentExercisePage() {
               )}
 
             {/* Submission Form */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-              <h3 className="text-xl font-semibold text-gray-900 mb-4">Submit Your Work</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Submit Your Work</h3>
               
               {error && (
-                <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+                <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded mb-4">
                   {error}
                 </div>
               )}
               
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="github-url" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="github-url" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     GitHub Repository URL
                   </label>
                   <div className="flex">
-                    <div className="flex items-center px-3 border border-r-0 border-gray-300 rounded-l-md bg-gray-50">
-                      <Github className="h-5 w-5 text-gray-400" />
+                    <div className="flex items-center px-3 border border-r-0 border-gray-300 dark:border-gray-600 rounded-l-md bg-gray-50 dark:bg-gray-800">
+                      <Github className="h-5 w-5 text-gray-400 dark:text-gray-500" />
                     </div>
                     <input
                       type="url"
@@ -472,11 +472,11 @@ export default function StudentExercisePage() {
                       value={githubUrl}
                       onChange={(e) => setGithubUrl(e.target.value)}
                       placeholder="https://github.com/username/repository"
-                      className="flex-1 px-3 py-2 border border-gray-300 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                      className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-r-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
                         disabled={submitting || !!exercise.submission}
                     />
                   </div>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                     Make sure your repository is public and contains all the required files.
                   </p>
                 </div>
@@ -508,8 +508,8 @@ export default function StudentExercisePage() {
 
             {/* Coding Standards Results */}
             {standardsCheck && (
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Coding Standards Check</h3>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Coding Standards Check</h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                   <div className="space-y-4">
@@ -525,8 +525,8 @@ export default function StudentExercisePage() {
                         <span
                           className={`px-2 py-1 rounded text-sm ${
                         standardsCheck.htmlValidation.passed
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
+                          : 'bg-red-100 dark:bg-red-900/20 text-red-800'
                           }`}
                         >
                         {standardsCheck.htmlValidation.passed ? 'Passed' : 'Failed'}
@@ -545,8 +545,8 @@ export default function StudentExercisePage() {
                         <span
                           className={`px-2 py-1 rounded text-sm ${
                         standardsCheck.cssValidation.passed
-                          ? 'bg-green-100 text-green-800'
-                          : 'bg-red-100 text-red-800'
+                          ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
+                          : 'bg-red-100 dark:bg-red-900/20 text-red-800'
                           }`}
                         >
                         {standardsCheck.cssValidation.passed ? 'Passed' : 'Failed'}
@@ -558,11 +558,11 @@ export default function StudentExercisePage() {
                     <div className="p-3 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium">Accessibility Score</span>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
                             {standardsCheck.accessibility.score}/100
                           </span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div
                           className="bg-blue-600 h-2 rounded-full"
                           style={{ width: `${standardsCheck.accessibility.score}%` }}
@@ -573,11 +573,11 @@ export default function StudentExercisePage() {
                     <div className="p-3 border rounded-lg">
                       <div className="flex items-center justify-between mb-2">
                         <span className="font-medium">Performance Score</span>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
                             {standardsCheck.performance.score}/100
                           </span>
                       </div>
-                      <div className="w-full bg-gray-200 rounded-full h-2">
+                      <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                         <div
                           className="bg-green-600 h-2 rounded-full"
                           style={{ width: `${standardsCheck.performance.score}%` }}
@@ -591,8 +591,8 @@ export default function StudentExercisePage() {
                     <div
                       className={`inline-flex items-center px-4 py-2 rounded-full text-lg font-medium ${
                     standardsCheck.overallScore >= 70
-                      ? 'bg-green-100 text-green-800'
-                      : 'bg-red-100 text-red-800'
+                      ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
+                      : 'bg-red-100 dark:bg-red-900/20 text-red-800'
                       }`}
                     >
                     Overall Score: {standardsCheck.overallScore}/100
@@ -610,23 +610,23 @@ export default function StudentExercisePage() {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-6">
             {/* Rubric */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Assessment Rubric</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Assessment Rubric</h3>
               <div className="space-y-3">
                   {exercise.rubric.criteria.map((criteria) => (
-                  <div key={criteria.id} className="border border-gray-200 rounded-lg p-3">
-                    <h4 className="font-medium text-gray-900 text-sm">{criteria.name}</h4>
+                  <div key={criteria.id} className="border border-gray-200 dark:border-gray-700 rounded-lg p-3">
+                    <h4 className="font-medium text-gray-900 dark:text-white text-sm">{criteria.name}</h4>
                       {criteria.description && (
-                    <p className="text-xs text-gray-600 mt-1">{criteria.description}</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-300 mt-1">{criteria.description}</p>
                       )}
-                    <div className="text-xs text-gray-500 mt-2">Weight: {criteria.weight}%</div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-2">Weight: {criteria.weight}%</div>
                   </div>
                 ))}
               </div>
-                <div className="mt-4 pt-4 border-t border-gray-200">
+                <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-gray-700">Total Points</span>
-                    <span className="text-sm font-bold text-gray-900">
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Total Points</span>
+                    <span className="text-sm font-bold text-gray-900 dark:text-white">
                       {exercise.rubric.totalPoints}
                     </span>
                   </div>
@@ -634,19 +634,19 @@ export default function StudentExercisePage() {
             </div>
 
             {/* Resources */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-              <h3 className="text-lg font-semibold text-gray-900 mb-4">Resources</h3>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Resources</h3>
               <div className="space-y-3">
                 <a
                   href="https://validator.w3.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
+                  className="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
                 >
                   <ExternalLink className="h-4 w-4 text-blue-500 mr-3" />
                   <div>
-                    <div className="font-medium text-gray-900 text-sm">HTML Validator</div>
-                    <div className="text-xs text-gray-600">Validate your HTML</div>
+                    <div className="font-medium text-gray-900 dark:text-white text-sm">HTML Validator</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Validate your HTML</div>
                   </div>
                 </a>
                 
@@ -654,12 +654,12 @@ export default function StudentExercisePage() {
                   href="https://jigsaw.w3.org/css-validator/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
+                  className="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
                 >
                   <ExternalLink className="h-4 w-4 text-blue-500 mr-3" />
                   <div>
-                    <div className="font-medium text-gray-900 text-sm">CSS Validator</div>
-                    <div className="text-xs text-gray-600">Validate your CSS</div>
+                    <div className="font-medium text-gray-900 dark:text-white text-sm">CSS Validator</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Validate your CSS</div>
                   </div>
                 </a>
                 
@@ -667,12 +667,12 @@ export default function StudentExercisePage() {
                   href="https://webaim.org/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center p-3 border border-gray-200 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
+                  className="flex items-center p-3 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 hover:bg-blue-50 transition-colors duration-200"
                 >
                   <ExternalLink className="h-4 w-4 text-blue-500 mr-3" />
                   <div>
-                    <div className="font-medium text-gray-900 text-sm">WebAIM</div>
-                    <div className="text-xs text-gray-600">Accessibility guidelines</div>
+                    <div className="font-medium text-gray-900 dark:text-white text-sm">WebAIM</div>
+                    <div className="text-xs text-gray-600 dark:text-gray-300">Accessibility guidelines</div>
                   </div>
                 </a>
               </div>
@@ -680,37 +680,37 @@ export default function StudentExercisePage() {
 
             {/* Submission History */}
               {exercise.submission && (
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                <h3 className="text-lg font-semibold text-gray-900 mb-4">Submission Details</h3>
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Submission Details</h3>
                 <div className="space-y-3">
                   <div>
-                    <div className="text-sm font-medium text-gray-700">Submitted:</div>
-                    <div className="text-sm text-gray-600">
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Submitted:</div>
+                    <div className="text-sm text-gray-600 dark:text-gray-300">
                         {new Date(exercise.submission.submittedAt).toLocaleDateString()}
                       </div>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-700">Repository:</div>
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Repository:</div>
                     <a
                         href={exercise.submission.githubUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-sm text-blue-600 hover:text-blue-800 break-all"
+                      className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 break-all"
                     >
                         {exercise.submission.githubUrl}
                     </a>
                   </div>
                   <div>
-                    <div className="text-sm font-medium text-gray-700">Status:</div>
+                    <div className="text-sm font-medium text-gray-700 dark:text-gray-300">Status:</div>
                       <div
                         className={`inline-flex items-center px-2 py-1 rounded text-xs font-medium ${
                           exercise.submission.status === 'approved'
-                        ? 'bg-green-100 text-green-800'
+                        ? 'bg-green-100 dark:bg-green-900/30 text-green-800'
                             : exercise.submission.status === 'needs_revision'
-                        ? 'bg-yellow-100 text-yellow-800'
+                        ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800'
                             : exercise.submission.status === 'rejected'
-                            ? 'bg-red-100 text-red-800'
-                        : 'bg-gray-100 text-gray-800'
+                            ? 'bg-red-100 dark:bg-red-900/20 text-red-800'
+                        : 'bg-gray-100 dark:bg-gray-700 text-gray-800'
                         }`}
                       >
                         {exercise.submission.status.charAt(0).toUpperCase() +

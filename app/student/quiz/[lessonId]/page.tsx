@@ -236,11 +236,11 @@ export default function QuizPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading quiz...</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading quiz...</span>
           </div>
         </div>
       </ProtectedRoute>
@@ -250,10 +250,10 @@ export default function QuizPage() {
   if (error && !lesson) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error}
             </div>
@@ -274,7 +274,7 @@ export default function QuizPage() {
   if (!lesson || questions.length === 0) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded-lg text-center">
@@ -305,27 +305,27 @@ export default function QuizPage() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         {/* Header */}
-        <header className="bg-white shadow-sm border-b">
+        <header className="bg-white dark:bg-gray-800 shadow-sm border-b">
           <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-between py-4">
               <div className="flex items-center space-x-4">
                 <Link
                   href={`/student/lesson/${lessonId}`}
-                  className="flex items-center text-gray-600 hover:text-blue-600 transition-colors"
+                  className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors"
                 >
                   <ArrowLeft className="h-4 w-4 mr-2" />
                   Back to Lesson
                 </Link>
                 <div className="h-6 w-px bg-gray-300" />
                 <div>
-                  <h1 className="text-xl font-semibold text-gray-900">
+                  <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                     Quiz: Lesson {lesson.number}
                   </h1>
-                  <p className="text-sm text-gray-600">{lesson.course.title}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{lesson.course.title}</p>
                 </div>
               </div>
               {!showResults && (
@@ -333,10 +333,10 @@ export default function QuizPage() {
                   <div
                     className={`flex items-center px-3 py-1.5 rounded-lg ${
                       timeRemaining < 60
-                        ? 'bg-red-100 text-red-700'
+                        ? 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
                         : timeRemaining < 300
-                        ? 'bg-yellow-100 text-yellow-700'
-                        : 'bg-blue-100 text-blue-700'
+                        ? 'bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700'
+                        : 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                     }`}
                   >
                     <Clock className="h-4 w-4 mr-2" />
@@ -381,11 +381,11 @@ export default function QuizPage() {
               </div>
 
               {/* Question Review */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                   Question {currentQuestionIndex + 1} of {questions.length}
                 </h3>
-                <h4 className="text-lg font-medium text-gray-900 mb-4">
+                <h4 className="text-lg font-medium text-gray-900 dark:text-white mb-4">
                   {currentQuestion.question}
                 </h4>
 
@@ -402,24 +402,24 @@ export default function QuizPage() {
                             ? 'border-green-500 bg-green-50'
                             : isSelected && !isCorrectOption
                             ? 'border-red-500 bg-red-50'
-                            : 'border-gray-200 bg-gray-50'
+                            : 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800'
                         }`}
                       >
                         <div className="flex items-center">
                           {isCorrectOption && (
-                            <CheckCircle className="h-5 w-5 text-green-600 mr-2" />
+                            <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400 mr-2" />
                           )}
                           {isSelected && !isCorrectOption && (
                             <XCircle className="h-5 w-5 text-red-600 mr-2" />
                           )}
-                          <span className="text-gray-900">{option}</span>
+                          <span className="text-gray-900 dark:text-white">{option}</span>
                           {isCorrectOption && (
-                            <span className="ml-auto text-sm font-medium text-green-700">
+                            <span className="ml-auto text-sm font-medium text-green-700 dark:text-green-400">
                               Correct Answer
                             </span>
                           )}
                           {isSelected && !isCorrectOption && (
-                            <span className="ml-auto text-sm font-medium text-red-700">
+                            <span className="ml-auto text-sm font-medium text-red-700 dark:text-red-400">
                               Your Answer
                             </span>
                           )}
@@ -442,12 +442,12 @@ export default function QuizPage() {
                 <button
                   onClick={handlePreviousQuestion}
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
 
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {currentQuestionIndex + 1} of {questions.length}
                 </div>
 
@@ -472,12 +472,12 @@ export default function QuizPage() {
           ) : (
             <div className="space-y-6">
               {/* Progress Bar */}
-              <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                 <div className="flex justify-between items-center mb-2">
-                  <span className="text-sm font-medium text-gray-700">Progress</span>
-                  <span className="text-sm text-gray-500">{Math.round(progress)}%</span>
+                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Progress</span>
+                  <span className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">{Math.round(progress)}%</span>
                 </div>
-                <div className="w-full bg-gray-200 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div
                     className="bg-blue-600 h-2 rounded-full transition-all duration-300"
                     style={{ width: `${progress}%` }}
@@ -486,8 +486,8 @@ export default function QuizPage() {
               </div>
 
               {/* Question */}
-              <div className="bg-white rounded-xl shadow-md p-8 border border-gray-100">
-                <h2 className="text-xl font-semibold text-gray-900 mb-6">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-8 border border-gray-100 dark:border-gray-700">
+                <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-6">
                   {currentQuestion.question}
                 </h2>
 
@@ -498,7 +498,7 @@ export default function QuizPage() {
                       className={`flex items-center p-4 border-2 rounded-lg cursor-pointer transition-colors duration-200 ${
                         selectedAnswer === index
                           ? 'border-blue-500 bg-blue-50'
-                          : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
+                          : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:bg-gray-800'
                       }`}
                     >
                       <input
@@ -513,14 +513,14 @@ export default function QuizPage() {
                         className={`w-4 h-4 rounded-full border-2 mr-3 flex items-center justify-center ${
                           selectedAnswer === index
                             ? 'border-blue-500 bg-blue-500'
-                            : 'border-gray-300'
+                            : 'border-gray-300 dark:border-gray-600'
                         }`}
                       >
                         {selectedAnswer === index && (
-                          <div className="w-2 h-2 rounded-full bg-white"></div>
+                          <div className="w-2 h-2 rounded-full bg-white dark:bg-gray-800"></div>
                         )}
                       </div>
-                      <span className="text-gray-900 flex-1">{option}</span>
+                      <span className="text-gray-900 dark:text-white flex-1">{option}</span>
                     </label>
                   ))}
                 </div>
@@ -531,12 +531,12 @@ export default function QuizPage() {
                 <button
                   onClick={handlePreviousQuestion}
                   disabled={currentQuestionIndex === 0}
-                  className="px-6 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-6 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Previous
                 </button>
 
-                <div className="text-sm text-gray-600">
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   {currentQuestionIndex + 1} of {questions.length}
                 </div>
 

@@ -84,18 +84,18 @@ export default function AdminInstructorsPage() {
 
   return (
     <ProtectedRoute requiredRole="admin">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               Instructor Approvals
             </h1>
-            <p className="text-gray-600">Review and approve pending instructor accounts</p>
+            <p className="text-gray-600 dark:text-gray-300">Review and approve pending instructor accounts</p>
           </div>
 
           {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
@@ -105,32 +105,32 @@ export default function AdminInstructorsPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : instructors.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
               <CheckCircle className="h-12 w-12 text-green-500 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">All Clear!</h3>
-              <p className="text-gray-600">No pending instructor approvals</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">All Clear!</h3>
+              <p className="text-gray-600 dark:text-gray-300">No pending instructor approvals</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {instructors.map((instructor) => (
                 <div
                   key={instructor.id}
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex items-center space-x-3">
-                      <div className="bg-blue-100 p-2 rounded-lg">
-                        <GraduationCap className="h-5 w-5 text-blue-600" />
+                      <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                        <GraduationCap className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                       </div>
                       <div>
-                        <h3 className="font-semibold text-gray-900">{instructor.name}</h3>
-                        <div className="flex items-center text-sm text-gray-500 mt-1">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">{instructor.name}</h3>
+                        <div className="flex items-center text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                           <Mail className="h-3 w-3 mr-1" />
                           {instructor.email}
                         </div>
                       </div>
                     </div>
-                    <div className="bg-yellow-100 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                    <div className="bg-yellow-100 dark:bg-yellow-900/30 text-yellow-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                       <Clock className="h-3 w-3 mr-1" />
                       Pending
                     </div>
@@ -139,13 +139,13 @@ export default function AdminInstructorsPage() {
                   {(instructor.department || instructor.title) && (
                     <div className="mb-4 space-y-2">
                       {instructor.department && (
-                        <div className="flex items-center text-sm text-gray-600">
+                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                           <Building className="h-4 w-4 mr-2" />
                           {instructor.department}
                         </div>
                       )}
                       {instructor.title && (
-                        <div className="flex items-center text-sm text-gray-600">
+                        <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                           <User className="h-4 w-4 mr-2" />
                           {instructor.title}
                         </div>
@@ -153,7 +153,7 @@ export default function AdminInstructorsPage() {
                     </div>
                   )}
 
-                  <div className="text-xs text-gray-500 mb-4">
+                  <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mb-4">
                     Registered: {new Date(instructor.createdAt).toLocaleDateString()}
                   </div>
 

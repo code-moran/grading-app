@@ -497,7 +497,7 @@ export default function InstructorCourseDetailPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="instructor">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex justify-center items-center py-12">
@@ -512,10 +512,10 @@ export default function InstructorCourseDetailPage() {
   if (!course) {
     return (
       <ProtectedRoute requiredRole="instructor">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border-l-4 border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
               {error || 'Course not found'}
             </div>
           </main>
@@ -529,7 +529,7 @@ export default function InstructorCourseDetailPage() {
 
   return (
     <ProtectedRoute requiredRole="instructor">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -537,28 +537,28 @@ export default function InstructorCourseDetailPage() {
           <div className="mb-6">
             <Link
               href="/instructor/courses"
-              className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4 transition-colors"
+              className="inline-flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:text-white mb-4 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Courses
             </Link>
             <div className="flex items-center justify-between">
               <div>
-                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                   {course.title}
                 </h1>
                 {course.description && (
-                  <p className="text-gray-600 text-lg">{course.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 text-lg">{course.description}</p>
                 )}
               </div>
               <div className="flex items-center space-x-2">
                 {course.isActive ? (
-                  <div className="bg-green-100 text-green-700 px-3 py-1.5 rounded-full text-sm font-semibold flex items-center shadow-sm">
+                  <div className="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 px-3 py-1.5 rounded-full text-sm font-semibold flex items-center shadow-sm">
                     <CheckCircle className="h-4 w-4 mr-1.5" />
                     Active
                   </div>
                 ) : (
-                  <div className="bg-gray-100 text-gray-700 px-3 py-1.5 rounded-full text-sm font-semibold flex items-center shadow-sm">
+                  <div className="bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 px-3 py-1.5 rounded-full text-sm font-semibold flex items-center shadow-sm">
                     <XCircle className="h-4 w-4 mr-1.5" />
                     Inactive
                   </div>
@@ -569,11 +569,11 @@ export default function InstructorCourseDetailPage() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border-l-4 border-red-400 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center justify-between animate-in slide-in-from-top-2">
+            <div className="bg-red-50 border-l-4 border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6 flex items-center justify-between animate-in slide-in-from-top-2">
               <span className="font-medium">{error}</span>
               <button
                 onClick={() => setError('')}
-                className="text-red-700 hover:text-red-900 p-1 rounded hover:bg-red-100 transition-colors"
+                className="text-red-700 dark:text-red-400 hover:text-red-900 p-1 rounded hover:bg-red-100 dark:bg-red-900/20 transition-colors"
               >
                 <X className="h-5 w-5" />
               </button>
@@ -617,15 +617,15 @@ export default function InstructorCourseDetailPage() {
           </div>
 
           {/* Tabs */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 mb-6">
+            <div className="border-b border-gray-200 dark:border-gray-700">
               <nav className="flex space-x-8 px-6" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('lessons')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                     activeTab === 'lessons'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -637,8 +637,8 @@ export default function InstructorCourseDetailPage() {
                   onClick={() => setActiveTab('subscribers')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                     activeTab === 'subscribers'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -650,8 +650,8 @@ export default function InstructorCourseDetailPage() {
                   onClick={() => setActiveTab('cohorts')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                     activeTab === 'cohorts'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   <span className="flex items-center gap-2">
@@ -694,13 +694,13 @@ export default function InstructorCourseDetailPage() {
                     </div>
                     {course.lessons.length > 0 && (
                       <div className="relative">
-                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                        <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                         <input
                           type="text"
                           placeholder="Search lessons..."
                           value={searchLessons}
                           onChange={(e) => setSearchLessons(e.target.value)}
-                          className="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                          className="pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         />
                       </div>
                     )}
@@ -709,7 +709,7 @@ export default function InstructorCourseDetailPage() {
                   {showAddLessons && unassignedLessons.length > 0 && (
                     <div className="p-4 bg-blue-50 rounded-lg border border-blue-200">
                       <div className="flex items-center justify-between mb-3">
-                        <h3 className="font-semibold text-gray-900">
+                        <h3 className="font-semibold text-gray-900 dark:text-white">
                           Available Lessons ({unassignedLessons.length})
                         </h3>
                         {selectedLessons.size > 0 && (
@@ -736,10 +736,10 @@ export default function InstructorCourseDetailPage() {
                         {unassignedLessons.map((lesson) => (
                           <div
                             key={lesson.id}
-                            className={`flex items-center justify-between p-3 bg-white rounded-lg border-2 transition-all ${
+                            className={`flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border-2 transition-all ${
                               selectedLessons.has(lesson.id)
                                 ? 'border-blue-500 bg-blue-50 shadow-sm'
-                                : 'border-gray-200 hover:border-gray-300'
+                                : 'border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:border-gray-600'
                             }`}
                           >
                             <div className="flex items-center space-x-3 flex-1">
@@ -747,13 +747,13 @@ export default function InstructorCourseDetailPage() {
                                 type="checkbox"
                                 checked={selectedLessons.has(lesson.id)}
                                 onChange={() => toggleLessonSelection(lesson.id)}
-                                className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                                className="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
                               />
                               <div className="flex-1">
-                                <div className="font-medium text-gray-900">
+                                <div className="font-medium text-gray-900 dark:text-white">
                                   Lesson {lesson.number}: {lesson.title}
                                 </div>
-                                <div className="text-sm text-gray-500">
+                                <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                   {lesson._count.exercises} exercises
                                 </div>
                               </div>
@@ -772,39 +772,39 @@ export default function InstructorCourseDetailPage() {
                   )}
 
                   {showAddLessons && unassignedLessons.length === 0 && (
-                    <div className="p-4 bg-gray-50 rounded-lg border border-gray-200 text-center">
-                      <p className="text-gray-600">No unassigned lessons available</p>
+                    <div className="p-4 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 text-center">
+                      <p className="text-gray-600 dark:text-gray-300">No unassigned lessons available</p>
                     </div>
                   )}
 
                   {/* Lessons List */}
                   {filteredLessons.length === 0 ? (
                     <div className="text-center py-12">
-                      <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Lessons Assigned</h3>
-                      <p className="text-gray-600">Add lessons to get started</p>
+                      <BookOpen className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Lessons Assigned</h3>
+                      <p className="text-gray-600 dark:text-gray-300">Add lessons to get started</p>
                     </div>
                   ) : (
                     <div className="space-y-3">
                       {filteredLessons.map((lesson) => (
                         <div
                           key={lesson.id}
-                          className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-sm transition-all"
+                          className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 hover:shadow-sm transition-all"
                         >
                           <div className="flex items-center justify-between">
                             <div className="flex-1">
                               <div className="flex items-center space-x-3">
-                                <div className="bg-blue-100 p-2 rounded-lg">
-                                  <BookOpen className="h-5 w-5 text-blue-600" />
+                                <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                                  <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                                 </div>
                                 <div className="flex-1">
-                                  <h3 className="font-semibold text-gray-900">
+                                  <h3 className="font-semibold text-gray-900 dark:text-white">
                                     Lesson {lesson.number}: {lesson.title}
                                   </h3>
                                   {lesson.description && (
-                                    <p className="text-sm text-gray-600 mt-1 line-clamp-1">{lesson.description}</p>
+                                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1 line-clamp-1">{lesson.description}</p>
                                   )}
-                                  <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500">
+                                  <div className="flex items-center space-x-4 mt-2 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                     <span className="flex items-center gap-1">
                                       <FileText className="h-3 w-3" />
                                       {lesson.exerciseCount} exercises
@@ -825,7 +825,7 @@ export default function InstructorCourseDetailPage() {
                             </div>
                             <Link
                               href={`/instructor/lesson/${lesson.id}`}
-                              className="ml-4 text-blue-600 hover:text-blue-700 font-medium text-sm flex items-center gap-1 transition-colors"
+                              className="ml-4 text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium text-sm flex items-center gap-1 transition-colors"
                             >
                               <Eye className="h-4 w-4" />
                               View
@@ -843,24 +843,24 @@ export default function InstructorCourseDetailPage() {
                 <div className="space-y-4">
                   {course.subscribers.length > 0 && (
                     <div className="relative mb-4">
-                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400" />
+                      <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 dark:text-gray-500" />
                       <input
                         type="text"
                         placeholder="Search subscribers by name or email..."
                         value={searchSubscribers}
                         onChange={(e) => setSearchSubscribers(e.target.value)}
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       />
                     </div>
                   )}
 
                   {filteredSubscribers.length === 0 ? (
                     <div className="text-center py-12">
-                      <Users className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                      <Users className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                         {searchSubscribers ? 'No subscribers found' : 'No Subscribers'}
                       </h3>
-                      <p className="text-gray-600">
+                      <p className="text-gray-600 dark:text-gray-300">
                         {searchSubscribers
                           ? 'Try adjusting your search terms'
                           : 'No students have subscribed to this course yet'}
@@ -868,7 +868,7 @@ export default function InstructorCourseDetailPage() {
                       {searchSubscribers && (
                         <button
                           onClick={() => setSearchSubscribers('')}
-                          className="mt-4 text-blue-600 hover:text-blue-700 font-medium text-sm"
+                          className="mt-4 text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium text-sm"
                         >
                           Clear search
                         </button>
@@ -880,23 +880,23 @@ export default function InstructorCourseDetailPage() {
                         <button
                           key={subscriber.id}
                           onClick={() => fetchStudentDetails(subscriber.id)}
-                          className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-md transition-all text-left w-full group"
+                          className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 hover:shadow-md transition-all text-left w-full group"
                         >
                           <div className="flex items-center space-x-3">
-                            <div className="bg-purple-100 p-2 rounded-lg group-hover:bg-purple-200 transition-colors">
-                              <Users className="h-5 w-5 text-purple-600" />
+                            <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg group-hover:bg-purple-200 transition-colors">
+                              <Users className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                             </div>
                             <div className="flex-1 min-w-0">
-                              <h3 className="font-semibold text-gray-900 truncate group-hover:text-blue-600 transition-colors">
+                              <h3 className="font-semibold text-gray-900 dark:text-white truncate group-hover:text-blue-600 dark:text-blue-400 transition-colors">
                                 {subscriber.name}
                               </h3>
-                              <p className="text-sm text-gray-600 truncate">{subscriber.email}</p>
-                              <div className="flex items-center mt-2 text-xs text-gray-500">
+                              <p className="text-sm text-gray-600 dark:text-gray-300 truncate">{subscriber.email}</p>
+                              <div className="flex items-center mt-2 text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                 <Clock className="h-3 w-3 mr-1" />
                                 Subscribed {new Date(subscriber.subscribedAt).toLocaleDateString()}
                               </div>
                             </div>
-                            <Eye className="h-4 w-4 text-gray-400 group-hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100" />
+                            <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:text-blue-400 transition-colors opacity-0 group-hover:opacity-100" />
                           </div>
                         </button>
                       ))}
@@ -920,9 +920,9 @@ export default function InstructorCourseDetailPage() {
 
                   {showEnrollCohort && (
                     <div className="p-4 bg-purple-50 rounded-lg border border-purple-200">
-                      <h3 className="font-semibold text-gray-900 mb-3">Available Cohorts</h3>
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Available Cohorts</h3>
                       {cohorts.length === 0 ? (
-                        <p className="text-gray-600 text-sm">No cohorts available.</p>
+                        <p className="text-gray-600 dark:text-gray-300 text-sm">No cohorts available.</p>
                       ) : (
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                           {cohorts
@@ -930,11 +930,11 @@ export default function InstructorCourseDetailPage() {
                             .map((cohort) => (
                               <div
                                 key={cohort.id}
-                                className="flex items-center justify-between p-3 bg-white rounded-lg border-2 border-gray-200 hover:border-purple-300 transition-colors"
+                                className="flex items-center justify-between p-3 bg-white dark:bg-gray-800 rounded-lg border-2 border-gray-200 dark:border-gray-700 hover:border-purple-300 transition-colors"
                               >
                                 <div>
-                                  <div className="font-medium text-gray-900">{cohort.name}</div>
-                                  <div className="text-sm text-gray-500">
+                                  <div className="font-medium text-gray-900 dark:text-white">{cohort.name}</div>
+                                  <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                                     {cohort._count?.students || 0} students
                                   </div>
                                 </div>
@@ -963,13 +963,13 @@ export default function InstructorCourseDetailPage() {
                   )}
 
                   {enrolledCohorts.length === 0 ? (
-                    <div className="text-center py-8 text-gray-500">
-                      <GraduationCap className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                    <div className="text-center py-8 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                      <GraduationCap className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                       <p>No cohorts enrolled in this course</p>
                       {cohorts.length > 0 && (
                         <button
                           onClick={() => setShowEnrollCohort(true)}
-                          className="mt-4 text-purple-600 hover:text-purple-700 font-medium"
+                          className="mt-4 text-purple-600 dark:text-purple-400 hover:text-purple-700 font-medium"
                         >
                           Enroll cohorts now
                         </button>
@@ -980,27 +980,27 @@ export default function InstructorCourseDetailPage() {
                       {enrolledCohorts.map((cohort) => (
                         <div
                           key={cohort.id}
-                          className="flex items-center justify-between p-4 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+                          className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-800 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                         >
                           <button
                             onClick={() => fetchCohortDetails(cohort.id)}
                             className="flex items-center space-x-4 flex-1 text-left group"
                           >
-                            <div className="bg-purple-100 p-2 rounded-lg group-hover:bg-purple-200 transition-colors">
-                              <GraduationCap className="h-5 w-5 text-purple-600" />
+                            <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg group-hover:bg-purple-200 transition-colors">
+                              <GraduationCap className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                             </div>
                             <div className="flex-1">
-                              <div className="font-semibold text-gray-900 group-hover:text-purple-600 transition-colors">
+                              <div className="font-semibold text-gray-900 dark:text-white group-hover:text-purple-600 dark:text-purple-400 transition-colors">
                                 {cohort.name}
                               </div>
-                              <div className="text-sm text-gray-600">
+                              <div className="text-sm text-gray-600 dark:text-gray-300">
                                 {cohort.enrolledStudents} of {cohort.totalStudents} students enrolled
                               </div>
                               {cohort.description && (
-                                <div className="text-xs text-gray-500 mt-1">{cohort.description}</div>
+                                <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">{cohort.description}</div>
                               )}
                             </div>
-                            <Eye className="h-4 w-4 text-gray-400 group-hover:text-purple-600 transition-colors opacity-0 group-hover:opacity-100" />
+                            <Eye className="h-4 w-4 text-gray-400 dark:text-gray-500 group-hover:text-purple-600 dark:text-purple-400 transition-colors opacity-0 group-hover:opacity-100" />
                           </button>
                           <button
                             onClick={(e) => {
@@ -1008,7 +1008,7 @@ export default function InstructorCourseDetailPage() {
                               handleUnenrollCohort(cohort.id);
                             }}
                             disabled={enrollingCohort === cohort.id}
-                            className="text-red-600 hover:text-red-700 text-sm font-medium flex items-center disabled:opacity-50 transition-colors ml-4"
+                            className="text-red-600 hover:text-red-700 dark:text-red-400 text-sm font-medium flex items-center disabled:opacity-50 transition-colors ml-4"
                           >
                             {enrollingCohort === cohort.id ? (
                               <>
@@ -1035,16 +1035,16 @@ export default function InstructorCourseDetailPage() {
         {/* Create Lesson Modal */}
         {showCreateLesson && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-4">
                   <div className="bg-gradient-to-br from-green-500 to-green-600 p-3 rounded-xl">
                     <Plus className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">Create New Lesson</h2>
-                    <p className="text-sm text-gray-600 mt-1">{course?.title}</p>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Create New Lesson</h2>
+                    <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{course?.title}</p>
                   </div>
                 </div>
                 <button
@@ -1058,9 +1058,9 @@ export default function InstructorCourseDetailPage() {
                     });
                     setError('');
                   }}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                 >
-                  <X className="h-5 w-5 text-gray-600" />
+                  <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                 </button>
               </div>
 
@@ -1068,7 +1068,7 @@ export default function InstructorCourseDetailPage() {
               <div className="flex-1 overflow-y-auto p-6">
                 <div className="space-y-4">
                   <div>
-                    <label htmlFor="lesson-number" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="lesson-number" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Lesson Number <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -1076,18 +1076,18 @@ export default function InstructorCourseDetailPage() {
                       id="lesson-number"
                       value={newLesson.number}
                       onChange={(e) => setNewLesson({ ...newLesson, number: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Enter lesson number"
                       min="1"
                       required
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                       Suggested: {getNextLessonNumber()} (based on existing lessons)
                     </p>
                   </div>
 
                   <div>
-                    <label htmlFor="lesson-title" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="lesson-title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Lesson Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -1095,28 +1095,28 @@ export default function InstructorCourseDetailPage() {
                       id="lesson-title"
                       value={newLesson.title}
                       onChange={(e) => setNewLesson({ ...newLesson, title: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Enter lesson title"
                       required
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="lesson-description" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="lesson-description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Description
                     </label>
                     <textarea
                       id="lesson-description"
                       value={newLesson.description}
                       onChange={(e) => setNewLesson({ ...newLesson, description: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Enter lesson description (optional)"
                       rows={4}
                     />
                   </div>
 
                   <div>
-                    <label htmlFor="lesson-duration" className="block text-sm font-medium text-gray-700 mb-2">
+                    <label htmlFor="lesson-duration" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Duration
                     </label>
                     <input
@@ -1124,7 +1124,7 @@ export default function InstructorCourseDetailPage() {
                       id="lesson-duration"
                       value={newLesson.duration}
                       onChange={(e) => setNewLesson({ ...newLesson, duration: e.target.value })}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="e.g., 1 hour, 2 hours, 45 minutes"
                     />
                   </div>
@@ -1132,7 +1132,7 @@ export default function InstructorCourseDetailPage() {
               </div>
 
               {/* Modal Footer */}
-              <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200">
+              <div className="flex items-center justify-end gap-3 p-6 border-t border-gray-200 dark:border-gray-700">
                 <button
                   onClick={() => {
                     setShowCreateLesson(false);
@@ -1144,7 +1144,7 @@ export default function InstructorCourseDetailPage() {
                     });
                     setError('');
                   }}
-                  className="px-4 py-2 text-gray-700 bg-gray-100 rounded-lg font-medium hover:bg-gray-200 transition-colors"
+                  className="px-4 py-2 text-gray-700 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-lg font-medium hover:bg-gray-200 dark:bg-gray-700 transition-colors"
                 >
                   Cancel
                 </button>
@@ -1173,19 +1173,19 @@ export default function InstructorCourseDetailPage() {
         {/* Student Details Modal */}
         {selectedStudentId && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-hidden flex flex-col">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-4">
                   <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-3 rounded-xl">
                     <User className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                       {loadingStudentDetails ? 'Loading...' : studentDetails?.student.name || 'Student Details'}
                     </h2>
                     {studentDetails && (
-                      <p className="text-sm text-gray-600 mt-1">{studentDetails.course.title}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{studentDetails.course.title}</p>
                     )}
                   </div>
                 </div>
@@ -1194,9 +1194,9 @@ export default function InstructorCourseDetailPage() {
                     setSelectedStudentId(null);
                     setStudentDetails(null);
                   }}
-                  className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                  className="p-2 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                 >
-                  <X className="h-5 w-5 text-gray-600" />
+                  <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                 </button>
               </div>
 
@@ -1209,14 +1209,14 @@ export default function InstructorCourseDetailPage() {
                 ) : studentDetails ? (
                   <>
                     {/* Tabs */}
-                    <div className="border-b border-gray-200 px-6">
+                    <div className="border-b border-gray-200 dark:border-gray-700 px-6">
                       <nav className="flex space-x-6" aria-label="Tabs">
                         <button
                           onClick={() => setModalActiveTab('overview')}
                           className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                             modalActiveTab === 'overview'
-                              ? 'border-blue-500 text-blue-600'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                              ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                              : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                           }`}
                         >
                           <span className="flex items-center gap-2">
@@ -1228,8 +1228,8 @@ export default function InstructorCourseDetailPage() {
                           onClick={() => setModalActiveTab('grades')}
                           className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                             modalActiveTab === 'grades'
-                              ? 'border-blue-500 text-blue-600'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                              ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                              : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                           }`}
                         >
                           <span className="flex items-center gap-2">
@@ -1241,8 +1241,8 @@ export default function InstructorCourseDetailPage() {
                           onClick={() => setModalActiveTab('quizzes')}
                           className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                             modalActiveTab === 'quizzes'
-                              ? 'border-blue-500 text-blue-600'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                              ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                              : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                           }`}
                         >
                           <span className="flex items-center gap-2">
@@ -1254,8 +1254,8 @@ export default function InstructorCourseDetailPage() {
                           onClick={() => setModalActiveTab('submissions')}
                           className={`py-4 px-1 border-b-2 font-medium text-sm transition-colors ${
                             modalActiveTab === 'submissions'
-                              ? 'border-blue-500 text-blue-600'
-                              : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                              ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                              : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                           }`}
                         >
                           <span className="flex items-center gap-2">
@@ -1271,31 +1271,31 @@ export default function InstructorCourseDetailPage() {
                       {modalActiveTab === 'overview' && (
                         <div className="space-y-6">
                           {/* Student Info */}
-                          <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                            <h3 className="font-semibold text-gray-900 mb-3">Student Information</h3>
+                          <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                            <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Student Information</h3>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                               <div className="flex items-center gap-2">
-                                <Mail className="h-4 w-4 text-gray-500" />
-                                <span className="text-sm text-gray-600">{studentDetails.student.email}</span>
+                                <Mail className="h-4 w-4 text-gray-500 dark:text-gray-400 dark:text-gray-500" />
+                                <span className="text-sm text-gray-600 dark:text-gray-300">{studentDetails.student.email}</span>
                               </div>
                               <div className="flex items-center gap-2">
-                                <User className="h-4 w-4 text-gray-500" />
-                                <span className="text-sm text-gray-600">
+                                <User className="h-4 w-4 text-gray-500 dark:text-gray-400 dark:text-gray-500" />
+                                <span className="text-sm text-gray-600 dark:text-gray-300">
                                   Reg: {studentDetails.student.registrationNumber}
                                 </span>
                               </div>
                               {studentDetails.student.cohort && (
                                 <div className="flex items-center gap-2">
-                                  <GraduationCap className="h-4 w-4 text-gray-500" />
-                                  <span className="text-sm text-gray-600">
+                                  <GraduationCap className="h-4 w-4 text-gray-500 dark:text-gray-400 dark:text-gray-500" />
+                                  <span className="text-sm text-gray-600 dark:text-gray-300">
                                     Cohort: {studentDetails.student.cohort.name}
                                   </span>
                                 </div>
                               )}
                               {studentDetails.student.subscribedAt && (
                                 <div className="flex items-center gap-2">
-                                  <Calendar className="h-4 w-4 text-gray-500" />
-                                  <span className="text-sm text-gray-600">
+                                  <Calendar className="h-4 w-4 text-gray-500 dark:text-gray-400 dark:text-gray-500" />
+                                  <span className="text-sm text-gray-600 dark:text-gray-300">
                                     Enrolled: {new Date(studentDetails.student.subscribedAt).toLocaleDateString()}
                                   </span>
                                 </div>
@@ -1307,51 +1307,51 @@ export default function InstructorCourseDetailPage() {
                           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                             <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                               <div className="flex items-center justify-between mb-2">
-                                <Target className="h-5 w-5 text-blue-600" />
+                                <Target className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                               </div>
                               <div className="text-2xl font-bold text-blue-900">
                                 {studentDetails.stats.completionPercentage}%
                               </div>
-                              <div className="text-xs text-blue-600 font-medium">Course Progress</div>
+                              <div className="text-xs text-blue-600 dark:text-blue-400 font-medium">Course Progress</div>
                             </div>
                             <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                               <div className="flex items-center justify-between mb-2">
-                                <Trophy className="h-5 w-5 text-green-600" />
+                                <Trophy className="h-5 w-5 text-green-600 dark:text-green-400" />
                               </div>
                               <div className="text-2xl font-bold text-green-900">
                                 {studentDetails.stats.averageGrade}%
                               </div>
-                              <div className="text-xs text-green-600 font-medium">Average Grade</div>
+                              <div className="text-xs text-green-600 dark:text-green-400 font-medium">Average Grade</div>
                             </div>
                             <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                               <div className="flex items-center justify-between mb-2">
-                                <CheckCircle className="h-5 w-5 text-purple-600" />
+                                <CheckCircle className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                               </div>
                               <div className="text-2xl font-bold text-purple-900">
                                 {studentDetails.stats.completedLessons}/{studentDetails.stats.totalLessons}
                               </div>
-                              <div className="text-xs text-purple-600 font-medium">Lessons Completed</div>
+                              <div className="text-xs text-purple-600 dark:text-purple-400 font-medium">Lessons Completed</div>
                             </div>
                             <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
                               <div className="flex items-center justify-between mb-2">
-                                <FileText className="h-5 w-5 text-orange-600" />
+                                <FileText className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                               </div>
                               <div className="text-2xl font-bold text-orange-900">
                                 {studentDetails.stats.totalGrades}
                               </div>
-                              <div className="text-xs text-orange-600 font-medium">Total Grades</div>
+                              <div className="text-xs text-orange-600 dark:text-orange-400 font-medium">Total Grades</div>
                             </div>
                           </div>
 
                           {/* Progress Bar */}
-                          <div className="bg-white rounded-lg p-4 border border-gray-200">
+                          <div className="bg-white dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                             <div className="flex items-center justify-between mb-2">
-                              <span className="text-sm font-medium text-gray-700">Course Progress</span>
-                              <span className="text-sm font-semibold text-gray-900">
+                              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Course Progress</span>
+                              <span className="text-sm font-semibold text-gray-900 dark:text-white">
                                 {studentDetails.stats.completedLessons} of {studentDetails.stats.totalLessons} lessons
                               </span>
                             </div>
-                            <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                               <div
                                 className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-500"
                                 style={{ width: `${studentDetails.stats.completionPercentage}%` }}
@@ -1369,41 +1369,41 @@ export default function InstructorCourseDetailPage() {
                                 <Link
                                   key={grade.id}
                                   href={`/instructor/exercise/${grade.exerciseId}/grade?studentId=${studentDetails.student.id}`}
-                                  className="block border border-gray-200 rounded-lg p-3 hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group"
+                                  className="block border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group"
                                 >
                                   <div className="flex items-center justify-between">
                                     <div className="flex-1">
-                                      <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                                      <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:text-blue-400 transition-colors">
                                         Lesson {grade.lesson.number}: {grade.lesson.title}
                                       </div>
-                                      <div className="text-sm text-gray-600 mt-1">
+                                      <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                                         {grade.exercise.title}
                                       </div>
                                       {grade.feedback && (
-                                        <div className="text-xs text-gray-500 mt-1 italic line-clamp-1">
+                                        <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1 italic line-clamp-1">
                                           "{grade.feedback}"
                                         </div>
                                       )}
                                     </div>
                                     <div className="flex items-center gap-3 ml-4">
                                       <div className="text-right">
-                                        <div className="text-lg font-bold text-gray-900">
+                                        <div className="text-lg font-bold text-gray-900 dark:text-white">
                                           {grade.percentage}%
                                         </div>
-                                        <div className="text-xs text-gray-500">{grade.letterGrade}</div>
-                                        <div className="text-xs text-gray-400 mt-1">
+                                        <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{grade.letterGrade}</div>
+                                        <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                                           {new Date(grade.gradedAt).toLocaleDateString()}
                                         </div>
                                       </div>
-                                      <Eye className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100" />
+                                      <Eye className="h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:text-blue-400 transition-colors opacity-0 group-hover:opacity-100" />
                                     </div>
                                   </div>
                                 </Link>
                               ))}
                             </div>
                           ) : (
-                            <div className="text-center py-12 text-gray-500">
-                              <Award className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                            <div className="text-center py-12 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                              <Award className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                               <p>No grades recorded yet</p>
                             </div>
                           )}
@@ -1417,27 +1417,27 @@ export default function InstructorCourseDetailPage() {
                               {studentDetails.quizAttempts.map((attempt) => (
                                 <div
                                   key={attempt.id}
-                                  className="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors"
+                                  className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-blue-300 transition-colors"
                                 >
                                   <div className="flex items-center justify-between">
                                     <div>
-                                      <div className="font-medium text-gray-900">
+                                      <div className="font-medium text-gray-900 dark:text-white">
                                         Lesson {attempt.lesson.number}: {attempt.lesson.title}
                                       </div>
-                                      <div className="text-xs text-gray-500 mt-1">
+                                      <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                                         {new Date(attempt.createdAt).toLocaleDateString()}
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-2">
                                       <div className={`px-3 py-1 rounded-full text-sm font-medium ${
                                         attempt.passed
-                                          ? 'bg-green-100 text-green-700'
-                                          : 'bg-red-100 text-red-700'
+                                          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                                          : 'bg-red-100 dark:bg-red-900/20 text-red-700 dark:text-red-400'
                                       }`}>
                                         {attempt.score}%
                                       </div>
                                       {attempt.passed ? (
-                                        <CheckCircle className="h-5 w-5 text-green-600" />
+                                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                                       ) : (
                                         <XCircle className="h-5 w-5 text-red-600" />
                                       )}
@@ -1447,8 +1447,8 @@ export default function InstructorCourseDetailPage() {
                               ))}
                             </div>
                           ) : (
-                            <div className="text-center py-12 text-gray-500">
-                              <HelpCircle className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                            <div className="text-center py-12 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                              <HelpCircle className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                               <p>No quiz attempts recorded yet</p>
                             </div>
                           )}
@@ -1463,39 +1463,39 @@ export default function InstructorCourseDetailPage() {
                                 <Link
                                   key={submission.id}
                                   href={`/instructor/exercise/${submission.exercise.id}/grade?studentId=${studentDetails.student.id}`}
-                                  className="block border border-gray-200 rounded-lg p-3 hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group"
+                                  className="block border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-blue-300 hover:bg-blue-50 transition-all cursor-pointer group"
                                 >
                                   <div className="flex items-center justify-between">
                                     <div className="flex-1">
-                                      <div className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">
+                                      <div className="font-medium text-gray-900 dark:text-white group-hover:text-blue-600 dark:text-blue-400 transition-colors">
                                         Lesson {submission.exercise.lesson.number}: {submission.exercise.lesson.title}
                                       </div>
-                                      <div className="text-sm text-gray-600 mt-1">
+                                      <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                                         {submission.exercise.title}
                                       </div>
-                                      <div className="text-xs text-gray-500 mt-1">
+                                      <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                                         {new Date(submission.submittedAt).toLocaleDateString()}
                                       </div>
                                     </div>
                                     <div className="flex items-center gap-3 ml-4">
                                       <div className={`px-3 py-1 rounded-full text-xs font-medium ${
                                         submission.status === 'submitted'
-                                          ? 'bg-blue-100 text-blue-700'
+                                          ? 'bg-blue-100 dark:bg-blue-900/30 text-blue-700'
                                           : submission.status === 'graded'
-                                          ? 'bg-green-100 text-green-700'
-                                          : 'bg-gray-100 text-gray-700'
+                                          ? 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                                          : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
                                       }`}>
                                         {submission.status}
                                       </div>
-                                      <Eye className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors opacity-0 group-hover:opacity-100" />
+                                      <Eye className="h-5 w-5 text-gray-400 dark:text-gray-500 group-hover:text-blue-600 dark:text-blue-400 transition-colors opacity-0 group-hover:opacity-100" />
                                     </div>
                                   </div>
                                 </Link>
                               ))}
                             </div>
                           ) : (
-                            <div className="text-center py-12 text-gray-500">
-                              <Code className="h-12 w-12 mx-auto mb-3 text-gray-400" />
+                            <div className="text-center py-12 text-gray-500 dark:text-gray-400 dark:text-gray-500">
+                              <Code className="h-12 w-12 mx-auto mb-3 text-gray-400 dark:text-gray-500" />
                               <p>No exercise submissions recorded yet</p>
                             </div>
                           )}
@@ -1504,7 +1504,7 @@ export default function InstructorCourseDetailPage() {
                     </div>
                   </>
                 ) : (
-                  <div className="flex-1 flex items-center justify-center py-12 text-gray-500">
+                  <div className="flex-1 flex items-center justify-center py-12 text-gray-500 dark:text-gray-400 dark:text-gray-500">
                     <p>Failed to load student details</p>
                   </div>
                 )}
@@ -1516,19 +1516,19 @@ export default function InstructorCourseDetailPage() {
         {/* Cohort Details Modal */}
         {selectedCohortId && (
           <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-6xl w-full max-h-[90vh] overflow-hidden flex flex-col">
               {/* Modal Header */}
-              <div className="flex items-center justify-between p-6 border-b border-gray-200">
+              <div className="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-700">
                 <div className="flex items-center gap-4">
                   <div className="bg-gradient-to-br from-purple-500 to-indigo-600 p-3 rounded-xl">
                     <GraduationCap className="h-6 w-6 text-white" />
                   </div>
                   <div>
-                    <h2 className="text-2xl font-bold text-gray-900">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                       {loadingCohortDetails ? 'Loading...' : cohortDetails?.cohort.name || 'Cohort Details'}
                     </h2>
                     {cohortDetails && (
-                      <p className="text-sm text-gray-600 mt-1">{cohortDetails.course.title}</p>
+                      <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{cohortDetails.course.title}</p>
                     )}
                   </div>
                 </div>
@@ -1547,9 +1547,9 @@ export default function InstructorCourseDetailPage() {
                       setSelectedCohortId(null);
                       setCohortDetails(null);
                     }}
-                    className="p-2 rounded-lg hover:bg-gray-100 transition-colors"
+                    className="p-2 rounded-lg hover:bg-gray-100 dark:bg-gray-700 transition-colors"
                   >
-                    <X className="h-5 w-5 text-gray-600" />
+                    <X className="h-5 w-5 text-gray-600 dark:text-gray-300" />
                   </button>
                 </div>
               </div>
@@ -1563,22 +1563,22 @@ export default function InstructorCourseDetailPage() {
                 ) : cohortDetails ? (
                   <div className="space-y-6">
                     {/* Cohort Info */}
-                    <div className="bg-gray-50 rounded-lg p-4 border border-gray-200">
-                      <h3 className="font-semibold text-gray-900 mb-3">Cohort Information</h3>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-3">Cohort Information</h3>
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div>
-                          <span className="text-sm text-gray-600">Name:</span>
-                          <p className="font-medium text-gray-900">{cohortDetails.cohort.name}</p>
+                          <span className="text-sm text-gray-600 dark:text-gray-300">Name:</span>
+                          <p className="font-medium text-gray-900 dark:text-white">{cohortDetails.cohort.name}</p>
                         </div>
                         {cohortDetails.cohort.description && (
                           <div>
-                            <span className="text-sm text-gray-600">Description:</span>
-                            <p className="font-medium text-gray-900">{cohortDetails.cohort.description}</p>
+                            <span className="text-sm text-gray-600 dark:text-gray-300">Description:</span>
+                            <p className="font-medium text-gray-900 dark:text-white">{cohortDetails.cohort.description}</p>
                           </div>
                         )}
                         <div>
-                          <span className="text-sm text-gray-600">Status:</span>
-                          <p className="font-medium text-gray-900">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">Status:</span>
+                          <p className="font-medium text-gray-900 dark:text-white">
                             {cohortDetails.cohort.isActive ? 'Active' : 'Inactive'}
                           </p>
                         </div>
@@ -1589,101 +1589,101 @@ export default function InstructorCourseDetailPage() {
                     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                       <div className="bg-blue-50 rounded-lg p-4 border border-blue-200">
                         <div className="flex items-center justify-between mb-2">
-                          <Users className="h-5 w-5 text-blue-600" />
+                          <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         </div>
                         <div className="text-2xl font-bold text-blue-900">
                           {cohortDetails.stats.totalStudents}
                         </div>
-                        <div className="text-xs text-blue-600 font-medium">Total Students</div>
+                        <div className="text-xs text-blue-600 dark:text-blue-400 font-medium">Total Students</div>
                       </div>
                       <div className="bg-green-50 rounded-lg p-4 border border-green-200">
                         <div className="flex items-center justify-between mb-2">
-                          <Trophy className="h-5 w-5 text-green-600" />
+                          <Trophy className="h-5 w-5 text-green-600 dark:text-green-400" />
                         </div>
                         <div className="text-2xl font-bold text-green-900">
                           {cohortDetails.stats.averageGrade}%
                         </div>
-                        <div className="text-xs text-green-600 font-medium">Average Grade</div>
+                        <div className="text-xs text-green-600 dark:text-green-400 font-medium">Average Grade</div>
                       </div>
                       <div className="bg-purple-50 rounded-lg p-4 border border-purple-200">
                         <div className="flex items-center justify-between mb-2">
-                          <CheckCircle className="h-5 w-5 text-purple-600" />
+                          <CheckCircle className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                         </div>
                         <div className="text-2xl font-bold text-purple-900">
                           {cohortDetails.stats.studentsWithGrades}
                         </div>
-                        <div className="text-xs text-purple-600 font-medium">Students Graded</div>
+                        <div className="text-xs text-purple-600 dark:text-purple-400 font-medium">Students Graded</div>
                       </div>
                       <div className="bg-orange-50 rounded-lg p-4 border border-orange-200">
                         <div className="flex items-center justify-between mb-2">
-                          <FileText className="h-5 w-5 text-orange-600" />
+                          <FileText className="h-5 w-5 text-orange-600 dark:text-orange-400" />
                         </div>
                         <div className="text-2xl font-bold text-orange-900">
                           {cohortDetails.stats.totalGrades}
                         </div>
-                        <div className="text-xs text-orange-600 font-medium">Total Grades</div>
+                        <div className="text-xs text-orange-600 dark:text-orange-400 font-medium">Total Grades</div>
                       </div>
                     </div>
 
                     {/* Students Table */}
                     <div>
-                      <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                        <Users className="h-5 w-5 text-blue-600" />
+                      <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                        <Users className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         Students ({cohortDetails.students.length})
                       </h3>
-                      <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
+                      <div className="bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 overflow-hidden">
                         <div className="overflow-x-auto">
                           <table className="min-w-full divide-y divide-gray-200">
-                            <thead className="bg-gray-50">
+                            <thead className="bg-gray-50 dark:bg-gray-800">
                               <tr>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Name
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Registration
                                 </th>
-                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Email
                                 </th>
-                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Grades
                                 </th>
-                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Avg Grade
                                 </th>
-                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                <th className="px-6 py-3 text-center text-xs font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500 uppercase tracking-wider">
                                   Lessons
                                 </th>
                               </tr>
                             </thead>
-                            <tbody className="bg-white divide-y divide-gray-200">
+                            <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                               {cohortDetails.students.map((student: any) => (
-                                <tr key={student.studentId} className="hover:bg-gray-50">
+                                <tr key={student.studentId} className="hover:bg-gray-50 dark:bg-gray-800">
                                   <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm font-medium text-gray-900">{student.name}</div>
+                                    <div className="text-sm font-medium text-gray-900 dark:text-white">{student.name}</div>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-600">{student.registrationNumber}</div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-300">{student.registrationNumber}</div>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap">
-                                    <div className="text-sm text-gray-600">{student.email || '-'}</div>
+                                    <div className="text-sm text-gray-600 dark:text-gray-300">{student.email || '-'}</div>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-center">
-                                    <div className="text-sm font-medium text-gray-900">{student.totalGrades}</div>
+                                    <div className="text-sm font-medium text-gray-900 dark:text-white">{student.totalGrades}</div>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-center">
                                     <div className={`text-sm font-bold ${
                                       student.averageGrade >= 70
-                                        ? 'text-green-600'
+                                        ? 'text-green-600 dark:text-green-400'
                                         : student.averageGrade >= 50
-                                        ? 'text-yellow-600'
+                                        ? 'text-yellow-600 dark:text-yellow-400'
                                         : 'text-red-600'
                                     }`}>
                                       {student.averageGrade > 0 ? `${student.averageGrade}%` : '-'}
                                     </div>
                                   </td>
                                   <td className="px-6 py-4 whitespace-nowrap text-center">
-                                    <div className="text-sm text-gray-600">
+                                    <div className="text-sm text-gray-600 dark:text-gray-300">
                                       {student.completedLessons}/{cohortDetails.stats.totalLessons}
                                     </div>
                                   </td>
@@ -1698,34 +1698,34 @@ export default function InstructorCourseDetailPage() {
                     {/* Recent Grades */}
                     {cohortDetails.grades.length > 0 && (
                       <div>
-                        <h3 className="font-semibold text-gray-900 mb-3 flex items-center gap-2">
-                          <Award className="h-5 w-5 text-yellow-600" />
+                        <h3 className="font-semibold text-gray-900 dark:text-white mb-3 flex items-center gap-2">
+                          <Award className="h-5 w-5 text-yellow-600 dark:text-yellow-400" />
                           Recent Grades ({cohortDetails.grades.length})
                         </h3>
                         <div className="space-y-2 max-h-64 overflow-y-auto">
                           {cohortDetails.grades.slice(0, 10).map((grade: any) => (
                             <div
                               key={grade.id}
-                              className="border border-gray-200 rounded-lg p-3 hover:border-blue-300 transition-colors"
+                              className="border border-gray-200 dark:border-gray-700 rounded-lg p-3 hover:border-blue-300 transition-colors"
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex-1">
-                                  <div className="font-medium text-gray-900">
+                                  <div className="font-medium text-gray-900 dark:text-white">
                                     {grade.studentName} ({grade.studentRegistration})
                                   </div>
-                                  <div className="text-sm text-gray-600 mt-1">
+                                  <div className="text-sm text-gray-600 dark:text-gray-300 mt-1">
                                     Lesson {grade.lessonNumber}: {grade.lessonTitle}
                                   </div>
-                                  <div className="text-xs text-gray-500 mt-1">
+                                  <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                                     {grade.exerciseTitle}
                                   </div>
                                 </div>
                                 <div className="text-right ml-4">
-                                  <div className="text-lg font-bold text-gray-900">
+                                  <div className="text-lg font-bold text-gray-900 dark:text-white">
                                     {grade.percentage}%
                                   </div>
-                                  <div className="text-xs text-gray-500">{grade.letterGrade}</div>
-                                  <div className="text-xs text-gray-400 mt-1">
+                                  <div className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500">{grade.letterGrade}</div>
+                                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-1">
                                     {new Date(grade.gradedAt).toLocaleDateString()}
                                   </div>
                                 </div>
@@ -1737,7 +1737,7 @@ export default function InstructorCourseDetailPage() {
                     )}
                   </div>
                 ) : (
-                  <div className="text-center py-12 text-gray-500">
+                  <div className="text-center py-12 text-gray-500 dark:text-gray-400 dark:text-gray-500">
                     <p>Failed to load cohort details</p>
                   </div>
                 )}

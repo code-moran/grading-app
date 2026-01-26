@@ -215,36 +215,36 @@ export default function CohortsPage() {
 
   return (
     <ProtectedRoute requiredRole={['instructor', 'admin']}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Cohort Management</h1>
-            <p className="text-gray-600">Create and manage student cohorts</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">Cohort Management</h1>
+            <p className="text-gray-600 dark:text-gray-300">Create and manage student cohorts</p>
           </div>
 
           {/* Success/Error Messages */}
           {success && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+            <div className="bg-green-50 border border-green-200 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6 flex items-center">
               <CheckCircle className="h-5 w-5 mr-2" />
               {success}
             </div>
           )}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6 flex items-center">
               <AlertCircle className="h-5 w-5 mr-2" />
               {error}
             </div>
           )}
 
           {/* Actions Bar */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
               <div className="flex-1 flex flex-col md:flex-row gap-4 w-full md:w-auto">
                 <div className="relative flex-1">
-                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-5 w-5" />
                   <input
                     type="text"
                     placeholder="Search cohorts..."
@@ -254,11 +254,11 @@ export default function CohortsPage() {
                   />
                 </div>
                 <div className="relative">
-                  <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                  <Filter className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-5 w-5" />
                   <select
                     value={filterActive}
                     onChange={(e) => setFilterActive(e.target.value)}
-                    className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white min-w-[150px]"
+                    className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white dark:bg-gray-800 min-w-[150px]"
                   >
                     <option value="all">All Cohorts</option>
                     <option value="active">Active Only</option>
@@ -282,19 +282,19 @@ export default function CohortsPage() {
           {/* Add/Edit Form Modal */}
           {(showAddForm || editingCohort) && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {editingCohort ? 'Edit Cohort' : 'Create New Cohort'}
                   </h2>
-                  <button onClick={resetForm} className="text-gray-400 hover:text-gray-600">
+                  <button onClick={resetForm} className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300">
                     <X className="h-6 w-6" />
                   </button>
                 </div>
 
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Cohort Name <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -308,7 +308,7 @@ export default function CohortsPage() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
                     <textarea
                       value={formData.description}
                       onChange={(e) => setFormData({ ...formData, description: e.target.value })}
@@ -320,7 +320,7 @@ export default function CohortsPage() {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Start Date</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Start Date</label>
                       <input
                         type="date"
                         value={formData.startDate}
@@ -329,7 +329,7 @@ export default function CohortsPage() {
                       />
                     </div>
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">End Date</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">End Date</label>
                       <input
                         type="date"
                         value={formData.endDate}
@@ -345,9 +345,9 @@ export default function CohortsPage() {
                       id="isActive"
                       checked={formData.isActive}
                       onChange={(e) => setFormData({ ...formData, isActive: e.target.checked })}
-                      className="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 rounded"
+                      className="h-4 w-4 text-blue-600 dark:text-blue-400 focus:ring-blue-500 border-gray-300 rounded"
                     />
-                    <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700">
+                    <label htmlFor="isActive" className="ml-2 block text-sm text-gray-700 dark:text-gray-300">
                       Active (cohort is currently in use)
                     </label>
                   </div>
@@ -362,7 +362,7 @@ export default function CohortsPage() {
                     </button>
                     <button
                       onClick={resetForm}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
                     >
                       Cancel
                     </button>
@@ -378,10 +378,10 @@ export default function CohortsPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredCohorts.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
-              <Users className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No cohorts found</h3>
-              <p className="text-gray-600 mb-4">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
+              <Users className="h-16 w-16 mx-auto mb-4 text-gray-400 dark:text-gray-500" />
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No cohorts found</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {searchTerm || filterActive !== 'all'
                   ? 'Try adjusting your search or filter criteria'
                   : 'Get started by creating your first cohort'}
@@ -404,27 +404,27 @@ export default function CohortsPage() {
               {filteredCohorts.map((cohort) => (
                 <div
                   key={cohort.id}
-                  className={`bg-white rounded-xl shadow-md p-6 border-2 transition-all hover:shadow-lg ${
-                    cohort.isActive ? 'border-blue-200' : 'border-gray-200 opacity-75'
+                  className={`bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border-2 transition-all hover:shadow-lg ${
+                    cohort.isActive ? 'border-blue-200' : 'border-gray-200 dark:border-gray-700 opacity-75'
                   }`}
                 >
                   <div className="flex items-start justify-between mb-4">
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-gray-900 mb-1">{cohort.name}</h3>
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{cohort.name}</h3>
                       {cohort.description && (
-                        <p className="text-sm text-gray-600 mb-2">{cohort.description}</p>
+                        <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{cohort.description}</p>
                       )}
                       <div className="flex items-center gap-2 mb-2">
                         {cohort.isActive ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 dark:bg-green-900/30 text-green-800">
                             Active
                           </span>
                         ) : (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 dark:bg-gray-700 text-gray-800">
                             Inactive
                           </span>
                         )}
-                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                        <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800">
                           <Users className="h-3 w-3 mr-1" />
                           {cohort._count?.students || 0} students
                         </span>
@@ -433,7 +433,7 @@ export default function CohortsPage() {
                   </div>
 
                   {(cohort.startDate || cohort.endDate) && (
-                    <div className="mb-4 space-y-1 text-sm text-gray-600">
+                    <div className="mb-4 space-y-1 text-sm text-gray-600 dark:text-gray-300">
                       {cohort.startDate && (
                         <div className="flex items-center">
                           <Calendar className="h-4 w-4 mr-2" />
@@ -449,10 +449,10 @@ export default function CohortsPage() {
                     </div>
                   )}
 
-                  <div className="flex gap-2 pt-4 border-t border-gray-200">
+                  <div className="flex gap-2 pt-4 border-t border-gray-200 dark:border-gray-700">
                     <button
                       onClick={() => startEdit(cohort)}
-                      className="flex-1 flex items-center justify-center px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium"
+                      className="flex-1 flex items-center justify-center px-3 py-2 text-blue-600 dark:text-blue-400 hover:bg-blue-50 rounded-lg transition-colors text-sm font-medium"
                     >
                       <Edit className="h-4 w-4 mr-1" />
                       Edit

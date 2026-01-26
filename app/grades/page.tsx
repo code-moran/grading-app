@@ -110,12 +110,12 @@ export default function GradesPage() {
 
   const getGradeColor = (letterGrade: string) => {
     switch (letterGrade) {
-      case 'A': return 'text-green-600 bg-green-100';
-      case 'B': return 'text-blue-600 bg-blue-100';
+      case 'A': return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30';
+      case 'B': return 'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30';
       case 'C': return 'text-yellow-600 bg-yellow-100';
       case 'D': return 'text-orange-600 bg-orange-100';
-      case 'F': return 'text-red-600 bg-red-100';
-      default: return 'text-gray-600 bg-gray-100';
+      case 'F': return 'text-red-600 bg-red-100 dark:bg-red-900/20';
+      default: return 'text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700';
     }
   };
 
@@ -132,14 +132,14 @@ export default function GradesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b">
+      <header className="bg-white dark:bg-gray-800 shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Grades Overview</h1>
-              <p className="text-sm text-gray-600">View and analyze student performance</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Grades Overview</h1>
+              <p className="text-sm text-gray-600 dark:text-gray-300">View and analyze student performance</p>
             </div>
             <div className="flex items-center space-x-4">
               <button
@@ -149,7 +149,7 @@ export default function GradesPage() {
                 <Download className="h-4 w-4 mr-2" />
                 Download Grades
               </button>
-              <Link href="/" className="text-gray-600 hover:text-blue-600">
+              <Link href="/" className="text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400">
                 Back to Dashboard
               </Link>
             </div>
@@ -160,12 +160,12 @@ export default function GradesPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Error Message */}
         {error && (
-          <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+          <div className="bg-red-100 dark:bg-red-900/20 border border-red-400 text-red-700 dark:text-red-400 px-4 py-3 rounded mb-6">
             <div className="flex justify-between items-center">
               <span>{error}</span>
               <button
                 onClick={() => setError(null)}
-                className="text-red-700 hover:text-red-900"
+                className="text-red-700 dark:text-red-400 hover:text-red-900"
               >
                 ×
               </button>
@@ -177,7 +177,7 @@ export default function GradesPage() {
         {loading && (
           <div className="flex justify-center items-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading grades...</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading grades...</span>
           </div>
         )}
 
@@ -185,7 +185,7 @@ export default function GradesPage() {
         {!loading && (
           <>
             {/* Filters */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Lesson</label>
@@ -222,52 +222,52 @@ export default function GradesPage() {
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
-              <div className="bg-blue-100 p-3 rounded-lg">
-                <BarChart3 className="h-6 w-6 text-blue-600" />
+              <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                <BarChart3 className="h-6 w-6 text-blue-600 dark:text-blue-400" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Grades</p>
-                <p className="text-2xl font-bold text-gray-900">{filteredGrades.length}</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Total Grades</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{filteredGrades.length}</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
-              <div className="bg-green-100 p-3 rounded-lg">
-                <TrendingUp className="h-6 w-6 text-green-600" />
+              <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                <TrendingUp className="h-6 w-6 text-green-600 dark:text-green-400" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Average Grade</p>
-                <p className="text-2xl font-bold text-gray-900">{averageGrade}%</p>
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Average Grade</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">{averageGrade}%</p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
               <div className="bg-purple-100 p-3 rounded-lg">
                 <Users className="h-6 w-6 text-purple-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Students Graded</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Students Graded</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   {new Set(filteredGrades.map(g => g.studentId)).size}
                 </p>
               </div>
             </div>
           </div>
           
-          <div className="bg-white rounded-lg shadow-md p-6">
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
               <div className="bg-orange-100 p-3 rounded-lg">
                 <BookOpen className="h-6 w-6 text-orange-600" />
               </div>
               <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Lessons Covered</p>
-                <p className="text-2xl font-bold text-gray-900">
+                <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Lessons Covered</p>
+                <p className="text-2xl font-bold text-gray-900 dark:text-white">
                   {new Set(filteredGrades.map(g => g.lessonId)).size}
                 </p>
               </div>
@@ -276,66 +276,66 @@ export default function GradesPage() {
         </div>
 
         {/* Grade Distribution */}
-        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-          <h3 className="text-lg font-semibold text-gray-900 mb-4">Grade Distribution</h3>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-8">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Grade Distribution</h3>
           <div className="grid grid-cols-5 gap-4">
             {Object.entries(gradeDistribution).map(([grade, count]) => (
               <div key={grade} className="text-center">
                 <div className={`inline-flex items-center justify-center w-12 h-12 rounded-full text-lg font-bold ${getGradeColor(grade)}`}>
                   {grade}
                 </div>
-                <div className="mt-2 text-sm text-gray-600">{count}</div>
+                <div className="mt-2 text-sm text-gray-600 dark:text-gray-300">{count}</div>
               </div>
             ))}
           </div>
         </div>
 
         {/* Grades Table */}
-        <div className="bg-white rounded-lg shadow-md overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-semibold text-gray-900">
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
+          <div className="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
               Grades ({filteredGrades.length})
             </h3>
           </div>
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Student
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Lesson
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Points
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Grade
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Feedback
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Date
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                 {filteredGrades.map((grade) => (
-                  <tr key={grade.id} className="hover:bg-gray-50">
+                  <tr key={grade.id} className="hover:bg-gray-50 dark:bg-gray-800">
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">
+                      <div className="text-sm font-medium text-gray-900 dark:text-white">
                         {getStudentName(grade.studentId)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm text-gray-900 dark:text-white">
                         {getLessonTitle(grade.lessonId)}
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-gray-900">
+                      <div className="text-sm text-gray-900 dark:text-white">
                         {grade.totalPoints} / {lessons.find(l => l.id === grade.lessonId)?.exercises[0]?.maxPoints || 16}
                       </div>
                     </td>
@@ -344,15 +344,15 @@ export default function GradesPage() {
                         <span className={`inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium ${getGradeColor(grade.letterGrade)}`}>
                           {grade.letterGrade}
                         </span>
-                        <span className="text-sm text-gray-600">({grade.percentage}%)</span>
+                        <span className="text-sm text-gray-600 dark:text-gray-300">({grade.percentage}%)</span>
                       </div>
                     </td>
                     <td className="px-6 py-4">
-                      <div className="text-sm text-gray-900 max-w-xs truncate">
+                      <div className="text-sm text-gray-900 dark:text-white max-w-xs truncate">
                         {grade.feedback}
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 dark:text-white">
                       {new Date(grade.gradedAt).toLocaleDateString()}
                     </td>
                   </tr>
@@ -365,8 +365,8 @@ export default function GradesPage() {
         {filteredGrades.length === 0 && (
           <div className="text-center py-12">
             <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">No grades found</h3>
-            <p className="text-gray-600">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No grades found</h3>
+            <p className="text-gray-600 dark:text-gray-300">
               {selectedLesson !== 'all' || selectedStudent !== 'all' 
                 ? 'Try adjusting your filters.' 
                 : 'Start grading exercises to see results here.'}

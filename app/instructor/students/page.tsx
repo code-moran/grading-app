@@ -130,16 +130,16 @@ export default function InstructorStudentsPage() {
   });
 
   const getGradeColor = (percentage: number) => {
-    if (percentage >= 90) return 'text-green-600 bg-green-50';
-    if (percentage >= 80) return 'text-blue-600 bg-blue-50';
+    if (percentage >= 90) return 'text-green-600 dark:text-green-400 bg-green-50';
+    if (percentage >= 80) return 'text-blue-600 dark:text-blue-400 bg-blue-50';
     if (percentage >= 70) return 'text-yellow-600 bg-yellow-50';
     if (percentage >= 60) return 'text-orange-600 bg-orange-50';
     return 'text-red-600 bg-red-50';
   };
 
   const getLetterGradeColor = (letter: string) => {
-    if (['A+', 'A', 'A-'].includes(letter)) return 'text-green-600';
-    if (['B+', 'B', 'B-'].includes(letter)) return 'text-blue-600';
+    if (['A+', 'A', 'A-'].includes(letter)) return 'text-green-600 dark:text-green-400';
+    if (['B+', 'B', 'B-'].includes(letter)) return 'text-blue-600 dark:text-blue-400';
     if (['C+', 'C', 'C-'].includes(letter)) return 'text-yellow-600';
     if (['D+', 'D', 'D-'].includes(letter)) return 'text-orange-600';
     return 'text-red-600';
@@ -148,7 +148,7 @@ export default function InstructorStudentsPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="instructor">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex justify-center items-center py-12">
@@ -162,21 +162,21 @@ export default function InstructorStudentsPage() {
 
   return (
     <ProtectedRoute requiredRole="instructor">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               Student Management
             </h1>
-            <p className="text-gray-600">Manage and track your students by cohort</p>
+            <p className="text-gray-600 dark:text-gray-300">Manage and track your students by cohort</p>
           </div>
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
@@ -229,16 +229,16 @@ export default function InstructorStudentsPage() {
           </div>
 
           {/* Filters and Search */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4">
               <div className="flex-1 relative">
-                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+                <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 h-5 w-5" />
                 <input
                   type="text"
                   placeholder="Search by name, ID, or registration number..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                 />
               </div>
               <div className="relative">
@@ -246,7 +246,7 @@ export default function InstructorStudentsPage() {
                 <select
                   value={selectedCourseId || ''}
                   onChange={(e) => setSelectedCourseId(e.target.value || null)}
-                  className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white"
+                  className="pl-10 pr-8 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
                 >
                   <option value="">All Courses</option>
                   {courses.map((course) => (
@@ -261,10 +261,10 @@ export default function InstructorStudentsPage() {
 
           {/* Student List */}
           {filteredStudents.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
               <Users className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No students found</h3>
-              <p className="text-gray-600">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No students found</h3>
+              <p className="text-gray-600 dark:text-gray-300">
                 {searchTerm || selectedCourseId
                   ? 'Try adjusting your search or filter criteria'
                   : 'No students are enrolled in your courses yet'}
@@ -275,15 +275,15 @@ export default function InstructorStudentsPage() {
               {filteredStudents.map((student) => (
                 <div
                   key={student.id}
-                  className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow"
                 >
                   <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
                     {/* Student Info */}
                     <div className="flex-1">
                       <div className="flex items-start justify-between mb-3">
                         <div>
-                          <h3 className="text-xl font-bold text-gray-900 mb-1">{student.name}</h3>
-                          <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                          <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{student.name}</h3>
+                          <div className="flex flex-wrap gap-4 text-sm text-gray-600 dark:text-gray-300">
                             <span className="flex items-center">
                               <Mail className="h-4 w-4 mr-1" />
                               {student.email || 'No email'}
@@ -299,7 +299,7 @@ export default function InstructorStudentsPage() {
                         </div>
                         <button
                           onClick={() => setSelectedStudent(student)}
-                          className="text-blue-600 hover:text-blue-700 text-sm font-medium flex items-center"
+                          className="text-blue-600 dark:text-blue-400 hover:text-blue-700 text-sm font-medium flex items-center"
                         >
                           <Eye className="h-4 w-4 mr-1" />
                           View Details
@@ -312,7 +312,7 @@ export default function InstructorStudentsPage() {
                           {student.courses.map((course) => (
                             <span
                               key={course.id}
-                              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 text-blue-800"
+                              className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800"
                             >
                               <BookOpen className="h-3 w-3 mr-1" />
                               {course.title}
@@ -324,7 +324,7 @@ export default function InstructorStudentsPage() {
                       {/* Stats */}
                       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                         <div>
-                          <div className="text-sm text-gray-600">Average Grade</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Average Grade</div>
                           <div
                             className={`text-2xl font-bold ${getGradeColor(student.stats.averageGrade)} px-2 py-1 rounded`}
                           >
@@ -332,20 +332,20 @@ export default function InstructorStudentsPage() {
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Grades</div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Grades</div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {student.stats.totalGrades}
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Quiz Attempts</div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Quiz Attempts</div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {student.stats.totalQuizAttempts}
                           </div>
                         </div>
                         <div>
-                          <div className="text-sm text-gray-600">Submissions</div>
-                          <div className="text-2xl font-bold text-gray-900">
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Submissions</div>
+                          <div className="text-2xl font-bold text-gray-900 dark:text-white">
                             {student.stats.totalSubmissions}
                           </div>
                         </div>
@@ -355,15 +355,15 @@ export default function InstructorStudentsPage() {
 
                   {/* Recent Grades Preview */}
                   {student.recentGrades.length > 0 && (
-                    <div className="mt-4 pt-4 border-t border-gray-200">
+                    <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                       <div className="text-sm font-semibold text-gray-700 mb-2">Recent Grades</div>
                       <div className="flex flex-wrap gap-2">
                         {student.recentGrades.slice(0, 3).map((grade) => (
                           <div
                             key={grade.id}
-                            className="flex items-center space-x-2 px-3 py-1 bg-gray-50 rounded-lg"
+                            className="flex items-center space-x-2 px-3 py-1 bg-gray-50 dark:bg-gray-800 rounded-lg"
                           >
-                            <span className="text-xs text-gray-600">
+                            <span className="text-xs text-gray-600 dark:text-gray-300">
                               {grade.lesson.course.title} - Lesson {grade.lesson.number}
                             </span>
                             <span
@@ -371,13 +371,13 @@ export default function InstructorStudentsPage() {
                             >
                               {grade.letterGrade}
                             </span>
-                            <span className="text-xs text-gray-500">
+                            <span className="text-xs text-gray-500 dark:text-gray-400">
                               ({grade.totalPoints}/{grade.maxPossiblePoints})
                             </span>
                           </div>
                         ))}
                         {student.recentGrades.length > 3 && (
-                          <span className="text-xs text-gray-500 flex items-center">
+                          <span className="text-xs text-gray-500 dark:text-gray-400 flex items-center">
                             +{student.recentGrades.length - 3} more
                           </span>
                         )}
@@ -392,12 +392,12 @@ export default function InstructorStudentsPage() {
           {/* Student Detail Modal */}
           {selectedStudent && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Student Details</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Student Details</h2>
                   <button
                     onClick={() => setSelectedStudent(null)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 dark:text-gray-300"
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -406,23 +406,23 @@ export default function InstructorStudentsPage() {
                 <div className="p-6">
                   {/* Student Info */}
                   <div className="mb-6">
-                    <h3 className="text-xl font-bold text-gray-900 mb-4">{selectedStudent.name}</h3>
+                    <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-4">{selectedStudent.name}</h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                       <div>
-                        <div className="text-sm text-gray-600">Registration</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Registration</div>
+                        <div className="font-semibold text-gray-900 dark:text-white">
                           {selectedStudent.registrationNumber}
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-gray-600">Email</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Email</div>
+                        <div className="font-semibold text-gray-900 dark:text-white">
                           {selectedStudent.email || 'N/A'}
                         </div>
                       </div>
                       <div>
-                        <div className="text-sm text-gray-600">Cohort</div>
-                        <div className="font-semibold text-gray-900">
+                        <div className="text-sm text-gray-600 dark:text-gray-300">Cohort</div>
+                        <div className="font-semibold text-gray-900 dark:text-white">
                           {selectedStudent.cohort?.name || '—'}
                         </div>
                       </div>
@@ -431,18 +431,18 @@ export default function InstructorStudentsPage() {
 
                   {/* Courses */}
                   <div className="mb-6">
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Enrolled Courses</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Enrolled Courses</h3>
                     <div className="space-y-2">
                       {selectedStudent.courses.map((course) => (
                         <div
                           key={course.id}
-                          className="flex items-center justify-between p-3 bg-gray-50 rounded-lg"
+                          className="flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-800 rounded-lg"
                         >
                           <div className="flex items-center">
-                            <BookOpen className="h-5 w-5 text-blue-600 mr-2" />
-                            <span className="font-medium text-gray-900">{course.title}</span>
+                            <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-2" />
+                            <span className="font-medium text-gray-900 dark:text-white">{course.title}</span>
                           </div>
-                          <span className="text-sm text-gray-600">
+                          <span className="text-sm text-gray-600 dark:text-gray-300">
                             Since {new Date(course.subscribedAt).toLocaleDateString()}
                           </span>
                         </div>
@@ -453,20 +453,20 @@ export default function InstructorStudentsPage() {
                   {/* Recent Grades */}
                   {selectedStudent.recentGrades.length > 0 && (
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900 mb-3">Recent Grades</h3>
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Recent Grades</h3>
                       <div className="space-y-3">
                         {selectedStudent.recentGrades.map((grade) => (
                           <div
                             key={grade.id}
-                            className="p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
+                            className="p-4 border border-gray-200 dark:border-gray-700 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
                           >
                             <div className="flex items-start justify-between mb-2">
                               <div>
-                                <div className="font-semibold text-gray-900">
+                                <div className="font-semibold text-gray-900 dark:text-white">
                                   {grade.lesson.course.title} - Lesson {grade.lesson.number}:{' '}
                                   {grade.lesson.title}
                                 </div>
-                                <div className="text-sm text-gray-600">{grade.exercise.title}</div>
+                                <div className="text-sm text-gray-600 dark:text-gray-300">{grade.exercise.title}</div>
                               </div>
                               <div className="text-right">
                                 <div
@@ -474,12 +474,12 @@ export default function InstructorStudentsPage() {
                                 >
                                   {grade.letterGrade}
                                 </div>
-                                <div className="text-sm text-gray-600">
+                                <div className="text-sm text-gray-600 dark:text-gray-300">
                                   {grade.totalPoints}/{grade.maxPossiblePoints} ({grade.percentage}%)
                                 </div>
                               </div>
                             </div>
-                            <div className="text-xs text-gray-500">
+                            <div className="text-xs text-gray-500 dark:text-gray-400">
                               Graded on {new Date(grade.gradedAt).toLocaleDateString()}
                             </div>
                           </div>

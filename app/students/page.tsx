@@ -326,14 +326,14 @@ export default function StudentsPage() {
 
   return (
     <ProtectedRoute requiredRole={['instructor', 'admin']}>
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Student Management</h1>
-            <p className="text-gray-600">Manage students with cohort assignment and bulk upload</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">Student Management</h1>
+            <p className="text-gray-600 dark:text-gray-300">Manage students with cohort assignment and bulk upload</p>
           </div>
 
           {/* Success/Error Messages */}
@@ -344,14 +344,14 @@ export default function StudentsPage() {
           </div>
         )}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6 flex items-center">
               <AlertCircle className="h-5 w-5 mr-2" />
               {error}
           </div>
         )}
 
           {/* Actions Bar */}
-          <div className="bg-white rounded-xl shadow-md p-6 mb-6 border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-6 border border-gray-100 dark:border-gray-700">
             <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
               <div className="flex-1 flex flex-col md:flex-row gap-4 w-full md:w-auto">
                 <div className="relative flex-1">
@@ -370,7 +370,7 @@ export default function StudentsPage() {
                     <select
                       value={cohortFilter}
                       onChange={(e) => setCohortFilter(e.target.value)}
-                      className="pl-10 pr-8 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white min-w-[150px]"
+                      className="pl-10 pr-8 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent appearance-none bg-white dark:bg-gray-800 text-gray-900 dark:text-white min-w-[150px]"
                     >
                       <option value="">All Cohorts</option>
                       {cohorts.map((cohort) => (
@@ -411,12 +411,12 @@ export default function StudentsPage() {
           {/* Add/Edit Form Modal */}
           {(showAddForm || editingStudent) && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {editingStudent ? 'Edit Student' : 'Add New Student'}
                   </h2>
-                  <button onClick={resetForm} className="text-gray-400 hover:text-gray-600">
+                  <button onClick={resetForm} className="text-gray-400 hover:text-gray-600 dark:text-gray-300">
                     <X className="h-6 w-6" />
                   </button>
                 </div>
@@ -475,8 +475,8 @@ export default function StudentsPage() {
                       ))}
                     </select>
                     {cohorts.length === 0 && (
-                      <p className="text-xs text-gray-500 mt-1">
-                        No cohorts available. <Link href="/cohorts" className="text-blue-600 hover:underline">Create one first</Link>
+                      <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                        No cohorts available. <Link href="/cohorts" className="text-blue-600 dark:text-blue-400 hover:underline">Create one first</Link>
                       </p>
                     )}
                   </div>
@@ -505,7 +505,7 @@ export default function StudentsPage() {
             </button>
             <button
                       onClick={resetForm}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
             >
                       Cancel
             </button>
@@ -518,9 +518,9 @@ export default function StudentsPage() {
           {/* Bulk Upload Modal */}
         {showBulkUpload && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Bulk Upload Students</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Bulk Upload Students</h2>
                   <button
                     onClick={() => {
                       setShowBulkUpload(false);
@@ -528,7 +528,7 @@ export default function StudentsPage() {
                       setBulkUploadText('');
                       setBulkCohortId('');
                     }}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 dark:text-gray-300"
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -583,27 +583,27 @@ export default function StudentsPage() {
                       </div>
                       <div className="border border-gray-300 rounded-lg max-h-64 overflow-y-auto">
                     <table className="min-w-full divide-y divide-gray-200">
-                      <thead className="bg-gray-50">
+                      <thead className="bg-gray-50 dark:bg-gray-800">
                         <tr>
-                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                                 Registration
                               </th>
-                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                                 Name
                               </th>
-                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 uppercase">
+                              <th className="px-4 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase">
                                 Cohort
                               </th>
                         </tr>
                       </thead>
-                      <tbody className="bg-white divide-y divide-gray-200">
+                      <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                             {bulkUploadData.slice(0, 10).map((student, index) => (
                           <tr key={index}>
-                                <td className="px-4 py-2 text-sm text-gray-900">
+                                <td className="px-4 py-2 text-sm text-gray-900 dark:text-white">
                                   {student.registrationNumber}
                                 </td>
-                                <td className="px-4 py-2 text-sm text-gray-900">{student.name}</td>
-                                <td className="px-4 py-2 text-sm text-gray-900">
+                                <td className="px-4 py-2 text-sm text-gray-900 dark:text-white">{student.name}</td>
+                                <td className="px-4 py-2 text-sm text-gray-900 dark:text-white">
                                   {student.cohortName || (bulkCohortId && cohorts.find(c => c.id === bulkCohortId)?.name) || '—'}
                                 </td>
                           </tr>
@@ -611,7 +611,7 @@ export default function StudentsPage() {
                       </tbody>
                     </table>
                         {bulkUploadData.length > 10 && (
-                          <div className="px-4 py-2 text-sm text-gray-500 text-center bg-gray-50">
+                          <div className="px-4 py-2 text-sm text-gray-500 dark:text-gray-400 text-center bg-gray-50 dark:bg-gray-800">
                             ... and {bulkUploadData.length - 10} more
                           </div>
                         )}
@@ -635,7 +635,7 @@ export default function StudentsPage() {
                   setBulkUploadText('');
                         setBulkCohortId('');
                 }}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
               >
                 Cancel
               </button>
@@ -651,10 +651,10 @@ export default function StudentsPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredStudents.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
               <Users className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No students found</h3>
-              <p className="text-gray-600 mb-4">
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No students found</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-4">
                 {searchTerm || cohortFilter
                   ? 'Try adjusting your search or filter criteria'
                   : 'Get started by adding your first student'}
@@ -670,40 +670,40 @@ export default function StudentsPage() {
               )}
             </div>
           ) : (
-            <div className="bg-white rounded-xl shadow-md border border-gray-100 overflow-hidden">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 overflow-hidden">
           <div className="overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
+              <thead className="bg-gray-50 dark:bg-gray-800">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Name
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Registration #
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                         Cohort
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Email
                   </th>
-                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                      <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
                 {filteredStudents.map((student) => (
-                  <tr key={student.id} className="hover:bg-gray-50">
+                  <tr key={student.id} className="hover:bg-gray-50 dark:bg-gray-800">
                     <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-medium text-gray-900">{student.name}</div>
+                          <div className="text-sm font-medium text-gray-900 dark:text-white">{student.name}</div>
                     </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{student.registrationNumber}</div>
+                          <div className="text-sm text-gray-900 dark:text-white">{student.registrationNumber}</div>
                     </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                         {student.cohort ? (
-                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
+                          <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 dark:bg-blue-900/30 text-blue-800">
                             {student.cohort.name}
                           </span>
                         ) : (
@@ -711,13 +711,13 @@ export default function StudentsPage() {
                         )}
                     </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm text-gray-900">{student.email || '—'}</div>
+                          <div className="text-sm text-gray-900 dark:text-white">{student.email || '—'}</div>
                     </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex items-center justify-end gap-2">
                             <button
                               onClick={() => setEditingStudent(student)}
-                              className="text-blue-600 hover:text-blue-900 p-2 hover:bg-blue-50 rounded-lg transition-colors"
+                              className="text-blue-600 dark:text-blue-400 hover:text-blue-900 p-2 hover:bg-blue-50 rounded-lg transition-colors"
                               title="Edit"
                             >
                           <Edit className="h-4 w-4" />
@@ -736,8 +736,8 @@ export default function StudentsPage() {
               </tbody>
             </table>
               </div>
-              <div className="bg-gray-50 px-6 py-4 border-t border-gray-200">
-                <div className="text-sm text-gray-600">
+              <div className="bg-gray-50 dark:bg-gray-800 px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                <div className="text-sm text-gray-600 dark:text-gray-300">
                   Showing <strong>{filteredStudents.length}</strong> of <strong>{students.length}</strong> students
           </div>
         </div>

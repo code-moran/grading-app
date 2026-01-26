@@ -309,21 +309,21 @@ export default function StudentGradesPage() {
   const stats = calculateStats();
 
   const getGradeColor = (percentage: number) => {
-    if (percentage >= 90) return 'text-green-600 bg-green-50';
-    if (percentage >= 80) return 'text-blue-600 bg-blue-50';
-    if (percentage >= 70) return 'text-yellow-600 bg-yellow-50';
-    if (percentage >= 60) return 'text-orange-600 bg-orange-50';
+    if (percentage >= 90) return 'text-green-600 dark:text-green-400 bg-green-50';
+    if (percentage >= 80) return 'text-blue-600 dark:text-blue-400 bg-blue-50';
+    if (percentage >= 70) return 'text-yellow-600 dark:text-yellow-400 bg-yellow-50';
+    if (percentage >= 60) return 'text-orange-600 dark:text-orange-400 bg-orange-50';
     return 'text-red-600 bg-red-50';
   };
 
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600">Loading grades...</span>
+            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading grades...</span>
           </div>
         </div>
       </ProtectedRoute>
@@ -333,10 +333,10 @@ export default function StudentGradesPage() {
   if (error) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error}
             </div>
@@ -348,7 +348,7 @@ export default function StudentGradesPage() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -356,63 +356,63 @@ export default function StudentGradesPage() {
           <div className="mb-8">
             <Link
               href="/student"
-              className="flex items-center text-gray-600 hover:text-blue-600 transition-colors mb-4"
+              className="flex items-center text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:text-blue-400 transition-colors mb-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Dashboard
             </Link>
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">My Grades</h1>
-            <p className="text-gray-600">View all your exercise grades and performance statistics</p>
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">My Grades</h1>
+            <p className="text-gray-600 dark:text-gray-300">View all your exercise grades and performance statistics</p>
           </div>
 
           {/* Statistics Cards */}
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <Trophy className="h-6 w-6 text-blue-600" />
+                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                  <Trophy className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{stats.averagePercentage}%</div>
-                  <div className="text-sm text-gray-600">Average Grade</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.averagePercentage}%</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Average Grade</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center">
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <Award className="h-6 w-6 text-green-600" />
+                <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                  <Award className="h-6 w-6 text-green-600 dark:text-green-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{stats.averageLetterGrade}</div>
-                  <div className="text-sm text-gray-600">Average Letter</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.averageLetterGrade}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Average Letter</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center">
-                <div className="bg-purple-100 p-3 rounded-lg">
-                  <FileText className="h-6 w-6 text-purple-600" />
+                <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                  <FileText className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{stats.totalGrades}</div>
-                  <div className="text-sm text-gray-600">Total Grades</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{stats.totalGrades}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Grades</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center">
-                <div className="bg-yellow-100 p-3 rounded-lg">
-                  <BarChart3 className="h-6 w-6 text-yellow-600" />
+                <div className="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg">
+                  <BarChart3 className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">
                     {stats.totalPoints} / {stats.maxPossiblePoints}
                   </div>
-                  <div className="text-sm text-gray-600">Total Points</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Total Points</div>
                 </div>
               </div>
             </div>
@@ -420,10 +420,10 @@ export default function StudentGradesPage() {
 
           {/* Grades List */}
           {groupedGrades.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 border border-gray-100 text-center">
-              <Trophy className="h-16 w-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">No grades yet</h3>
-              <p className="text-gray-600 mb-6">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 border border-gray-100 dark:border-gray-700 text-center">
+              <Trophy className="h-16 w-16 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">No grades yet</h3>
+              <p className="text-gray-600 dark:text-gray-300 mb-6">
                 You haven't received any grades yet. Submit exercises to get graded!
               </p>
               <Link
@@ -436,9 +436,9 @@ export default function StudentGradesPage() {
           ) : (
             <div className="space-y-6">
               {groupedGrades.map((courseGroup) => (
-                <div key={courseGroup.courseId} className="bg-white rounded-xl shadow-md border border-gray-100">
-                  <div className="p-6 border-b border-gray-200">
-                    <h2 className="text-2xl font-bold text-gray-900">{courseGroup.courseTitle}</h2>
+                <div key={courseGroup.courseId} className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700">
+                  <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white">{courseGroup.courseTitle}</h2>
                   </div>
 
                   <div className="divide-y divide-gray-200">
@@ -446,7 +446,7 @@ export default function StudentGradesPage() {
                       <div key={lessonGroup.lessonId} className="p-6">
                         <div className="flex items-center justify-between mb-4">
                           <div>
-                            <h3 className="text-lg font-semibold text-gray-900">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
                               Lesson {lessonGroup.lessonNumber}: {lessonGroup.lessonTitle}
                             </h3>
                           </div>
@@ -456,18 +456,18 @@ export default function StudentGradesPage() {
                           {lessonGroup.grades.map((grade) => (
                             <div
                               key={grade.id}
-                              className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer"
+                              className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 hover:shadow-md transition-all cursor-pointer"
                               onClick={() => setSelectedGrade(grade)}
                             >
                               <div className="flex items-center justify-between">
                                 <div className="flex-1">
                                   <div className="flex items-center space-x-3 mb-2">
-                                    <BookOpen className="h-5 w-5 text-gray-400" />
-                                    <h4 className="font-semibold text-gray-900">
+                                    <BookOpen className="h-5 w-5 text-gray-400 dark:text-gray-500" />
+                                    <h4 className="font-semibold text-gray-900 dark:text-white">
                                       {grade.exercise?.title || 'Exercise'}
                                     </h4>
                                   </div>
-                                  <div className="flex items-center space-x-4 text-sm text-gray-600">
+                                  <div className="flex items-center space-x-4 text-sm text-gray-600 dark:text-gray-300">
                                     <span className="flex items-center">
                                       <Calendar className="h-4 w-4 mr-1" />
                                       {new Date(grade.gradedAt).toLocaleDateString()}
@@ -480,8 +480,8 @@ export default function StudentGradesPage() {
                                 </div>
                                 <div className="flex items-center space-x-4">
                                   <div className="text-right">
-                                    <div className="text-sm text-gray-600">Score</div>
-                                    <div className="text-lg font-semibold text-gray-900">
+                                    <div className="text-sm text-gray-600 dark:text-gray-300">Score</div>
+                                    <div className="text-lg font-semibold text-gray-900 dark:text-white">
                                       {grade.totalPoints} / {grade.maxPossiblePoints}
                                     </div>
                                   </div>
@@ -502,8 +502,8 @@ export default function StudentGradesPage() {
                                 </div>
                               </div>
                               {grade.feedback && (
-                                <div className="mt-3 pt-3 border-t border-gray-200">
-                                  <p className="text-sm text-gray-700 line-clamp-2">{grade.feedback}</p>
+                                <div className="mt-3 pt-3 border-t border-gray-200 dark:border-gray-700">
+                                  <p className="text-sm text-gray-700 dark:text-gray-300 line-clamp-2">{grade.feedback}</p>
                                 </div>
                               )}
                             </div>
@@ -525,14 +525,14 @@ export default function StudentGradesPage() {
             onClick={() => setSelectedGrade(null)}
           >
             <div
-              className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
+              className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto"
               onClick={(e) => e.stopPropagation()}
             >
-              <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                <h2 className="text-2xl font-bold text-gray-900">Grade Details</h2>
+              <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Grade Details</h2>
                 <button
                   onClick={() => setSelectedGrade(null)}
-                  className="text-gray-400 hover:text-gray-600"
+                  className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300"
                 >
                   <X className="h-6 w-6" />
                 </button>
@@ -540,63 +540,63 @@ export default function StudentGradesPage() {
 
               <div className="p-6">
                 <div className="mb-6">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                     {selectedGrade.exercise?.title || 'Exercise'}
                   </h3>
-                  <p className="text-sm text-gray-600">
+                  <p className="text-sm text-gray-600 dark:text-gray-300">
                     Lesson {selectedGrade.lesson?.number}: {selectedGrade.lesson?.title}
                   </p>
-                  <p className="text-sm text-gray-600">{selectedGrade.lesson?.course?.title}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-300">{selectedGrade.lesson?.course?.title}</p>
                 </div>
 
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Total Points</div>
-                    <div className="text-2xl font-bold text-gray-900">
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Total Points</div>
+                    <div className="text-2xl font-bold text-gray-900 dark:text-white">
                       {selectedGrade.totalPoints} / {selectedGrade.maxPossiblePoints}
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Percentage</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Percentage</div>
                     <div
                       className={`text-2xl font-bold ${getGradeColor(selectedGrade.percentage).split(' ')[0]}`}
                     >
                       {selectedGrade.percentage}%
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Letter Grade</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Letter Grade</div>
                     <div
                       className={`text-2xl font-bold ${getGradeColor(selectedGrade.percentage).split(' ')[0]}`}
                     >
                       {selectedGrade.letterGrade}
                     </div>
                   </div>
-                  <div className="bg-gray-50 rounded-lg p-4">
-                    <div className="text-sm text-gray-600 mb-1">Graded By</div>
-                    <div className="text-lg font-semibold text-gray-900">{selectedGrade.gradedBy}</div>
+                  <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                    <div className="text-sm text-gray-600 dark:text-gray-300 mb-1">Graded By</div>
+                    <div className="text-lg font-semibold text-gray-900 dark:text-white">{selectedGrade.gradedBy}</div>
                   </div>
                 </div>
 
                 {selectedGrade.criteriaGrades && selectedGrade.criteriaGrades.length > 0 && (
                   <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-4">Criteria Breakdown</h4>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Criteria Breakdown</h4>
                     <div className="space-y-3">
                       {selectedGrade.criteriaGrades.map((criteria, index) => (
-                        <div key={index} className="border border-gray-200 rounded-lg p-4">
+                        <div key={index} className="border border-gray-200 dark:border-gray-700 rounded-lg p-4">
                           <div className="flex items-center justify-between mb-2">
-                            <span className="font-medium text-gray-900">
+                            <span className="font-medium text-gray-900 dark:text-white">
                               {criteria.criteriaName || `Criteria ${index + 1}`}
                             </span>
-                            <span className="text-sm font-semibold text-gray-700">{criteria.points} points</span>
+                            <span className="text-sm font-semibold text-gray-700 dark:text-gray-300">{criteria.points} points</span>
                           </div>
                           {criteria.levelName && (
-                            <div className="text-sm text-gray-600 mb-2">
+                            <div className="text-sm text-gray-600 dark:text-gray-300 mb-2">
                               Level: {criteria.levelName}
                             </div>
                           )}
                           {criteria.comments && (
-                            <div className="text-sm text-gray-700 mt-2 p-2 bg-gray-50 rounded">
+                            <div className="text-sm text-gray-700 dark:text-gray-300 mt-2 p-2 bg-gray-50 dark:bg-gray-800 rounded">
                               {criteria.comments}
                             </div>
                           )}
@@ -608,14 +608,14 @@ export default function StudentGradesPage() {
 
                 {selectedGrade.feedback && (
                   <div className="mb-6">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">Instructor Feedback</h4>
-                    <div className="bg-gray-50 rounded-lg p-4">
-                      <p className="text-gray-700 whitespace-pre-wrap">{selectedGrade.feedback}</p>
+                    <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">Instructor Feedback</h4>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4">
+                      <p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">{selectedGrade.feedback}</p>
                     </div>
                   </div>
                 )}
 
-                <div className="text-sm text-gray-500 flex items-center">
+                <div className="text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500 flex items-center">
                   <Calendar className="h-4 w-4 mr-1" />
                   Graded on {new Date(selectedGrade.gradedAt).toLocaleString()}
                 </div>

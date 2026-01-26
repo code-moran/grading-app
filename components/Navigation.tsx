@@ -3,15 +3,19 @@
 import { useSession, signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { BookOpen, Users, BarChart3, LogOut, Menu, X, Home, GraduationCap, FileText, HelpCircle, ChevronDown, Settings } from 'lucide-react';
+import { BookOpen, Users, BarChart3, LogOut, Menu, X, Home, GraduationCap, FileText, HelpCircle, ChevronDown, Settings, Sun, Moon, Monitor } from 'lucide-react';
 import { useState, useRef, useEffect } from 'react';
+import { useTheme } from '@/components/ThemeProvider';
 
 export default function Navigation() {
   const { data: session, status } = useSession();
   const pathname = usePathname();
+  const { theme, setTheme, resolvedTheme } = useTheme();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [moreMenuOpen, setMoreMenuOpen] = useState(false);
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const moreMenuRef = useRef<HTMLDivElement>(null);
+  const themeMenuRef = useRef<HTMLDivElement>(null);
 
   const isActive = (path: string) => pathname === path || pathname?.startsWith(path);
 
@@ -21,18 +25,21 @@ export default function Navigation() {
       if (moreMenuRef.current && !moreMenuRef.current.contains(event.target as Node)) {
         setMoreMenuOpen(false);
       }
+      if (themeMenuRef.current && !themeMenuRef.current.contains(event.target as Node)) {
+        setThemeMenuOpen(false);
+      }
     }
 
-    if (moreMenuOpen) {
+    if (moreMenuOpen || themeMenuOpen) {
       document.addEventListener('mousedown', handleClickOutside);
       return () => document.removeEventListener('mousedown', handleClickOutside);
     }
-  }, [moreMenuOpen]);
+  }, [moreMenuOpen, themeMenuOpen]);
 
   // Show loading state while session is being determined
   if (status === 'loading') {
     return (
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-3">
@@ -53,7 +60,7 @@ export default function Navigation() {
 
   if (!session) {
     return (
-      <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+      <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <Link href="/" className="flex items-center space-x-3 group">
@@ -64,13 +71,14 @@ export default function Navigation() {
                 <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   Grading App
                 </h1>
-                <p className="text-xs text-gray-500 hidden sm:block">Web Design Course</p>
+                <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">Web Design Course</p>
               </div>
             </Link>
             <div className="hidden md:flex items-center space-x-4">
+              <ThemeToggle theme={theme} setTheme={setTheme} resolvedTheme={resolvedTheme} themeMenuOpen={themeMenuOpen} setThemeMenuOpen={setThemeMenuOpen} themeMenuRef={themeMenuRef} />
               <Link
                 href="/auth/signin"
-                className="px-4 py-2 text-gray-700 hover:text-blue-600 font-medium transition-colors"
+                className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 font-medium transition-colors"
               >
                 Sign In
               </Link>
@@ -83,18 +91,21 @@ export default function Navigation() {
             </div>
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-md text-gray-600 hover:text-gray-900"
+              className="md:hidden p-2 rounded-md text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
             >
               {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
           </div>
         </div>
         {mobileMenuOpen && (
-          <div className="md:hidden border-t bg-white">
+          <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
             <div className="px-4 py-4 space-y-2">
+              <div className="px-4 py-2">
+                <ThemeToggle theme={theme} setTheme={setTheme} resolvedTheme={resolvedTheme} themeMenuOpen={themeMenuOpen} setThemeMenuOpen={setThemeMenuOpen} themeMenuRef={themeMenuRef} />
+              </div>
               <Link
                 href="/auth/signin"
-                className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg"
+                className="block px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 Sign In
@@ -111,7 +122,7 @@ export default function Navigation() {
   const isAdmin = session.user?.role === 'admin';
 
   return (
-    <nav className="bg-white shadow-sm border-b sticky top-0 z-50">
+    <nav className="bg-white dark:bg-gray-900 shadow-sm border-b border-gray-200 dark:border-gray-800 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <Link href={isStudent ? "/student" : isInstructor ? "/instructor" : "/"} className="flex items-center space-x-3 group">
@@ -122,7 +133,7 @@ export default function Navigation() {
               <h1 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 Grading App
               </h1>
-              <p className="text-xs text-gray-500 hidden sm:block">
+              <p className="text-xs text-gray-500 dark:text-gray-400 hidden sm:block">
                 {isStudent ? 'Student Portal' : isInstructor ? 'Instructor Portal' : 'Web Design Course'}
               </p>
             </div>
@@ -178,9 +189,10 @@ export default function Navigation() {
                 />
               </>
             )}
+            <ThemeToggle theme={theme} setTheme={setTheme} resolvedTheme={resolvedTheme} themeMenuOpen={themeMenuOpen} setThemeMenuOpen={setThemeMenuOpen} themeMenuRef={themeMenuRef} />
             <button
               onClick={() => signOut({ callbackUrl: '/' })}
-              className="flex items-center space-x-2 px-4 py-2 text-gray-600 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+              className="flex items-center space-x-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-red-600 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
             >
               <LogOut className="h-4 w-4" />
               <span className="hidden lg:inline">Sign Out</span>
@@ -197,7 +209,7 @@ export default function Navigation() {
       </div>
 
       {mobileMenuOpen && (
-        <div className="md:hidden border-t bg-white">
+        <div className="md:hidden border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900">
           <div className="px-4 py-4 space-y-2">
             {isAdmin && (
               <>
@@ -229,12 +241,15 @@ export default function Navigation() {
                 <MobileNavLink href="/instructor/resources" icon={FileText} label="Resources" onClick={() => setMobileMenuOpen(false)} />
               </>
             )}
+            <div className="px-4 py-2">
+              <ThemeToggle theme={theme} setTheme={setTheme} resolvedTheme={resolvedTheme} themeMenuOpen={themeMenuOpen} setThemeMenuOpen={setThemeMenuOpen} themeMenuRef={themeMenuRef} />
+            </div>
             <button
               onClick={() => {
                 signOut({ callbackUrl: '/' });
                 setMobileMenuOpen(false);
               }}
-              className="w-full flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg"
+              className="w-full flex items-center space-x-2 px-4 py-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
             >
               <LogOut className="h-4 w-4" />
               <span>Sign Out</span>
@@ -246,6 +261,85 @@ export default function Navigation() {
   );
 }
 
+function ThemeToggle({
+  theme,
+  setTheme,
+  resolvedTheme,
+  themeMenuOpen,
+  setThemeMenuOpen,
+  themeMenuRef,
+}: {
+  theme: 'light' | 'dark' | 'system';
+  setTheme: (theme: 'light' | 'dark' | 'system') => void;
+  resolvedTheme: 'light' | 'dark';
+  themeMenuOpen: boolean;
+  setThemeMenuOpen: (open: boolean) => void;
+  themeMenuRef: React.RefObject<HTMLDivElement>;
+}) {
+  return (
+    <div className="relative" ref={themeMenuRef}>
+      <button
+        onClick={() => setThemeMenuOpen(!themeMenuOpen)}
+        className="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+        aria-label="Toggle theme"
+      >
+        {resolvedTheme === 'dark' ? (
+          <Moon className="h-5 w-5" />
+        ) : (
+          <Sun className="h-5 w-5" />
+        )}
+      </button>
+
+      {themeMenuOpen && (
+        <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
+          <button
+            onClick={() => {
+              setTheme('light');
+              setThemeMenuOpen(false);
+            }}
+            className={`w-full flex items-center space-x-3 px-4 py-2 text-sm transition-colors ${
+              theme === 'light'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+            }`}
+          >
+            <Sun className="h-4 w-4" />
+            <span>Light</span>
+          </button>
+          <button
+            onClick={() => {
+              setTheme('dark');
+              setThemeMenuOpen(false);
+            }}
+            className={`w-full flex items-center space-x-3 px-4 py-2 text-sm transition-colors ${
+              theme === 'dark'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+            }`}
+          >
+            <Moon className="h-4 w-4" />
+            <span>Dark</span>
+          </button>
+          <button
+            onClick={() => {
+              setTheme('system');
+              setThemeMenuOpen(false);
+            }}
+            className={`w-full flex items-center space-x-3 px-4 py-2 text-sm transition-colors ${
+              theme === 'system'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
+            }`}
+          >
+            <Monitor className="h-4 w-4" />
+            <span>System</span>
+          </button>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function NavLink({ href, icon: Icon, label, isActive }: { href: string; icon: any; label: string; isActive: boolean }) {
   return (
     <Link
@@ -253,7 +347,7 @@ function NavLink({ href, icon: Icon, label, isActive }: { href: string; icon: an
       className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
         isActive
           ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-          : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+          : 'text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800'
       }`}
     >
       <Icon className="h-4 w-4" />
@@ -267,7 +361,7 @@ function MobileNavLink({ href, icon: Icon, label, onClick }: { href: string; ico
     <Link
       href={href}
       onClick={onClick}
-      className="flex items-center space-x-2 px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg"
+      className="flex items-center space-x-2 px-4 py-2 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 rounded-lg"
     >
       <Icon className="h-4 w-4" />
       <span>{label}</span>
@@ -306,7 +400,7 @@ function StudentsMenu({
         className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
           studentsActive
             ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-            : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+            : 'text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800'
         }`}
         onMouseEnter={() => setIsOpen(true)}
         onMouseLeave={() => setIsOpen(false)}
@@ -318,7 +412,7 @@ function StudentsMenu({
 
       {isOpen && (
         <div
-          className="absolute left-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50"
+          className="absolute left-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50"
           onMouseEnter={() => setIsOpen(true)}
           onMouseLeave={() => setIsOpen(false)}
         >
@@ -327,8 +421,8 @@ function StudentsMenu({
             onClick={() => setIsOpen(false)}
             className={`flex items-center space-x-2 px-4 py-2 text-sm transition-colors ${
               isActive('/instructor/students')
-                ? 'bg-blue-50 text-blue-600 font-medium'
-                : 'text-gray-700 hover:bg-gray-50'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
             <Users className="h-4 w-4" />
@@ -339,8 +433,8 @@ function StudentsMenu({
             onClick={() => setIsOpen(false)}
             className={`flex items-center space-x-2 px-4 py-2 text-sm transition-colors ${
               isActive('/students')
-                ? 'bg-blue-50 text-blue-600 font-medium'
-                : 'text-gray-700 hover:bg-gray-50'
+                ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
             }`}
           >
             <Users className="h-4 w-4" />
@@ -376,7 +470,7 @@ function MoreMenu({
         className={`flex items-center space-x-2 px-4 py-2 rounded-lg transition-all ${
           hasActiveItem
             ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-md'
-            : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
+            : 'text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-50 dark:hover:bg-gray-800'
         }`}
       >
         <Settings className="h-4 w-4" />
@@ -385,7 +479,7 @@ function MoreMenu({
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-lg border border-gray-200 py-2 z-50">
+        <div className="absolute right-0 mt-2 w-56 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700 py-2 z-50">
           {items.map((item) => {
             const Icon = item.icon;
             const active = isActive(item.href);
@@ -396,8 +490,8 @@ function MoreMenu({
                 onClick={() => setIsOpen(false)}
                 className={`flex items-center space-x-2 px-4 py-2 text-sm transition-colors ${
                   active
-                    ? 'bg-blue-50 text-blue-600 font-medium'
-                    : 'text-gray-700 hover:bg-gray-50'
+                    ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400 font-medium'
+                    : 'text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'
                 }`}
               >
                 <Icon className="h-4 w-4" />

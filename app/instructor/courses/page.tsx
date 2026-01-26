@@ -63,16 +63,16 @@ export default function InstructorCoursesPage() {
 
   return (
     <ProtectedRoute requiredRole="instructor">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Header */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               My Courses
             </h1>
-            <p className="text-gray-600">Manage courses assigned to you</p>
+            <p className="text-gray-600 dark:text-gray-300">Manage courses assigned to you</p>
           </div>
 
           {/* Search Bar */}
@@ -91,7 +91,7 @@ export default function InstructorCoursesPage() {
 
           {/* Error Message */}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
@@ -102,12 +102,12 @@ export default function InstructorCoursesPage() {
               <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
             </div>
           ) : filteredCourses.length === 0 ? (
-            <div className="bg-white rounded-xl shadow-md p-12 text-center border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-12 text-center border border-gray-100 dark:border-gray-700">
               <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                 {searchTerm ? 'No courses found' : 'No courses assigned'}
               </h3>
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 {searchTerm
                   ? 'Try adjusting your search terms'
                   : 'Contact an administrator to get assigned to courses'}
@@ -117,40 +117,40 @@ export default function InstructorCoursesPage() {
             <>
               {/* Stats Summary */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-blue-100 p-3 rounded-lg">
-                      <BookOpen className="h-6 w-6 text-blue-600" />
+                    <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                      <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">{filteredCourses.length}</div>
-                      <div className="text-sm text-gray-600">Assigned Courses</div>
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">{filteredCourses.length}</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Assigned Courses</div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
-                    <div className="bg-green-100 p-3 rounded-lg">
-                      <BookOpen className="h-6 w-6 text-green-600" />
+                    <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                      <BookOpen className="h-6 w-6 text-green-600 dark:text-green-400" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {filteredCourses.reduce((sum, course) => sum + course.lessonCount, 0)}
                       </div>
-                      <div className="text-sm text-gray-600">Total Lessons</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Lessons</div>
                     </div>
                   </div>
                 </div>
-                <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100">
+                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
                   <div className="flex items-center">
                     <div className="bg-purple-100 p-3 rounded-lg">
                       <Users className="h-6 w-6 text-purple-600" />
                     </div>
                     <div className="ml-4">
-                      <div className="text-2xl font-bold text-gray-900">
+                      <div className="text-2xl font-bold text-gray-900 dark:text-white">
                         {filteredCourses.reduce((sum, course) => sum + course.subscriberCount, 0)}
                       </div>
-                      <div className="text-sm text-gray-600">Total Students</div>
+                      <div className="text-sm text-gray-600 dark:text-gray-300">Total Students</div>
                     </div>
                   </div>
                 </div>
@@ -162,7 +162,7 @@ export default function InstructorCoursesPage() {
                   <Link
                     key={course.id}
                     href={`/instructor/courses/${course.id}`}
-                    className="bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 hover:border-blue-300 group"
+                    className="bg-white dark:bg-gray-800 rounded-xl shadow-md hover:shadow-xl transition-all duration-300 border border-gray-200 dark:border-gray-700 hover:border-blue-300 group"
                   >
                     <div className="p-6">
                       <div className="flex items-start justify-between mb-4">
@@ -170,29 +170,29 @@ export default function InstructorCoursesPage() {
                           <BookOpen className="h-6 w-6 text-white" />
                         </div>
                         {course.isActive ? (
-                          <div className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                          <div className="bg-green-100 dark:bg-green-900/30 text-green-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                             <span className="w-2 h-2 bg-green-500 rounded-full mr-1"></span>
                             Active
                           </div>
                         ) : (
-                          <div className="bg-gray-100 text-gray-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
+                          <div className="bg-gray-100 dark:bg-gray-700 text-gray-700 px-2 py-1 rounded-full text-xs font-medium flex items-center">
                             <span className="w-2 h-2 bg-gray-500 rounded-full mr-1"></span>
                             Inactive
                           </div>
                         )}
                       </div>
 
-                      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-blue-600 transition-colors">
+                      <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:text-blue-400 transition-colors">
                         {course.title}
                       </h3>
 
                       {course.description && (
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-2">
                           {course.description}
                         </p>
                       )}
 
-                      <div className="flex items-center justify-between text-sm text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                      <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                         <div className="flex items-center">
                           <BookOpen className="h-4 w-4 mr-1" />
                           {course.lessonCount} {course.lessonCount === 1 ? 'lesson' : 'lessons'}
@@ -204,11 +204,11 @@ export default function InstructorCoursesPage() {
                       </div>
 
                       <div className="flex items-center justify-between">
-                        <div className="flex items-center text-xs text-gray-500">
+                        <div className="flex items-center text-xs text-gray-500 dark:text-gray-400">
                           <Clock className="h-3 w-3 mr-1" />
                           Assigned {new Date(course.assignedAt).toLocaleDateString()}
                         </div>
-                        <div className="flex items-center text-blue-600 font-medium text-sm group-hover:translate-x-1 transition-transform">
+                        <div className="flex items-center text-blue-600 dark:text-blue-400 font-medium text-sm group-hover:translate-x-1 transition-transform">
                           Manage
                           <ArrowRight className="ml-1 h-4 w-4" />
                         </div>

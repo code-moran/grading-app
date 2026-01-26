@@ -333,11 +333,11 @@ export default function StudentDashboard() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="flex items-center justify-center py-12">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-gray-600">Loading dashboard...</span>
+        <span className="ml-2 text-gray-600 dark:text-gray-300">Loading dashboard...</span>
       </div>
         </div>
       </ProtectedRoute>
@@ -347,10 +347,10 @@ export default function StudentDashboard() {
   if (error && !studentProfile) {
     return (
       <ProtectedRoute requiredRole="student">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg text-center">
               <AlertCircle className="h-5 w-5 inline mr-2" />
               {error}
             </div>
@@ -368,70 +368,70 @@ export default function StudentDashboard() {
 
   return (
     <ProtectedRoute requiredRole="student">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           {/* Welcome Section */}
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
               Welcome back,{' '}
               <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                 {studentProfile?.name || session?.user?.name}
               </span>
               !
             </h1>
-            <p className="text-gray-600">Continue your learning journey and track your progress</p>
+            <p className="text-gray-600 dark:text-gray-300">Continue your learning journey and track your progress</p>
           </div>
 
         {/* Progress Overview */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
             <div className="flex items-center">
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <BookOpen className="h-6 w-6 text-blue-600" />
+                <div className="bg-blue-100 dark:bg-blue-900/30 p-3 rounded-lg">
+                  <BookOpen className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                 </div>
               <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{allLessons.length}</div>
-                <div className="text-sm text-gray-600">Total Lessons</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{allLessons.length}</div>
+                <div className="text-sm text-gray-600 dark:text-gray-300">Total Lessons</div>
                 </div>
             </div>
           </div>
           
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
             <div className="flex items-center">
-                <div className="bg-green-100 p-3 rounded-lg">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                <div className="bg-green-100 dark:bg-green-900/30 p-3 rounded-lg">
+                  <CheckCircle className="h-6 w-6 text-green-600 dark:text-green-400 dark:text-green-400" />
                 </div>
               <div className="ml-4">
-                <div className="text-2xl font-bold text-gray-900">
+                <div className="text-2xl font-bold text-gray-900 dark:text-white">
                     {allLessons.filter((lesson) => hasPassedQuiz(lesson.id)).length}
                   </div>
-                  <div className="text-sm text-gray-600">Completed</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Completed</div>
                 </div>
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
               <div className="flex items-center">
-                <div className="bg-yellow-100 p-3 rounded-lg">
-                  <Trophy className="h-6 w-6 text-yellow-600" />
+                <div className="bg-yellow-100 dark:bg-yellow-900/30 p-3 rounded-lg">
+                  <Trophy className="h-6 w-6 text-yellow-600 dark:text-yellow-400" />
                 </div>
                 <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{averageGrade}%</div>
-                  <div className="text-sm text-gray-600">Average Grade</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{averageGrade}%</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Average Grade</div>
               </div>
             </div>
           </div>
           
-            <div className="bg-white rounded-xl shadow-md p-6 border border-gray-100 hover:shadow-lg transition-shadow">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-lg transition-shadow">
             <div className="flex items-center">
-                <div className="bg-purple-100 p-3 rounded-lg">
-                  <GraduationCap className="h-6 w-6 text-purple-600" />
+                <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                  <GraduationCap className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                 </div>
               <div className="ml-4">
-                  <div className="text-2xl font-bold text-gray-900">{enrolledCourses.length}</div>
-                  <div className="text-sm text-gray-600">Enrolled Courses</div>
+                  <div className="text-2xl font-bold text-gray-900 dark:text-white">{enrolledCourses.length}</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-300">Enrolled Courses</div>
                 </div>
               </div>
             </div>
@@ -439,17 +439,17 @@ export default function StudentDashboard() {
           
           {/* Progress Bar */}
           {allLessons.length > 0 && (
-            <div className="bg-white rounded-xl shadow-md p-6 mb-8 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 mb-8 border border-gray-100 dark:border-gray-700">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center space-x-2">
-                  <Target className="h-5 w-5 text-blue-600" />
-                  <h3 className="text-lg font-semibold text-gray-900">Overall Progress</h3>
+                  <Target className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Overall Progress</h3>
                 </div>
                 <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
                   {progress}%
                 </span>
               </div>
-              <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+              <div className="w-full bg-gray-200 dark:bg-gray-700 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
                 <div
                   className="h-full bg-gradient-to-r from-blue-600 to-indigo-600 rounded-full transition-all duration-500"
                   style={{ width: `${progress}%` }}
@@ -459,15 +459,15 @@ export default function StudentDashboard() {
           )}
 
           {/* Tabs */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 mb-6">
+            <div className="border-b border-gray-200 dark:border-gray-700">
               <nav className="flex space-x-8 px-6" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('courses')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'courses'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   My Courses ({enrolledCourses.length})
@@ -476,8 +476,8 @@ export default function StudentDashboard() {
                   onClick={() => setActiveTab('lessons')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'lessons'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 dark:border-blue-400 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 hover:border-gray-300 dark:hover:border-gray-600'
                   }`}
                 >
                   All Lessons ({allLessons.length})
@@ -491,7 +491,7 @@ export default function StudentDashboard() {
                   {/* Enrolled Courses */}
                   <div>
                     <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-xl font-semibold text-gray-900">Enrolled Courses</h3>
+                      <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Enrolled Courses</h3>
                       <button
                         onClick={() => setShowEnrollModal(true)}
                         className="flex items-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
@@ -502,12 +502,12 @@ export default function StudentDashboard() {
                     </div>
 
                     {enrolledCourses.length === 0 ? (
-                      <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                         <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                           No enrolled courses
                         </h4>
-                        <p className="text-gray-600 mb-4">
+                        <p className="text-gray-600 dark:text-gray-300 mb-4">
                           Enroll in a course to start learning, or wait for your instructor to enroll
                           you.
                         </p>
@@ -524,15 +524,15 @@ export default function StudentDashboard() {
                         {enrolledCourses.map((course) => (
                           <div
                             key={course.id}
-                            className="border border-gray-200 rounded-xl p-6 hover:border-blue-400 hover:shadow-lg transition-all bg-white"
+                            className="border border-gray-200 dark:border-gray-700 rounded-xl p-6 hover:border-blue-400 hover:shadow-lg transition-all bg-white dark:bg-gray-800"
                           >
                             <div className="flex items-start justify-between mb-4">
                               <div className="flex-1">
-                                <h4 className="text-lg font-semibold text-gray-900 mb-2">
+                                <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
                                   {course.title}
                                 </h4>
                                 {course.description && (
-                                  <p className="text-sm text-gray-600 mb-3 line-clamp-2">
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-3 line-clamp-2">
                                     {course.description}
                                   </p>
                                 )}
@@ -548,12 +548,12 @@ export default function StudentDashboard() {
                             </div>
 
                             <div className="space-y-2 mb-4">
-                              <div className="flex items-center text-sm text-gray-600">
+                              <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                 <BookOpen className="h-4 w-4 mr-2" />
                                 {course.lessonCount} lessons
                               </div>
                               {course.instructors.length > 0 && (
-                                <div className="flex items-center text-sm text-gray-600">
+                                <div className="flex items-center text-sm text-gray-600 dark:text-gray-300">
                                   <Users className="h-4 w-4 mr-2" />
                                   {course.instructors.map((i) => i.name).join(', ')}
           </div>
@@ -576,12 +576,12 @@ export default function StudentDashboard() {
                 <div className="space-y-6">
                   {/* All Lessons from Enrolled Courses */}
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-4">All Lessons</h3>
+                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">All Lessons</h3>
                     {allLessons.length === 0 ? (
-                      <div className="text-center py-12 bg-gray-50 rounded-lg border border-gray-200">
+                      <div className="text-center py-12 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                         <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                        <h4 className="text-lg font-semibold text-gray-900 mb-2">No lessons available</h4>
-                        <p className="text-gray-600">
+                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No lessons available</h4>
+                        <p className="text-gray-600 dark:text-gray-300">
                           Enroll in a course to access lessons, or wait for your instructor to enroll you.
                         </p>
                       </div>
@@ -597,8 +597,8 @@ export default function StudentDashboard() {
                   key={lesson.id}
                               className={`rounded-xl border-2 p-6 transition-all duration-300 ${
                     isUnlocked
-                                  ? 'border-gray-200 hover:border-blue-400 hover:shadow-xl bg-white'
-                                  : 'border-gray-100 bg-gray-50 opacity-75'
+                                  ? 'border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:shadow-xl bg-white dark:bg-gray-800'
+                                  : 'border-gray-100 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 opacity-75'
                   }`}
                 >
                   <div className="flex items-start justify-between mb-4">
@@ -607,26 +607,26 @@ export default function StudentDashboard() {
                                     className={`p-2 rounded-lg ${
                                       isUnlocked
                                         ? hasPassed
-                                          ? 'bg-green-100'
-                                          : 'bg-blue-100'
-                                        : 'bg-gray-200'
+                                          ? 'bg-green-100 dark:bg-green-900/30'
+                                          : 'bg-blue-100 dark:bg-blue-900/30'
+                                        : 'bg-gray-200 dark:bg-gray-700'
                                     }`}
                                   >
                       {isUnlocked ? (
                         hasPassed ? (
-                                        <CheckCircle className="h-5 w-5 text-green-600" />
+                                        <CheckCircle className="h-5 w-5 text-green-600 dark:text-green-400" />
                         ) : (
-                                        <BookOpen className="h-5 w-5 text-blue-600" />
+                                        <BookOpen className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                         )
                       ) : (
                                       <Lock className="h-5 w-5 text-gray-400" />
                       )}
                                   </div>
                       <div>
-                                    <div className="text-xs font-medium text-gray-500 mb-1">
+                                    <div className="text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">
                                       {lesson.courseTitle} • Lesson {lesson.number}
                                     </div>
-                                    <h3 className="font-semibold text-gray-900 text-sm">
+                                    <h3 className="font-semibold text-gray-900 dark:text-white text-sm">
                                       {lesson.title}
                         </h3>
                       </div>
@@ -634,12 +634,12 @@ export default function StudentDashboard() {
                   </div>
                   
                               {lesson.description && (
-                  <p className="text-sm text-gray-600 mb-4 line-clamp-2">
+                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
                     {lesson.description}
                   </p>
                               )}
                   
-                              <div className="flex items-center justify-between text-xs text-gray-500 mb-4 pb-4 border-b border-gray-100">
+                              <div className="flex items-center justify-between text-xs text-gray-500 dark:text-gray-400 mb-4 pb-4 border-b border-gray-100 dark:border-gray-700">
                                 {lesson.duration && (
                     <div className="flex items-center">
                                     <Clock className="h-3 w-3 mr-1" />
@@ -674,7 +674,7 @@ export default function StudentDashboard() {
                         )}
                       </>
                     ) : (
-                                  <div className="w-full bg-gray-200 text-gray-500 py-2.5 px-4 rounded-lg text-center text-sm">
+                                  <div className="w-full bg-gray-200 dark:bg-gray-700 text-gray-500 dark:text-gray-400 py-2.5 px-4 rounded-lg text-center text-sm">
                         Complete Previous Lesson
                       </div>
                     )}
@@ -693,12 +693,12 @@ export default function StudentDashboard() {
           {/* Enroll Modal */}
           {showEnrollModal && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">Available Courses</h2>
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">Available Courses</h2>
                   <button
                     onClick={() => setShowEnrollModal(false)}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 hover:text-gray-600 dark:text-gray-300"
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -708,7 +708,7 @@ export default function StudentDashboard() {
                   {availableCourses.length === 0 ? (
                     <div className="text-center py-8">
                       <BookOpen className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <p className="text-gray-600">No courses available at the moment.</p>
+                      <p className="text-gray-600 dark:text-gray-300">No courses available at the moment.</p>
                     </div>
                   ) : (
                     <div className="space-y-4">
@@ -717,15 +717,15 @@ export default function StudentDashboard() {
                         return (
                           <div
                             key={course.id}
-                            className="border border-gray-200 rounded-lg p-4 hover:border-blue-300 transition-colors"
+                            className="border border-gray-200 dark:border-gray-700 rounded-lg p-4 hover:border-blue-300 transition-colors"
                           >
                             <div className="flex items-start justify-between">
                               <div className="flex-1">
-                                <h4 className="font-semibold text-gray-900 mb-1">{course.title}</h4>
+                                <h4 className="font-semibold text-gray-900 dark:text-white mb-1">{course.title}</h4>
                                 {course.description && (
-                                  <p className="text-sm text-gray-600 mb-2">{course.description}</p>
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mb-2">{course.description}</p>
                                 )}
-                                <div className="flex items-center space-x-4 text-xs text-gray-500">
+                                <div className="flex items-center space-x-4 text-xs text-gray-500 dark:text-gray-400">
                                   <span className="flex items-center">
                                     <BookOpen className="h-3 w-3 mr-1" />
                                     {course.lessonCount} lessons
@@ -738,7 +738,7 @@ export default function StudentDashboard() {
                               </div>
                               <div className="ml-4">
                                 {isEnrolled ? (
-                                  <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-medium">
+                                  <span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-700 rounded-full text-sm font-medium">
                                     Enrolled
                                   </span>
                                 ) : (

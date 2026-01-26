@@ -392,7 +392,7 @@ export default function InstructorLessonDetailPage() {
   if (loading) {
     return (
       <ProtectedRoute requiredRole="instructor">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div className="flex justify-center items-center py-12">
@@ -407,10 +407,10 @@ export default function InstructorLessonDetailPage() {
   if (!lesson) {
     return (
       <ProtectedRoute requiredRole="instructor">
-        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+        <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
           <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg">
               {error || 'Lesson not found'}
             </div>
           </main>
@@ -421,7 +421,7 @@ export default function InstructorLessonDetailPage() {
 
   return (
     <ProtectedRoute requiredRole="instructor">
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50">
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
         <Navigation />
 
         <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -429,7 +429,7 @@ export default function InstructorLessonDetailPage() {
           <div className="mb-6">
             <Link
               href={`/instructor/courses/${lesson.courseId}`}
-              className="inline-flex items-center text-gray-600 hover:text-gray-900 mb-4"
+              className="inline-flex items-center text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:text-white mb-4"
             >
               <ArrowLeft className="h-4 w-4 mr-2" />
               Back to Course
@@ -437,20 +437,20 @@ export default function InstructorLessonDetailPage() {
             <div className="flex items-center justify-between">
               <div>
                 <div className="flex items-center space-x-3 mb-2">
-                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900">
+                  <h1 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white">
                     Lesson {lesson.number}: {lesson.title}
                   </h1>
                   <Link
                     href={`/instructor/courses/${lesson.courseId}`}
-                    className="text-sm text-blue-600 hover:text-blue-700"
+                    className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700"
                   >
                     {lesson.course.title}
                   </Link>
                 </div>
                 {lesson.description && (
-                  <p className="text-gray-600 mt-2">{lesson.description}</p>
+                  <p className="text-gray-600 dark:text-gray-300 mt-2">{lesson.description}</p>
                 )}
-                <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
+                <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                   {lesson.duration && (
                     <div className="flex items-center">
                       <Clock className="h-4 w-4 mr-1" />
@@ -472,13 +472,13 @@ export default function InstructorLessonDetailPage() {
 
           {/* Success/Error Messages */}
           {success && (
-            <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+            <div className="bg-green-50 border border-green-200 text-green-700 dark:text-green-400 px-4 py-3 rounded-lg mb-6 flex items-center">
               <CheckCircle className="h-5 w-5 mr-2" />
               {success}
             </div>
           )}
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 flex items-center">
+            <div className="bg-red-50 border border-red-200 text-red-700 dark:text-red-400 px-4 py-3 rounded-lg mb-6 flex items-center">
               <AlertCircle className="h-5 w-5 mr-2" />
               {error}
             </div>
@@ -517,15 +517,15 @@ export default function InstructorLessonDetailPage() {
           </div>
 
           {/* Tabs */}
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 mb-6">
-            <div className="border-b border-gray-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-100 dark:border-gray-700 mb-6">
+            <div className="border-b border-gray-200 dark:border-gray-700">
               <nav className="flex space-x-8 px-6" aria-label="Tabs">
                 <button
                   onClick={() => setActiveTab('overview')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'overview'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Overview
@@ -534,8 +534,8 @@ export default function InstructorLessonDetailPage() {
                   onClick={() => setActiveTab('exercises')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'exercises'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Exercises ({lesson.exercises.length})
@@ -544,8 +544,8 @@ export default function InstructorLessonDetailPage() {
                   onClick={() => setActiveTab('quiz')}
                   className={`py-4 px-1 border-b-2 font-medium text-sm ${
                     activeTab === 'quiz'
-                      ? 'border-blue-500 text-blue-600'
-                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                      ? 'border-blue-500 text-blue-600 dark:text-blue-400'
+                      : 'border-transparent text-gray-500 dark:text-gray-400 dark:text-gray-500 hover:text-gray-700 dark:text-gray-300 hover:border-gray-300 dark:border-gray-600'
                   }`}
                 >
                   Quiz Questions ({lesson.quizQuestions.length})
@@ -558,40 +558,40 @@ export default function InstructorLessonDetailPage() {
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Lesson Information</h3>
-                    <div className="bg-gray-50 rounded-lg p-4 space-y-3">
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Lesson Information</h3>
+                    <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 space-y-3">
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Lesson Number:</span>
-                        <span className="font-medium text-gray-900">{lesson.number}</span>
+                        <span className="text-gray-600 dark:text-gray-300">Lesson Number:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">{lesson.number}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Title:</span>
-                        <span className="font-medium text-gray-900">{lesson.title}</span>
+                        <span className="text-gray-600 dark:text-gray-300">Title:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">{lesson.title}</span>
                       </div>
                       {lesson.description && (
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Description:</span>
-                          <span className="font-medium text-gray-900 text-right max-w-md">{lesson.description}</span>
+                          <span className="text-gray-600 dark:text-gray-300">Description:</span>
+                          <span className="font-medium text-gray-900 dark:text-white text-right max-w-md">{lesson.description}</span>
                         </div>
                       )}
                       {lesson.duration && (
                         <div className="flex justify-between">
-                          <span className="text-gray-600">Duration:</span>
-                          <span className="font-medium text-gray-900">{lesson.duration}</span>
+                          <span className="text-gray-600 dark:text-gray-300">Duration:</span>
+                          <span className="font-medium text-gray-900 dark:text-white">{lesson.duration}</span>
                         </div>
                       )}
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Course:</span>
+                        <span className="text-gray-600 dark:text-gray-300">Course:</span>
                         <Link
                           href={`/instructor/courses/${lesson.courseId}`}
-                          className="font-medium text-blue-600 hover:text-blue-700"
+                          className="font-medium text-blue-600 dark:text-blue-400 hover:text-blue-700"
                         >
                           {lesson.course.title}
                         </Link>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-gray-600">Created:</span>
-                        <span className="font-medium text-gray-900">
+                        <span className="text-gray-600 dark:text-gray-300">Created:</span>
+                        <span className="font-medium text-gray-900 dark:text-white">
                           {new Date(lesson.createdAt).toLocaleDateString()}
                         </span>
                       </div>
@@ -599,26 +599,26 @@ export default function InstructorLessonDetailPage() {
                   </div>
 
                   <div>
-                    <h3 className="text-lg font-semibold text-gray-900 mb-3">Quick Actions</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">Quick Actions</h3>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                       <Link
                         href={`/instructor/lesson/${lessonId}/notes`}
-                        className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 transition-colors"
+                        className="flex items-center p-4 bg-blue-50 rounded-lg border border-blue-200 hover:bg-blue-100 dark:bg-blue-900/30 transition-colors"
                       >
-                        <FileText className="h-5 w-5 text-blue-600 mr-3" />
+                        <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400 mr-3" />
                         <div>
-                          <div className="font-medium text-gray-900">Manage Notes</div>
-                          <div className="text-sm text-gray-600">Edit lesson notes and content</div>
+                          <div className="font-medium text-gray-900 dark:text-white">Manage Notes</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Edit lesson notes and content</div>
                         </div>
                       </Link>
                       <button
                         onClick={() => setActiveTab('exercises')}
-                        className="flex items-center p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 transition-colors text-left w-full"
+                        className="flex items-center p-4 bg-green-50 rounded-lg border border-green-200 hover:bg-green-100 dark:bg-green-900/30 transition-colors text-left w-full"
                       >
-                        <Award className="h-5 w-5 text-green-600 mr-3" />
+                        <Award className="h-5 w-5 text-green-600 dark:text-green-400 mr-3" />
                         <div>
-                          <div className="font-medium text-gray-900">Grade Exercises</div>
-                          <div className="text-sm text-gray-600">Review and grade student submissions</div>
+                          <div className="font-medium text-gray-900 dark:text-white">Grade Exercises</div>
+                          <div className="text-sm text-gray-600 dark:text-gray-300">Review and grade student submissions</div>
                         </div>
                       </button>
                     </div>
@@ -630,7 +630,7 @@ export default function InstructorLessonDetailPage() {
               {activeTab === 'exercises' && (
                 <div className="space-y-4">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Exercises</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Exercises</h3>
                     <button
                       onClick={() => {
                         setNewExercise({ title: '', description: '', maxPoints: 16, rubricId: '' });
@@ -644,9 +644,9 @@ export default function InstructorLessonDetailPage() {
                   </div>
                   {lesson.exercises.length === 0 ? (
                     <div className="text-center py-12">
-                      <FileText className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Exercises</h3>
-                      <p className="text-gray-600 mb-4">This lesson doesn't have any exercises yet.</p>
+                      <FileText className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Exercises</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">This lesson doesn't have any exercises yet.</p>
                       <button
                         onClick={() => {
                           setNewExercise({ title: '', description: '', maxPoints: 16, rubricId: '' });
@@ -662,22 +662,22 @@ export default function InstructorLessonDetailPage() {
                     lesson.exercises.map((exercise) => (
                       <div
                         key={exercise.id}
-                        className="border border-gray-200 rounded-lg p-6 hover:border-blue-300 transition-colors"
+                        className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:border-blue-300 transition-colors"
                       >
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
                             <div className="flex items-center space-x-3 mb-2">
-                              <div className="bg-blue-100 p-2 rounded-lg">
-                                <FileText className="h-5 w-5 text-blue-600" />
+                              <div className="bg-blue-100 dark:bg-blue-900/30 p-2 rounded-lg">
+                                <FileText className="h-5 w-5 text-blue-600 dark:text-blue-400" />
                               </div>
                               <div>
-                                <h3 className="text-lg font-semibold text-gray-900">{exercise.title}</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{exercise.title}</h3>
                                 {exercise.description && (
-                                  <p className="text-sm text-gray-600 mt-1">{exercise.description}</p>
+                                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{exercise.description}</p>
                                 )}
                               </div>
                             </div>
-                            <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500">
+                            <div className="flex items-center space-x-4 mt-3 text-sm text-gray-500 dark:text-gray-400 dark:text-gray-500">
                               <span className="flex items-center">
                                 <Award className="h-4 w-4 mr-1" />
                                 {exercise.maxPoints} points
@@ -695,7 +695,7 @@ export default function InstructorLessonDetailPage() {
                           <div className="flex items-center gap-2 ml-4">
                             <Link
                               href={`/instructor/exercise/${exercise.id}/grade`}
-                              className="text-green-600 hover:text-green-700 font-medium text-sm flex items-center px-3 py-1.5 bg-green-50 hover:bg-green-100 rounded-lg transition-colors"
+                              className="text-green-600 dark:text-green-400 hover:text-green-700 dark:text-green-400 font-medium text-sm flex items-center px-3 py-1.5 bg-green-50 hover:bg-green-100 dark:bg-green-900/30 rounded-lg transition-colors"
                               title="Grade Exercise"
                             >
                               <ClipboardCheck className="h-4 w-4 mr-1" />
@@ -703,7 +703,7 @@ export default function InstructorLessonDetailPage() {
                             </Link>
                             <button
                               onClick={() => setEditingExercise(exercise)}
-                              className="text-gray-600 hover:text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:text-white p-2 hover:bg-gray-50 dark:bg-gray-800 rounded-lg transition-colors"
                               title="Edit"
                             >
                               <Edit className="h-4 w-4" />
@@ -719,25 +719,25 @@ export default function InstructorLessonDetailPage() {
                         </div>
 
                         {/* Rubric Preview */}
-                        <div className="mt-4 pt-4 border-t border-gray-200">
+                        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
                           <div className="flex items-center justify-between mb-2">
-                            <h4 className="text-sm font-medium text-gray-700">Rubric: {exercise.rubric.name}</h4>
+                            <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300">Rubric: {exercise.rubric.name}</h4>
                             <Link
                               href={`/instructor/rubric/${exercise.rubric.id}/edit`}
-                              className="text-xs text-blue-600 hover:text-blue-700 font-medium flex items-center"
+                              className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 font-medium flex items-center"
                             >
                               <Edit className="h-3 w-3 mr-1" />
                               Edit
                             </Link>
                           </div>
                           {exercise.rubric.description && (
-                            <p className="text-xs text-gray-600 mb-3">{exercise.rubric.description}</p>
+                            <p className="text-xs text-gray-600 dark:text-gray-300 mb-3">{exercise.rubric.description}</p>
                           )}
                           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                             {exercise.rubric.criteria.map((criteria) => (
-                              <div key={criteria.id} className="bg-gray-50 rounded p-2">
-                                <div className="text-xs font-medium text-gray-900">{criteria.name}</div>
-                                <div className="text-xs text-gray-600">Weight: {criteria.weight}%</div>
+                              <div key={criteria.id} className="bg-gray-50 dark:bg-gray-800 rounded p-2">
+                                <div className="text-xs font-medium text-gray-900 dark:text-white">{criteria.name}</div>
+                                <div className="text-xs text-gray-600 dark:text-gray-300">Weight: {criteria.weight}%</div>
                               </div>
                             ))}
                           </div>
@@ -752,7 +752,7 @@ export default function InstructorLessonDetailPage() {
               {activeTab === 'quiz' && (
                 <div className="space-y-4">
                   <div className="flex justify-between items-center mb-4">
-                    <h3 className="text-lg font-semibold text-gray-900">Quiz Questions</h3>
+                    <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Quiz Questions</h3>
                     <button
                       onClick={() => {
                         setNewQuestion({ question: '', options: ['', ''], correctAnswer: 0, explanation: '', order: lesson.quizQuestions.length });
@@ -766,9 +766,9 @@ export default function InstructorLessonDetailPage() {
                   </div>
                   {lesson.quizQuestions.length === 0 ? (
                     <div className="text-center py-12">
-                      <HelpCircle className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-                      <h3 className="text-lg font-semibold text-gray-900 mb-2">No Quiz Questions</h3>
-                      <p className="text-gray-600 mb-4">This lesson doesn't have any quiz questions yet.</p>
+                      <HelpCircle className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
+                      <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Quiz Questions</h3>
+                      <p className="text-gray-600 dark:text-gray-300 mb-4">This lesson doesn't have any quiz questions yet.</p>
                       <button
                         onClick={() => {
                           setNewQuestion({ question: '', options: ['', ''], correctAnswer: 0, explanation: '', order: 0 });
@@ -784,22 +784,22 @@ export default function InstructorLessonDetailPage() {
                     lesson.quizQuestions.map((question, index) => (
                       <div
                         key={question.id}
-                        className="border border-gray-200 rounded-lg p-6 hover:border-purple-300 transition-colors"
+                        className="border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:border-purple-300 transition-colors"
                       >
                         <div className="flex items-start justify-between mb-4">
                           <div className="flex-1">
                             <div className="flex items-center space-x-3 mb-3">
-                              <div className="bg-purple-100 p-2 rounded-lg">
-                                <HelpCircle className="h-5 w-5 text-purple-600" />
+                              <div className="bg-purple-100 dark:bg-purple-900/30 p-2 rounded-lg">
+                                <HelpCircle className="h-5 w-5 text-purple-600 dark:text-purple-400" />
                               </div>
                               <div>
                                 <div className="flex items-center space-x-2">
-                                  <span className="text-sm font-medium text-gray-500">Question {index + 1}</span>
+                                  <span className="text-sm font-medium text-gray-500 dark:text-gray-400 dark:text-gray-500">Question {index + 1}</span>
                                   {question.order > 0 && (
-                                    <span className="text-xs text-gray-400">(Order: {question.order})</span>
+                                    <span className="text-xs text-gray-400 dark:text-gray-500">(Order: {question.order})</span>
                                   )}
                                 </div>
-                                <h3 className="text-lg font-semibold text-gray-900 mt-1">{question.question}</h3>
+                                <h3 className="text-lg font-semibold text-gray-900 dark:text-white mt-1">{question.question}</h3>
                               </div>
                             </div>
 
@@ -810,16 +810,16 @@ export default function InstructorLessonDetailPage() {
                                   className={`p-3 rounded-lg border-2 ${
                                     optIndex === question.correctAnswer
                                       ? 'border-green-300 bg-green-50'
-                                      : 'border-gray-200 bg-white'
+                                      : 'border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800'
                                   }`}
                                 >
                                   <div className="flex items-center space-x-2">
                                     {optIndex === question.correctAnswer && (
-                                      <CheckCircle className="h-4 w-4 text-green-600" />
+                                      <CheckCircle className="h-4 w-4 text-green-600 dark:text-green-400" />
                                     )}
-                                    <span className="text-sm text-gray-900">{option}</span>
+                                    <span className="text-sm text-gray-900 dark:text-white">{option}</span>
                                     {optIndex === question.correctAnswer && (
-                                      <span className="ml-auto text-xs font-medium text-green-600">Correct Answer</span>
+                                      <span className="ml-auto text-xs font-medium text-green-600 dark:text-green-400">Correct Answer</span>
                                     )}
                                   </div>
                                 </div>
@@ -836,7 +836,7 @@ export default function InstructorLessonDetailPage() {
                           <div className="flex items-center gap-2 ml-4">
                             <button
                               onClick={() => setEditingQuestion(question)}
-                              className="text-gray-600 hover:text-gray-900 p-2 hover:bg-gray-50 rounded-lg transition-colors"
+                              className="text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:text-white p-2 hover:bg-gray-50 dark:bg-gray-800 rounded-lg transition-colors"
                               title="Edit"
                             >
                               <Edit className="h-4 w-4" />
@@ -861,9 +861,9 @@ export default function InstructorLessonDetailPage() {
           {/* Exercise Form Modal */}
           {(showExerciseForm || editingExercise) && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {editingExercise ? 'Edit Exercise' : 'Add New Exercise'}
                   </h2>
                   <button
@@ -871,7 +871,7 @@ export default function InstructorLessonDetailPage() {
                       setShowExerciseForm(false);
                       setEditingExercise(null);
                     }}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300"
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -879,7 +879,7 @@ export default function InstructorLessonDetailPage() {
 
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Title <span className="text-red-500">*</span>
                     </label>
                     <input
@@ -890,13 +890,13 @@ export default function InstructorLessonDetailPage() {
                           ? setEditingExercise({ ...editingExercise, title: e.target.value })
                           : setNewExercise({ ...newExercise, title: e.target.value })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       required
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Description</label>
                     <textarea
                       value={editingExercise?.description || newExercise.description}
                       onChange={(e) =>
@@ -905,13 +905,13 @@ export default function InstructorLessonDetailPage() {
                           : setNewExercise({ ...newExercise, description: e.target.value })
                       }
                       rows={4}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     />
                   </div>
 
                   <div className="grid grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">Max Points</label>
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Max Points</label>
                       <input
                         type="number"
                         value={editingExercise?.maxPoints || newExercise.maxPoints}
@@ -920,13 +920,13 @@ export default function InstructorLessonDetailPage() {
                             ? setEditingExercise({ ...editingExercise, maxPoints: parseInt(e.target.value) || 16 })
                             : setNewExercise({ ...newExercise, maxPoints: parseInt(e.target.value) || 16 })
                         }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                         min="1"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-2">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                         Rubric <span className="text-red-500">*</span>
                       </label>
                       <select
@@ -939,7 +939,7 @@ export default function InstructorLessonDetailPage() {
                               })
                             : setNewExercise({ ...newExercise, rubricId: e.target.value })
                         }
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
                         required
                       >
                         <option value="">Select Rubric</option>
@@ -965,7 +965,7 @@ export default function InstructorLessonDetailPage() {
                         setShowExerciseForm(false);
                         setEditingExercise(null);
                       }}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
                     >
                       Cancel
                     </button>
@@ -978,9 +978,9 @@ export default function InstructorLessonDetailPage() {
           {/* Quiz Question Form Modal */}
           {(showQuizForm || editingQuestion) && (
             <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-              <div className="bg-white rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
-                <div className="sticky top-0 bg-white border-b border-gray-200 px-6 py-4 flex items-center justify-between">
-                  <h2 className="text-2xl font-bold text-gray-900">
+              <div className="bg-white dark:bg-gray-800 rounded-xl shadow-2xl max-w-3xl w-full max-h-[90vh] overflow-y-auto">
+                <div className="sticky top-0 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 px-6 py-4 flex items-center justify-between">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
                     {editingQuestion ? 'Edit Quiz Question' : 'Add New Quiz Question'}
                   </h2>
                   <button
@@ -988,7 +988,7 @@ export default function InstructorLessonDetailPage() {
                       setShowQuizForm(false);
                       setEditingQuestion(null);
                     }}
-                    className="text-gray-400 hover:text-gray-600"
+                    className="text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:text-gray-300"
                   >
                     <X className="h-6 w-6" />
                   </button>
@@ -996,7 +996,7 @@ export default function InstructorLessonDetailPage() {
 
                 <div className="p-6 space-y-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Question <span className="text-red-500">*</span>
                     </label>
                     <textarea
@@ -1007,7 +1007,7 @@ export default function InstructorLessonDetailPage() {
                           : setNewQuestion({ ...newQuestion, question: e.target.value })
                       }
                       rows={3}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Enter your question here..."
                       required
                     />
@@ -1015,13 +1015,13 @@ export default function InstructorLessonDetailPage() {
 
                   <div>
                     <div className="flex items-center justify-between mb-2">
-                      <label className="block text-sm font-medium text-gray-700">
+                      <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                         Options <span className="text-red-500">*</span>
                       </label>
                       <button
                         type="button"
                         onClick={addOption}
-                        className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+                        className="text-sm text-purple-600 dark:text-purple-400 hover:text-purple-700 font-medium"
                       >
                         + Add Option
                       </button>
@@ -1040,20 +1040,20 @@ export default function InstructorLessonDetailPage() {
                                 ? setEditingQuestion({ ...editingQuestion, correctAnswer: index })
                                 : setNewQuestion({ ...newQuestion, correctAnswer: index })
                             }
-                            className="h-4 w-4 text-purple-600 focus:ring-purple-500"
+                            className="h-4 w-4 text-purple-600 dark:text-purple-400 focus:ring-purple-500"
                           />
                           <input
                             type="text"
                             value={option}
                             onChange={(e) => updateOption(index, e.target.value)}
                             placeholder={`Option ${index + 1}`}
-                            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                            className="flex-1 px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                           />
                           {(editingQuestion?.options || newQuestion.options).length > 2 && (
                             <button
                               type="button"
                               onClick={() => removeOption(index)}
-                              className="text-red-600 hover:text-red-700 p-2"
+                              className="text-red-600 hover:text-red-700 dark:text-red-400 p-2"
                             >
                               <X className="h-4 w-4" />
                             </button>
@@ -1061,13 +1061,13 @@ export default function InstructorLessonDetailPage() {
                         </div>
                       ))}
                     </div>
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-2">
                       Select the radio button next to the correct answer
                     </p>
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                       Explanation (Optional)
                     </label>
                     <textarea
@@ -1078,13 +1078,13 @@ export default function InstructorLessonDetailPage() {
                           : setNewQuestion({ ...newQuestion, explanation: e.target.value })
                       }
                       rows={2}
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       placeholder="Explain why this is the correct answer..."
                     />
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Order (Optional)</label>
+                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Order (Optional)</label>
                     <input
                       type="number"
                       value={editingQuestion?.order ?? newQuestion.order}
@@ -1093,10 +1093,10 @@ export default function InstructorLessonDetailPage() {
                           ? setEditingQuestion({ ...editingQuestion, order: parseInt(e.target.value) || 0 })
                           : setNewQuestion({ ...newQuestion, order: parseInt(e.target.value) || 0 })
                       }
-                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                       min="0"
                     />
-                    <p className="text-xs text-gray-500 mt-1">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 dark:text-gray-500 mt-1">
                       Lower numbers appear first. Leave as 0 for auto-ordering.
                     </p>
                   </div>
@@ -1114,7 +1114,7 @@ export default function InstructorLessonDetailPage() {
                         setShowQuizForm(false);
                         setEditingQuestion(null);
                       }}
-                      className="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                      className="px-4 py-2 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 rounded-lg hover:bg-gray-50 dark:bg-gray-800 transition-colors"
                     >
                       Cancel
                     </button>
