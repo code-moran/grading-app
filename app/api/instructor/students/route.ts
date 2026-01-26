@@ -3,6 +3,9 @@ import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
 
+// Force dynamic rendering since we use getServerSession (which uses headers)
+export const dynamic = 'force-dynamic';
+
 // GET /api/instructor/students - Get students enrolled in instructor's courses
 export async function GET(request: NextRequest) {
   try {

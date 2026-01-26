@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "postinstall": "prisma generate",
     "setup-db": "node scripts/setup-db.js",
     "init-db": "tsx lib/init-db.ts",
     "create-schema": "tsx lib/create-schema.ts",

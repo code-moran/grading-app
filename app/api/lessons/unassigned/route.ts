@@ -3,6 +3,9 @@ import { prisma } from '@/lib/prisma';
 import { getServerSession } from 'next-auth';
 import { authOptions } from '@/lib/auth';
 
+// Force dynamic rendering since we use getServerSession (which uses headers)
+export const dynamic = 'force-dynamic';
+
 // GET - Get lessons from other courses that can be reassigned
 // Note: All lessons must be linked to a course (courseId is required).
 // This endpoint returns lessons from OTHER courses that can be moved/reassigned.
