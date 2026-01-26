@@ -6,8 +6,8 @@ import SessionProvider from '@/components/SessionProvider'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
-  title: 'Web Design Grading App',
-  description: 'A comprehensive grading tool for web design practical exercises',
+  title: 'Learning & Grading Platform',
+  description: 'A comprehensive learning and grading platform for courses, lessons, and practical exercises',
 }
 
 export default function RootLayout({

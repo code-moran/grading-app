@@ -46,14 +46,14 @@ export default function HomePage() {
         <div className="text-center py-16 md:py-24">
           <div className="inline-flex items-center space-x-2 bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-sm font-medium mb-6">
             <Sparkles className="h-4 w-4" />
-            <span>Modern Grading Platform for Web Design</span>
+            <span>Modern Learning & Grading Platform</span>
           </div>
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6">
             Learn, Practice, and
             <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent"> Excel</span>
           </h1>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
-            A comprehensive learning platform for web design. Master HTML, CSS, JavaScript, and modern web development through interactive lessons, quizzes, and hands-on exercises.
+            A comprehensive learning platform for all courses. Master new skills through interactive lessons, quizzes, and hands-on exercises with detailed feedback and progress tracking.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
@@ -93,7 +93,7 @@ export default function HomePage() {
               <Award className="h-6 w-6 text-purple-600" />
             </div>
             <h3 className="text-xl font-semibold text-gray-900 mb-2">Interactive Learning</h3>
-            <p className="text-gray-600">Engage with quizzes, exercises, and real-time feedback to master web design.</p>
+            <p className="text-gray-600">Engage with quizzes, exercises, and real-time feedback to master any subject.</p>
           </div>
         </div>
 
@@ -106,7 +106,7 @@ export default function HomePage() {
             </div>
             <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Explore Our Courses</h2>
             <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Discover comprehensive courses designed to help you master web design and development skills.
+              Discover comprehensive courses designed to help you master new skills and advance your knowledge.
             </p>
           </div>
 
@@ -228,7 +228,7 @@ export default function HomePage() {
         <div className="text-center py-16 mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Ready to Get Started?</h2>
           <p className="text-lg text-gray-600 mb-8 max-w-2xl mx-auto">
-            Join thousands of students learning web design. Create your account, subscribe to courses, and start your learning journey today.
+            Join thousands of students on their learning journey. Create your account, subscribe to courses, and start mastering new skills today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
