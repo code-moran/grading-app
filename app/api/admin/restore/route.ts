@@ -344,7 +344,93 @@ export async function POST(request: NextRequest) {
           }
         }
         
-        createRestoreOp('instructors', tx.instructor, skipUsers, 'instructors', 'userId');
+        // Instructors need userId remapping
+        if (!skipUsers && backupData.data.instructors && backupData.data.instructors.length > 0) {
+          const instructorsWithRemappedUsers = remapForeignKeys(backupData.data.instructors, {
+            userId: 'users',
+            approvedBy: 'users', // approvedBy is also a userId
+          });
+          
+          // Filter out instructors where required foreign keys are null
+          const validInstructors = instructorsWithRemappedUsers.filter(({ data }) => {
+            // userId is required
+            return data.userId !== null;
+          });
+          
+          if (validInstructors.length > 0) {
+            restoreOperations.push({
+              key: 'instructors',
+              restoreFn: async () => {
+                const insertedRecords = [];
+                for (const { oldId, data } of validInstructors) {
+                  try {
+                    // Check if instructor already exists BEFORE creating
+                    let existing = null;
+                    if (data.userId) {
+                      try {
+                        existing = await tx.instructor.findUnique({
+                          where: { userId: data.userId },
+                        });
+                      } catch (findError) {
+                        // Ignore find errors, proceed with create
+                      }
+                    }
+                    
+                    if (existing) {
+                      // Record exists, use it for ID mapping
+                      if (oldId) {
+                        idMaps.instructors.set(oldId, existing.id);
+                      }
+                    } else {
+                      // Create new record
+                      const created = await tx.instructor.create({
+                        data,
+                      });
+                      insertedRecords.push(created);
+                      // Store ID mapping
+                      if (oldId) {
+                        idMaps.instructors.set(oldId, created.id);
+                      }
+                    }
+                  } catch (error: any) {
+                    // Only catch duplicate errors, let other errors propagate
+                    if (error.code === 'P2002') {
+                      // Unique constraint violation - try to find existing record
+                      let existing = null;
+                      if (data.userId) {
+                        try {
+                          existing = await tx.instructor.findUnique({
+                            where: { userId: data.userId },
+                          });
+                        } catch (findError) {
+                          // Ignore find errors
+                        }
+                      }
+                      
+                      if (existing && oldId) {
+                        idMaps.instructors.set(oldId, existing.id);
+                      }
+                      // Continue to next record
+                    } else {
+                      // Log the error before re-throwing
+                      console.error(`Error creating instructor record:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        data: JSON.stringify(data, null, 2),
+                        oldId,
+                        userId: data.userId,
+                      });
+                      // Re-throw non-duplicate errors to abort transaction
+                      throw error;
+                    }
+                  }
+                }
+                restoreStats.instructors = insertedRecords.length;
+              },
+            });
+          }
+        }
         // AssessorAccreditations need instructorId remapping
         if (!skipUsers && backupData.data.assessorAccreditations && backupData.data.assessorAccreditations.length > 0) {
           const accreditationsWithRemapping = remapForeignKeys(backupData.data.assessorAccreditations, {
