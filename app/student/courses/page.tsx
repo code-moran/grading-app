@@ -56,24 +56,28 @@ interface EnrolledCourse {
   enrolledByInstructor?: boolean;
 }
 
+import { CardSkeleton } from '@/components/Skeleton';
+
+import Skeleton from '@/components/Skeleton';
+
 // Skeleton Loader Component
 function CourseCardSkeleton() {
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 animate-pulse">
+    <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
       <div className="flex items-start justify-between mb-4">
-        <div className="bg-gray-200 dark:bg-gray-700 p-3 rounded-lg w-12 h-12"></div>
-        <div className="bg-gray-200 dark:bg-gray-700 w-20 h-6 rounded-full"></div>
+        <Skeleton variant="rectangular" width={48} height={48} className="rounded-lg" />
+        <Skeleton variant="rectangular" width={80} height={24} className="rounded-full" />
       </div>
       <div className="space-y-3 mb-4">
-        <div className="bg-gray-200 dark:bg-gray-700 h-6 rounded w-3/4"></div>
-        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-full"></div>
-        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-2/3"></div>
+        <Skeleton variant="text" width="75%" height={24} />
+        <Skeleton variant="text" width="100%" height={16} />
+        <Skeleton variant="text" width="66%" height={16} />
       </div>
       <div className="space-y-2 mb-4">
-        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2"></div>
-        <div className="bg-gray-200 dark:bg-gray-700 h-4 rounded w-1/2"></div>
+        <Skeleton variant="text" width="50%" height={16} />
+        <Skeleton variant="text" width="50%" height={16} />
       </div>
-      <div className="bg-gray-200 dark:bg-gray-700 h-10 rounded-lg"></div>
+      <Skeleton variant="rectangular" width="100%" height={40} className="rounded-lg" />
     </div>
   );
 }

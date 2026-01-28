@@ -6,6 +6,9 @@ import { Grade, Student, BulkGradeExport } from '@/lib/types';
 import { BarChart3, TrendingUp, Users, BookOpen, Download } from 'lucide-react';
 import Link from 'next/link';
 import { convertGradesToCSV, downloadCSV, calculateBestGrade } from '@/lib/utils';
+import Navigation from '@/components/Navigation';
+import ProtectedRoute from '@/components/ProtectedRoute';
+import { TableSkeleton } from '@/components/Skeleton';
 
 export default function GradesPage() {
   const [students, setStudents] = useState<Student[]>([]);
@@ -112,9 +115,9 @@ export default function GradesPage() {
     switch (letterGrade) {
       case 'A': return 'text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-900/30';
       case 'B': return 'text-blue-600 dark:text-blue-400 bg-blue-100 dark:bg-blue-900/30';
-      case 'C': return 'text-yellow-600 bg-yellow-100';
-      case 'D': return 'text-orange-600 bg-orange-100';
-      case 'F': return 'text-red-600 bg-red-100 dark:bg-red-900/20';
+      case 'C': return 'text-yellow-600 dark:text-yellow-400 bg-yellow-100 dark:bg-yellow-900/30';
+      case 'D': return 'text-orange-600 dark:text-orange-400 bg-orange-100 dark:bg-orange-900/30';
+      case 'F': return 'text-red-600 dark:text-red-400 bg-red-100 dark:bg-red-900/30';
       default: return 'text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700';
     }
   };
@@ -132,9 +135,11 @@ export default function GradesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-gray-800">
-      {/* Header */}
-      <header className="bg-white dark:bg-gray-800 shadow-sm border-b">
+    <ProtectedRoute requiredRole={['instructor', 'admin']}>
+      <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+        <Navigation />
+        {/* Header */}
+        <header className="bg-white dark:bg-gray-800 shadow-sm border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div>
@@ -144,7 +149,7 @@ export default function GradesPage() {
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleBulkDownload}
-                className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors duration-200 flex items-center"
+                className="bg-green-600 dark:bg-green-700 text-white px-4 py-2 rounded-md hover:bg-green-700 dark:hover:bg-green-600 transition-colors duration-200 flex items-center"
               >
                 <Download className="h-4 w-4 mr-2" />
                 Download Grades
@@ -175,9 +180,8 @@ export default function GradesPage() {
 
         {/* Loading State */}
         {loading && (
-          <div className="flex justify-center items-center py-12">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            <span className="ml-2 text-gray-600 dark:text-gray-300">Loading grades...</span>
+          <div className="py-12">
+            <TableSkeleton rows={8} cols={6} />
           </div>
         )}
 
@@ -188,11 +192,11 @@ export default function GradesPage() {
         <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mb-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Lesson</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by Lesson</label>
               <select
                 value={selectedLesson}
                 onChange={(e) => setSelectedLesson(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="all">All Lessons</option>
                 {lessons.map(lesson => (
@@ -203,11 +207,11 @@ export default function GradesPage() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Filter by Student</label>
+              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Filter by Student</label>
               <select
                 value={selectedStudent}
                 onChange={(e) => setSelectedStudent(e.target.value)}
-                className="w-full p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
               >
                 <option value="all">All Students</option>
                     {students.map(student => (
@@ -248,8 +252,8 @@ export default function GradesPage() {
           
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
-              <div className="bg-purple-100 p-3 rounded-lg">
-                <Users className="h-6 w-6 text-purple-600" />
+              <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg">
+                <Users className="h-6 w-6 text-purple-600 dark:text-purple-400" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Students Graded</p>
@@ -262,8 +266,8 @@ export default function GradesPage() {
           
           <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
             <div className="flex items-center">
-              <div className="bg-orange-100 p-3 rounded-lg">
-                <BookOpen className="h-6 w-6 text-orange-600" />
+              <div className="bg-orange-100 dark:bg-orange-900/30 p-3 rounded-lg">
+                <BookOpen className="h-6 w-6 text-orange-600 dark:text-orange-400" />
               </div>
               <div className="ml-4">
                 <p className="text-sm font-medium text-gray-600 dark:text-gray-300">Lessons Covered</p>
@@ -298,8 +302,8 @@ export default function GradesPage() {
             </h3>
           </div>
           <div className="overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50 dark:bg-gray-800">
+            <table className="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+              <thead className="bg-gray-50 dark:bg-gray-900/50">
                 <tr>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider">
                     Student
@@ -321,9 +325,9 @@ export default function GradesPage() {
                   </th>
                 </tr>
               </thead>
-              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200">
+              <tbody className="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
                 {filteredGrades.map((grade) => (
-                  <tr key={grade.id} className="hover:bg-gray-50 dark:bg-gray-800">
+                  <tr key={grade.id} className="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                     <td className="px-6 py-4 whitespace-nowrap">
                       <div className="text-sm font-medium text-gray-900 dark:text-white">
                         {getStudentName(grade.studentId)}
@@ -363,8 +367,8 @@ export default function GradesPage() {
         </div>
 
         {filteredGrades.length === 0 && (
-          <div className="text-center py-12">
-            <BarChart3 className="h-12 w-12 text-gray-400 mx-auto mb-4" />
+          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-12 text-center">
+            <BarChart3 className="h-12 w-12 text-gray-400 dark:text-gray-500 mx-auto mb-4" />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">No grades found</h3>
             <p className="text-gray-600 dark:text-gray-300">
               {selectedLesson !== 'all' || selectedStudent !== 'all' 
@@ -373,9 +377,10 @@ export default function GradesPage() {
             </p>
           </div>
         )}
-          </>
+          </> 
         )}
       </main>
-    </div>
+      </div>
+    </ProtectedRoute>
   );
 }

@@ -630,7 +630,11 @@ export default function StudentLessonPage() {
                         Exercise {index + 1}: {exercise.title}
                       </h3>
                               {exercise.description && (
-                      <p className="text-gray-700 dark:text-gray-300 mb-4">{exercise.description}</p>
+                      <div className="text-gray-700 dark:text-gray-300 mb-4 markdown-content">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {exercise.description}
+                        </ReactMarkdown>
+                      </div>
                               )}
                             </div>
                             <div className="ml-4 flex items-center space-x-2">

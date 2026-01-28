@@ -111,7 +111,7 @@ export async function PATCH(
     }
 
     const body = await request.json();
-    const { name, description, totalPoints, criteriaIds, levelIds } = body;
+    const { name, description, totalPoints, criteriaIds, levelIds, criteriaWeights } = body;
 
     // Check if rubric exists
     const existingRubric = await prisma.rubric.findUnique({
@@ -154,6 +154,19 @@ export async function PATCH(
 
           if (existingCriteria.length !== criteriaIds.length) {
             throw new Error('One or more criteria not found');
+          }
+
+          // Update criteria weights if provided
+          if (criteriaWeights && typeof criteriaWeights === 'object') {
+            for (const [criteriaId, weight] of Object.entries(criteriaWeights)) {
+              const weightValue = typeof weight === 'number' ? weight : parseInt(weight as string, 10);
+              if (!isNaN(weightValue) && weightValue >= 0 && weightValue <= 100) {
+                await tx.rubricCriteria.update({
+                  where: { id: criteriaId },
+                  data: { weight: weightValue },
+                });
+              }
+            }
           }
 
           // Create mappings

@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'next/navigation';
 import { lessons } from '@/lib/lessons';
 import { Lesson, Student, Grade, RubricLevel } from '@/lib/types';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import { ArrowLeft, Save, CheckCircle, AlertCircle, Search, User, FileText } from 'lucide-react';
 import Link from 'next/link';
 import Navigation from '@/components/Navigation';
@@ -360,7 +362,13 @@ export default function GradingPage() {
                   </div>
                   <div className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4 border border-gray-200 dark:border-gray-700">
                     <p className="font-medium text-gray-900 dark:text-white mb-1">{exercise.title}</p>
-                    <p className="text-sm text-gray-600 dark:text-gray-300">{exercise.description}</p>
+                    {exercise.description && (
+                      <div className="text-sm text-gray-600 dark:text-gray-300 markdown-content">
+                        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                          {exercise.description}
+                        </ReactMarkdown>
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -430,24 +438,24 @@ export default function GradingPage() {
                 </div>
 
                 {/* Grade Summary */}
-                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 rounded-xl shadow-lg p-6 text-white">
-                  <h3 className="text-lg font-bold mb-6">Grade Summary</h3>
+                <div className="bg-gradient-to-br from-blue-600 to-indigo-600 dark:from-blue-700 dark:to-indigo-700 rounded-xl shadow-lg p-6 text-white">
+                  <h3 className="text-lg font-bold mb-6 text-white">Grade Summary</h3>
                   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
-                      <div className="text-3xl font-bold">{totalPoints}</div>
-                      <div className="text-sm opacity-90 mt-1">Points Earned</div>
+                    <div className="text-center bg-white/30 dark:bg-gray-900/40 rounded-lg p-4 backdrop-blur-sm border border-white/30 dark:border-gray-700/50">
+                      <div className="text-3xl font-bold text-white drop-shadow-sm">{totalPoints}</div>
+                      <div className="text-sm text-white/95 dark:text-gray-200 mt-1">Points Earned</div>
                     </div>
-                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
-                      <div className="text-3xl font-bold">{exercise.maxPoints}</div>
-                      <div className="text-sm opacity-90 mt-1">Max Points</div>
+                    <div className="text-center bg-white/30 dark:bg-gray-900/40 rounded-lg p-4 backdrop-blur-sm border border-white/30 dark:border-gray-700/50">
+                      <div className="text-3xl font-bold text-white drop-shadow-sm">{exercise.maxPoints}</div>
+                      <div className="text-sm text-white/95 dark:text-gray-200 mt-1">Max Points</div>
                     </div>
-                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
-                      <div className="text-3xl font-bold">{percentage}%</div>
-                      <div className="text-sm opacity-90 mt-1">Percentage</div>
+                    <div className="text-center bg-white/30 dark:bg-gray-900/40 rounded-lg p-4 backdrop-blur-sm border border-white/30 dark:border-gray-700/50">
+                      <div className="text-3xl font-bold text-white drop-shadow-sm">{percentage}%</div>
+                      <div className="text-sm text-white/95 dark:text-gray-200 mt-1">Percentage</div>
                     </div>
-                    <div className="text-center bg-white dark:bg-gray-800/10 rounded-lg p-4 backdrop-blur-sm">
-                      <div className="text-3xl font-bold">{letterGrade}</div>
-                      <div className="text-sm opacity-90 mt-1">Letter Grade</div>
+                    <div className="text-center bg-white/30 dark:bg-gray-900/40 rounded-lg p-4 backdrop-blur-sm border border-white/30 dark:border-gray-700/50">
+                      <div className="text-3xl font-bold text-white drop-shadow-sm">{letterGrade}</div>
+                      <div className="text-sm text-white/95 dark:text-gray-200 mt-1">Letter Grade</div>
                     </div>
                   </div>
                 </div>

@@ -5,6 +5,8 @@ import { useParams, useRouter } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Navigation from '@/components/Navigation';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   BookOpen,
   ArrowLeft,
@@ -673,7 +675,11 @@ export default function InstructorLessonDetailPage() {
                               <div>
                                 <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{exercise.title}</h3>
                                 {exercise.description && (
-                                  <p className="text-sm text-gray-600 dark:text-gray-300 mt-1">{exercise.description}</p>
+                                  <div className="text-sm text-gray-600 dark:text-gray-300 mt-1 markdown-content">
+                                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                                      {exercise.description}
+                                    </ReactMarkdown>
+                                  </div>
                                 )}
                               </div>
                             </div>

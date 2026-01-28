@@ -39,8 +39,8 @@ model Student {
   updatedAt          DateTime @updatedAt @map("updated_at")
 
   // Relations
-  user                User?                 @relation(fields: [userId], references: [id], onDelete: SetNull)
-  cohort               Cohort?              @relation(fields: [cohortId], references: [id], onDelete: SetNull)
+  user                User?                @relation(fields: [userId], references: [id], onDelete: SetNull)
+  cohort              Cohort?              @relation(fields: [cohortId], references: [id], onDelete: SetNull)
   grades              Grade[]
   quizAttempts        QuizAttempt[]
   exerciseSubmissions ExerciseSubmission[]
@@ -50,31 +50,31 @@ model Student {
 }
 
 model Instructor {
-  id         String    @id @default(cuid())
-  userId     String?   @unique @map("user_id") // Optional - can exist without User
-  name       String
-  email      String    @unique
-  department String?
-  title      String?
-  isApproved Boolean   @default(false) @map("is_approved")
-  approvedBy String?   @map("approved_by")
-  approvedAt DateTime? @map("approved_at")
+  id                  String    @id @default(cuid())
+  userId              String?   @unique @map("user_id") // Optional - can exist without User
+  name                String
+  email               String    @unique
+  department          String?
+  title               String?
+  isApproved          Boolean   @default(false) @map("is_approved")
+  approvedBy          String?   @map("approved_by")
+  approvedAt          DateTime? @map("approved_at")
   // TVETA/CBET Compliance Fields
-  isAssessor     Boolean  @default(false) @map("is_assessor")
-  isVerifier     Boolean  @default(false) @map("is_verifier")
-  isModerator    Boolean  @default(false) @map("is_moderator")
-  accreditationNumber String? @map("accreditation_number")
+  isAssessor          Boolean   @default(false) @map("is_assessor")
+  isVerifier          Boolean   @default(false) @map("is_verifier")
+  isModerator         Boolean   @default(false) @map("is_moderator")
+  accreditationNumber String?   @map("accreditation_number")
   accreditationExpiry DateTime? @map("accreditation_expiry")
-  createdAt  DateTime  @default(now()) @map("created_at")
-  updatedAt  DateTime  @updatedAt @map("updated_at")
+  createdAt           DateTime  @default(now()) @map("created_at")
+  updatedAt           DateTime  @updatedAt @map("updated_at")
 
   // Relations
-  user              User?                    @relation(fields: [userId], references: [id], onDelete: SetNull)
-  courses           CourseInstructor[]
-  accreditations    AssessorAccreditation[]
-  assessedGrades    Grade[]                  @relation("AssessorGrades")
-  verifiedGrades    Grade[]                  @relation("VerifierGrades")
-  moderatedGrades   Grade[]                  @relation("ModeratorGrades")
+  user            User?                   @relation(fields: [userId], references: [id], onDelete: SetNull)
+  courses         CourseInstructor[]
+  accreditations  AssessorAccreditation[]
+  assessedGrades  Grade[]                 @relation("AssessorGrades")
+  verifiedGrades  Grade[]                 @relation("VerifierGrades")
+  moderatedGrades Grade[]                 @relation("ModeratorGrades")
 
   @@map("instructors")
 }
@@ -82,7 +82,7 @@ model Instructor {
 model Lesson {
   id          String   @id @default(cuid())
   courseId    String   @map("course_id")
-  number      Int      @unique
+  number      Int
   title       String
   description String?
   duration    String?
@@ -90,12 +90,13 @@ model Lesson {
   updatedAt   DateTime @updatedAt @map("updated_at")
 
   // Relations
-  course          Course          @relation(fields: [courseId], references: [id], onDelete: Cascade)
-  exercises       Exercise[]
-  grades          Grade[]
-  quizAttempts    QuizAttempt[]
-  quizQuestions   QuizQuestion[]
+  course        Course         @relation(fields: [courseId], references: [id], onDelete: Cascade)
+  exercises     Exercise[]
+  grades        Grade[]
+  quizAttempts  QuizAttempt[]
+  quizQuestions QuizQuestion[]
 
+  @@unique([number, courseId])
   @@map("lessons")
 }
 
@@ -194,35 +195,35 @@ model Exercise {
 }
 
 model Grade {
-  id                String   @id @default(cuid())
-  studentId         String   @map("student_id")
-  lessonId          String   @map("lesson_id")
-  exerciseId        String   @map("exercise_id")
-  totalPoints       Int      @default(0) @map("total_points")
-  maxPossiblePoints Int      @default(0) @map("max_possible_points")
-  percentage        Int      @default(0)
-  letterGrade       String   @map("letter_grade")
+  id                String    @id @default(cuid())
+  studentId         String    @map("student_id")
+  lessonId          String    @map("lesson_id")
+  exerciseId        String    @map("exercise_id")
+  totalPoints       Int       @default(0) @map("total_points")
+  maxPossiblePoints Int       @default(0) @map("max_possible_points")
+  percentage        Int       @default(0)
+  letterGrade       String    @map("letter_grade")
   // TVETA/CBET Compliance Fields
-  isCompetent       Boolean? @map("is_competent") // Competent/Not Competent status
-  competencyStatus  String?  @map("competency_status") // 'competent', 'not_competent', 'needs_improvement'
-  assessorId        String?  @map("assessor_id") // Link to Instructor/Assessor
-  verifiedBy        String?  @map("verified_by") // Verifier ID
+  isCompetent       Boolean?  @map("is_competent") // Competent/Not Competent status
+  competencyStatus  String?   @map("competency_status") // 'competent', 'not_competent', 'needs_improvement'
+  assessorId        String?   @map("assessor_id") // Link to Instructor/Assessor
+  verifiedBy        String?   @map("verified_by") // Verifier ID
   verifiedAt        DateTime? @map("verified_at")
-  moderatedBy       String?  @map("moderated_by") // Moderator ID
+  moderatedBy       String?   @map("moderated_by") // Moderator ID
   moderatedAt       DateTime? @map("moderated_at")
   feedback          String?
-  gradedBy          String   @default("Instructor") @map("graded_by")
-  gradedAt          DateTime @default(now()) @map("graded_at")
-  createdAt         DateTime @default(now()) @map("created_at")
-  updatedAt         DateTime @updatedAt @map("updated_at")
+  gradedBy          String    @default("Instructor") @map("graded_by")
+  gradedAt          DateTime  @default(now()) @map("graded_at")
+  createdAt         DateTime  @default(now()) @map("created_at")
+  updatedAt         DateTime  @updatedAt @map("updated_at")
 
   // Relations
-  student       Student         @relation(fields: [studentId], references: [id], onDelete: Cascade)
-  lesson        Lesson          @relation(fields: [lessonId], references: [id], onDelete: Cascade)
-  exercise      Exercise        @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
-  assessor      Instructor?     @relation("AssessorGrades", fields: [assessorId], references: [id], onDelete: SetNull)
-  verifier      Instructor?     @relation("VerifierGrades", fields: [verifiedBy], references: [id], onDelete: SetNull)
-  moderator     Instructor?     @relation("ModeratorGrades", fields: [moderatedBy], references: [id], onDelete: SetNull)
+  student       Student              @relation(fields: [studentId], references: [id], onDelete: Cascade)
+  lesson        Lesson               @relation(fields: [lessonId], references: [id], onDelete: Cascade)
+  exercise      Exercise             @relation(fields: [exerciseId], references: [id], onDelete: Cascade)
+  assessor      Instructor?          @relation("AssessorGrades", fields: [assessorId], references: [id], onDelete: SetNull)
+  verifier      Instructor?          @relation("VerifierGrades", fields: [verifiedBy], references: [id], onDelete: SetNull)
+  moderator     Instructor?          @relation("ModeratorGrades", fields: [moderatedBy], references: [id], onDelete: SetNull)
   gradeCriteria GradeCriteria[]
   auditLogs     AssessmentAuditLog[]
 
@@ -248,15 +249,15 @@ model GradeCriteria {
 }
 
 model QuizQuestion {
-  id             String   @id @default(cuid())
-  lessonId       String   @map("lesson_id")
-  question       String
-  options         Json     // Array of strings
-  correctAnswer   Int      @map("correct_answer")
-  explanation     String?
-  order           Int      @default(0) // Order of question in quiz
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id            String   @id @default(cuid())
+  lessonId      String   @map("lesson_id")
+  question      String
+  options       Json // Array of strings
+  correctAnswer Int      @map("correct_answer")
+  explanation   String?
+  order         Int      @default(0) // Order of question in quiz
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
 
   // Relations
   lesson Lesson @relation(fields: [lessonId], references: [id], onDelete: Cascade)
@@ -329,34 +330,34 @@ model PDFResource {
 
 // Course model - represents a course that users can subscribe to
 model Course {
-  id          String   @id @default(cuid())
-  title       String
-  description String?
-  price       Decimal? @db.Decimal(10, 2) // Price inclusive of tax
-  isActive    Boolean  @default(true) @map("is_active")
+  id                String   @id @default(cuid())
+  title             String
+  description       String?
+  price             Decimal? @db.Decimal(10, 2) // Price inclusive of tax
+  isActive          Boolean  @default(true) @map("is_active")
   // TVETA/CBET Compliance Fields
-  knqfLevel        Int?     @map("knqf_level") // Kenya National Qualifications Framework level
-  unitStandardId   String?  @map("unit_standard_id")
-  qualificationCode String? @map("qualification_code")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  knqfLevel         Int?     @map("knqf_level") // Kenya National Qualifications Framework level
+  unitStandardId    String?  @map("unit_standard_id")
+  qualificationCode String?  @map("qualification_code")
+  createdAt         DateTime @default(now()) @map("created_at")
+  updatedAt         DateTime @updatedAt @map("updated_at")
 
   // Relations
-  subscriptions    CourseSubscription[]
-  lessons          Lesson[]
+  subscriptions     CourseSubscription[]
+  lessons           Lesson[]
   courseInstructors CourseInstructor[]
-  unitStandard     UnitStandard? @relation(fields: [unitStandardId], references: [id], onDelete: SetNull)
+  unitStandard      UnitStandard?        @relation(fields: [unitStandardId], references: [id], onDelete: SetNull)
 
   @@map("courses")
 }
 
 // Course Instructor - links instructors to courses they manage
 model CourseInstructor {
-  id         String   @id @default(cuid())
-  courseId   String   @map("course_id")
-  instructorId String @map("instructor_id")
-  assignedAt DateTime @default(now()) @map("assigned_at")
-  assignedBy String?  @map("assigned_by") // admin user ID who assigned
+  id           String   @id @default(cuid())
+  courseId     String   @map("course_id")
+  instructorId String   @map("instructor_id")
+  assignedAt   DateTime @default(now()) @map("assigned_at")
+  assignedBy   String?  @map("assigned_by") // admin user ID who assigned
 
   // Relations
   course     Course     @relation(fields: [courseId], references: [id], onDelete: Cascade)
@@ -388,14 +389,14 @@ model CourseSubscription {
 
 // Cohort model - represents a student cohort
 model Cohort {
-  id          String   @id @default(cuid())
-  name        String   @unique
+  id          String    @id @default(cuid())
+  name        String    @unique
   description String?
   startDate   DateTime? @map("start_date")
   endDate     DateTime? @map("end_date")
-  isActive    Boolean  @default(true) @map("is_active")
-  createdAt   DateTime @default(now()) @map("created_at")
-  updatedAt   DateTime @updatedAt @map("updated_at")
+  isActive    Boolean   @default(true) @map("is_active")
+  createdAt   DateTime  @default(now()) @map("created_at")
+  updatedAt   DateTime  @updatedAt @map("updated_at")
 
   // Relations
   students Student[]
@@ -426,15 +427,15 @@ model UnitStandard {
 
 // Competency Unit - Specific competencies within a unit standard
 model CompetencyUnit {
-  id              String   @id @default(cuid())
-  unitStandardId  String   @map("unit_standard_id")
-  code            String   // Competency unit code
-  title           String
-  description     String?
-  performanceCriteria Json? @map("performance_criteria") // JSON array of performance criteria
-  isActive        Boolean  @default(true) @map("is_active")
-  createdAt       DateTime @default(now()) @map("created_at")
-  updatedAt       DateTime @updatedAt @map("updated_at")
+  id                  String   @id @default(cuid())
+  unitStandardId      String   @map("unit_standard_id")
+  code                String // Competency unit code
+  title               String
+  description         String?
+  performanceCriteria Json?    @map("performance_criteria") // JSON array of performance criteria
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
 
   // Relations
   unitStandard UnitStandard @relation(fields: [unitStandardId], references: [id], onDelete: Cascade)
@@ -453,9 +454,9 @@ model AssessorAccreditation {
   issuingAuthority    String   @map("issuing_authority") // TVETA, TVET CDACC, etc.
   issueDate           DateTime @map("issue_date")
   expiryDate          DateTime @map("expiry_date")
-  isActive             Boolean  @default(true) @map("is_active")
-  createdAt            DateTime @default(now()) @map("created_at")
-  updatedAt            DateTime @updatedAt @map("updated_at")
+  isActive            Boolean  @default(true) @map("is_active")
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
 
   // Relations
   instructor Instructor @relation(fields: [instructorId], references: [id], onDelete: Cascade)
@@ -465,17 +466,17 @@ model AssessorAccreditation {
 
 // Assessment Audit Log - Tracks all assessment actions for compliance
 model AssessmentAuditLog {
-  id            String   @id @default(cuid())
-  gradeId       String   @map("grade_id")
-  action        String   // 'assessed', 'verified', 'moderated', 'updated', 'exported'
-  performedBy   String   @map("performed_by") // User/Instructor ID
-  performedByRole String @map("performed_by_role") // 'instructor', 'assessor', 'verifier', 'moderator', 'admin'
-  previousValue Json?    @map("previous_value") // Previous grade/status if updated
-  newValue      Json?    @map("new_value") // New grade/status
-  notes         String?
-  ipAddress     String?  @map("ip_address")
-  userAgent     String?  @map("user_agent")
-  createdAt     DateTime @default(now()) @map("created_at")
+  id              String   @id @default(cuid())
+  gradeId         String   @map("grade_id")
+  action          String // 'assessed', 'verified', 'moderated', 'updated', 'exported'
+  performedBy     String   @map("performed_by") // User/Instructor ID
+  performedByRole String   @map("performed_by_role") // 'instructor', 'assessor', 'verifier', 'moderator', 'admin'
+  previousValue   Json?    @map("previous_value") // Previous grade/status if updated
+  newValue        Json?    @map("new_value") // New grade/status
+  notes           String?
+  ipAddress       String?  @map("ip_address")
+  userAgent       String?  @map("user_agent")
+  createdAt       DateTime @default(now()) @map("created_at")
 
   // Relations
   grade Grade @relation(fields: [gradeId], references: [id], onDelete: Cascade)

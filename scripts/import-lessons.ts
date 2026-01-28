@@ -227,9 +227,12 @@ async function importLessons(courseTitleOrId?: string) {
 
     // Process each lesson
     for (const lessonData of lessons as LessonData[]) {
-      // Check if lesson with this number already exists
-      const existingLesson = await prisma.lesson.findUnique({
-        where: { number: lessonData.number },
+      // Check if lesson with this number already exists in this course
+      const existingLesson = await prisma.lesson.findFirst({
+        where: { 
+          number: lessonData.number,
+          courseId: course.id
+        },
         include: { exercises: true },
       });
 
@@ -237,24 +240,18 @@ async function importLessons(courseTitleOrId?: string) {
       let exercisesCreated = 0;
 
       if (existingLesson) {
-        lesson = existingLesson;
-        // Update existing lesson if needed
-        if (existingLesson.courseId !== course.id) {
-          lesson = await prisma.lesson.update({
-            where: { id: existingLesson.id },
-            data: {
-              title: lessonData.title,
-              description: lessonData.description || null,
-              duration: lessonData.duration || null,
-              courseId: course.id,
-            },
-          });
-          updatedCount++;
-          console.log(`📝 Updated lesson ${lessonData.number}: ${lessonData.title}`);
-        } else {
-          skippedCount++;
-          console.log(`⏭️  Skipped lesson ${lessonData.number}: ${lessonData.title} (already exists)`);
-        }
+        // Update existing lesson in this course
+        lesson = await prisma.lesson.update({
+          where: { id: existingLesson.id },
+          data: {
+            title: lessonData.title,
+            description: lessonData.description || null,
+            duration: lessonData.duration || null,
+            courseId: course.id,
+          },
+        });
+        updatedCount++;
+        console.log(`📝 Updated lesson ${lessonData.number}: ${lessonData.title}`);
 
         // Check if exercises need to be created
         const existingExerciseTitles = new Set(existingLesson.exercises.map(e => e.title));
@@ -341,14 +338,17 @@ async function importLessons(courseTitleOrId?: string) {
         continue;
       }
 
-      // Find the lesson in database
-      const dbLesson = await prisma.lesson.findUnique({
-        where: { number: lessonData.number },
+      // Find the lesson in database for this course
+      const dbLesson = await prisma.lesson.findFirst({
+        where: { 
+          number: lessonData.number,
+          courseId: course.id
+        },
         include: { quizQuestions: true },
       });
 
       if (!dbLesson) {
-        console.log(`⚠️  Lesson ${lessonData.number} not found, skipping quiz questions`);
+        console.log(`⚠️  Lesson ${lessonData.number} not found in this course, skipping quiz questions`);
         continue;
       }
 

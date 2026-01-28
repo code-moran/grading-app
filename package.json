@@ -21,7 +21,8 @@
     "db:studio": "prisma studio",
     "create-admin": "tsx scripts/create-admin.ts",
     "create-course": "tsx scripts/create-course.ts",
-    "import-lessons": "tsx scripts/import-lessons.ts"
+    "import-lessons": "tsx scripts/import-lessons.ts",
+    "import-ai-lessons": "tsx scripts/import-ai-lessons.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.7.0",

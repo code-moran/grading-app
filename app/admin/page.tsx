@@ -17,6 +17,7 @@ import {
   Settings,
   BarChart3,
   AlertCircle,
+  Database,
 } from 'lucide-react';
 
 interface AdminStats {
@@ -278,20 +279,24 @@ export default function AdminDashboard() {
                   </div>
                 </Link>
 
-                <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
+                <Link
+                  href="/admin/backup-restore"
+                  className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700 hover:shadow-xl transition-all duration-300 group"
+                >
                   <div className="flex items-center mb-4">
-                    <div className="bg-gray-100 dark:bg-gray-700 p-3 rounded-lg">
-                      <Settings className="h-6 w-6 text-gray-600 dark:text-gray-300" />
+                    <div className="bg-purple-100 dark:bg-purple-900/30 p-3 rounded-lg group-hover:scale-110 transition-transform">
+                      <Database className="h-6 w-6 text-purple-600 dark:text-purple-400" />
                     </div>
                     <div className="ml-4">
-                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">System Settings</h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300">Platform configuration</p>
+                      <h3 className="text-lg font-bold text-gray-900 dark:text-white">Backup & Restore</h3>
+                      <p className="text-sm text-gray-600 dark:text-gray-300">Manage database backups</p>
                     </div>
                   </div>
-                  <div className="text-gray-500 dark:text-gray-400 text-sm font-medium">
-                    Coming soon
+                  <div className="flex items-center text-purple-600 dark:text-purple-400 text-sm font-medium">
+                    Manage backups
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                   </div>
-                </div>
+                </Link>
               </div>
 
               {/* Recent Registrations */}

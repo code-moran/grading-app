@@ -18,6 +18,7 @@ import {
   HelpCircle,
 } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import { DashboardSkeleton } from '@/components/Skeleton';
 
 interface InstructorStats {
   totalCourses: number;
@@ -102,9 +103,7 @@ export default function InstructorDashboard() {
 
           {/* Loading State */}
           {loading ? (
-            <div className="flex justify-center items-center py-12">
-              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-            </div>
+            <DashboardSkeleton />
           ) : (
             <>
               {/* Statistics Cards */}
@@ -280,7 +279,7 @@ export default function InstructorDashboard() {
                         <Link
                           key={lesson.id}
                           href={`/instructor/lesson/${lesson.id}`}
-                          className="p-6 border-2 border-orange-200 dark:border-orange-800 rounded-xl hover:border-orange-400 dark:hover:border-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/20 transition-all duration-200 group"
+                          className="p-6 border-2 border-orange-200 dark:border-orange-800/50 rounded-xl hover:border-orange-400 dark:hover:border-orange-600 hover:bg-orange-50 dark:hover:bg-orange-900/30 transition-all duration-200 group bg-white dark:bg-gray-800/50"
                         >
                           <div className="flex items-center space-x-3 mb-2">
                             <FileText className="h-5 w-5 text-orange-600 dark:text-orange-400" />
@@ -337,16 +336,16 @@ export default function InstructorDashboard() {
                       <Link
                         key={course.id}
                         href={`/instructor/courses/${course.id}`}
-                        className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20 transition-all duration-200 group"
+                        className="p-6 border-2 border-gray-200 dark:border-gray-700 rounded-xl hover:border-blue-400 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/30 transition-all duration-200 group bg-white dark:bg-gray-800/50"
                       >
                         <h3 className="font-semibold text-gray-900 dark:text-white mb-2">{course.title}</h3>
                         <div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
                           <span className="flex items-center">
-                            <FileText className="h-4 w-4 mr-1" />
+                            <FileText className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
                             {course.lessonCount} lessons
                           </span>
                           <span className="flex items-center">
-                            <Users className="h-4 w-4 mr-1" />
+                            <Users className="h-4 w-4 mr-1 text-gray-500 dark:text-gray-400" />
                             {course.subscriberCount} subscribers
                           </span>
                         </div>

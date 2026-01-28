@@ -137,14 +137,17 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Check if lesson number already exists
-    const existingLesson = await prisma.lesson.findUnique({
-      where: { number },
+    // Check if lesson number already exists in this course
+    const existingLesson = await prisma.lesson.findFirst({
+      where: { 
+        number,
+        courseId 
+      },
     });
 
     if (existingLesson) {
       return NextResponse.json(
-        { error: 'Lesson with this number already exists' },
+        { error: 'Lesson with this number already exists in this course' },
         { status: 409 }
       );
     }

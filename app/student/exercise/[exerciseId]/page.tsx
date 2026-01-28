@@ -5,6 +5,10 @@ import { useParams } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Navigation from '@/components/Navigation';
+import { CardSkeleton } from '@/components/Skeleton';
+import { ButtonSpinner } from '@/components/LoadingSpinner';
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 import {
   ArrowLeft,
   Code,
@@ -284,10 +288,9 @@ export default function StudentExercisePage() {
       <ProtectedRoute requiredRole="student">
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
-          <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-gray-600 dark:text-gray-300">Loading exercise...</span>
-      </div>
+          <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <CardSkeleton />
+          </div>
         </div>
       </ProtectedRoute>
     );
@@ -390,9 +393,15 @@ export default function StudentExercisePage() {
             {/* Exercise Description */}
               <div className="bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">Exercise Description</h2>
-                <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
-                  {exercise.description || 'No description provided for this exercise.'}
-                </p>
+                <div className="text-gray-700 dark:text-gray-300 leading-relaxed mb-6 markdown-content">
+                  {exercise.description ? (
+                    <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                      {exercise.description}
+                    </ReactMarkdown>
+                  ) : (
+                    <p>No description provided for this exercise.</p>
+                  )}
+                </div>
               
               <div className="bg-blue-50 border border-blue-200 rounded-lg p-4">
                 <h3 className="font-semibold text-blue-900 mb-2">Requirements:</h3>
@@ -488,8 +497,8 @@ export default function StudentExercisePage() {
                 >
                   {submitting ? (
                     <>
-                      <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                      Checking Standards...
+                      <ButtonSpinner size="sm" />
+                      <span className="ml-2">Checking Standards...</span>
                     </>
                     ) : exercise.submission ? (
                       <>

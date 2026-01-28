@@ -21,6 +21,7 @@ import {
   GraduationCap,
 } from 'lucide-react';
 import Link from 'next/link';
+import { DashboardSkeleton } from '@/components/Skeleton';
 
 interface Course {
   id: string;
@@ -335,10 +336,9 @@ export default function StudentDashboard() {
       <ProtectedRoute requiredRole="student">
         <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
           <Navigation />
-          <div className="flex items-center justify-center py-12">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span className="ml-2 text-gray-600 dark:text-gray-300">Loading dashboard...</span>
-      </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <DashboardSkeleton />
+          </div>
         </div>
       </ProtectedRoute>
     );
