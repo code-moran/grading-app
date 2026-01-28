@@ -649,17 +649,32 @@ export async function POST(request: NextRequest) {
             criteriaId: 'rubricCriteria',
           });
           
-          if (rubricCriteriaMappingsWithRemapping.length > 0) {
+          // Filter out mappings where required foreign keys are null
+          const validRubricCriteriaMappings = rubricCriteriaMappingsWithRemapping.filter(({ data }) => {
+            // rubricId and criteriaId are required
+            return data.rubricId !== null && data.criteriaId !== null;
+          });
+          
+          if (validRubricCriteriaMappings.length > 0) {
             restoreOperations.push({
               key: 'rubricCriteriaMappings',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of rubricCriteriaMappingsWithRemapping) {
+                for (const { data } of validRubricCriteriaMappings) {
                   try {
                     await tx.rubricCriteriaMapping.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    if (error.code === 'P2002') {
+                      // Duplicate error, continue
+                    } else {
+                      console.error(`Error creating rubricCriteriaMapping:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        rubricId: data.rubricId,
+                        criteriaId: data.criteriaId,
+                      });
                       throw error;
                     }
                   }
@@ -676,17 +691,32 @@ export async function POST(request: NextRequest) {
             levelId: 'rubricLevels',
           });
           
-          if (rubricLevelMappingsWithRemapping.length > 0) {
+          // Filter out mappings where required foreign keys are null
+          const validRubricLevelMappings = rubricLevelMappingsWithRemapping.filter(({ data }) => {
+            // rubricId and levelId are required
+            return data.rubricId !== null && data.levelId !== null;
+          });
+          
+          if (validRubricLevelMappings.length > 0) {
             restoreOperations.push({
               key: 'rubricLevelMappings',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of rubricLevelMappingsWithRemapping) {
+                for (const { data } of validRubricLevelMappings) {
                   try {
                     await tx.rubricLevelMapping.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    if (error.code === 'P2002') {
+                      // Duplicate error, continue
+                    } else {
+                      console.error(`Error creating rubricLevelMapping:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        rubricId: data.rubricId,
+                        levelId: data.levelId,
+                      });
                       throw error;
                     }
                   }
