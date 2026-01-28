@@ -136,9 +136,13 @@ export default function BackupRestorePage() {
       const text = await selectedFile.text();
       const backupData = JSON.parse(text);
 
-      const response = await fetch(
-        `/api/admin/restore/validate?backupData=${encodeURIComponent(JSON.stringify(backupData))}`
-      );
+      const response = await fetch('/api/admin/restore/validate', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ backupData }),
+      });
 
       // Check if response is JSON before parsing
       const contentType = response.headers.get('content-type');
@@ -146,8 +150,8 @@ export default function BackupRestorePage() {
       if (contentType && contentType.includes('application/json')) {
         result = await response.json();
       } else {
-        const text = await response.text();
-        throw new Error(text || 'Backup validation failed');
+        const errorText = await response.text();
+        throw new Error(errorText || 'Backup validation failed');
       }
 
       if (!response.ok || !result.valid) {
