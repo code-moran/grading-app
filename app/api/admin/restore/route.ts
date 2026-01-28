@@ -518,12 +518,18 @@ export async function POST(request: NextRequest) {
             courseId: 'courses',
           });
           
-          if (lessonsWithRemapping.length > 0) {
+          // Filter out lessons where required foreign keys are null
+          const validLessons = lessonsWithRemapping.filter(({ data }) => {
+            // courseId is required
+            return data.courseId !== null;
+          });
+          
+          if (validLessons.length > 0) {
             restoreOperations.push({
               key: 'lessons',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { oldId, data } of lessonsWithRemapping) {
+                for (const { oldId, data } of validLessons) {
                   try {
                     // Check if lesson already exists BEFORE creating
                     let existing = null;
@@ -679,17 +685,29 @@ export async function POST(request: NextRequest) {
             lessonId: 'lessons',
           });
           
-          if (quizQuestionsWithRemapping.length > 0) {
+          // Filter out quiz questions where required foreign keys are null
+          const validQuizQuestions = quizQuestionsWithRemapping.filter(({ data }) => {
+            // lessonId is required
+            return data.lessonId !== null;
+          });
+          
+          if (validQuizQuestions.length > 0) {
             restoreOperations.push({
               key: 'quizQuestions',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of quizQuestionsWithRemapping) {
+                for (const { data } of validQuizQuestions) {
                   try {
                     await tx.quizQuestion.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating quizQuestion:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        lessonId: data.lessonId,
+                      });
                       throw error;
                     }
                   }
@@ -706,17 +724,29 @@ export async function POST(request: NextRequest) {
             lessonId: 'lessons',
           });
           
-          if (lessonNotesWithRemapping.length > 0) {
+          // Filter out lesson notes where required foreign keys are null
+          const validLessonNotes = lessonNotesWithRemapping.filter(({ data }) => {
+            // lessonId is required
+            return data.lessonId !== null;
+          });
+          
+          if (validLessonNotes.length > 0) {
             restoreOperations.push({
               key: 'lessonNotes',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of lessonNotesWithRemapping) {
+                for (const { data } of validLessonNotes) {
                   try {
                     await tx.lessonNote.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating lessonNote:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        lessonId: data.lessonId,
+                      });
                       throw error;
                     }
                   }
@@ -733,17 +763,29 @@ export async function POST(request: NextRequest) {
             lessonId: 'lessons',
           });
           
-          if (pdfResourcesWithRemapping.length > 0) {
+          // Filter out PDF resources where required foreign keys are null
+          const validPDFResources = pdfResourcesWithRemapping.filter(({ data }) => {
+            // lessonId is required
+            return data.lessonId !== null;
+          });
+          
+          if (validPDFResources.length > 0) {
             restoreOperations.push({
               key: 'pdfResources',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of pdfResourcesWithRemapping) {
+                for (const { data } of validPDFResources) {
                   try {
                     await tx.pDFResource.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating pdfResource:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        lessonId: data.lessonId,
+                      });
                       throw error;
                     }
                   }
