@@ -57,8 +57,15 @@ export default function BackupRestorePage() {
       const response = await fetch('/api/admin/backup');
       
       if (!response.ok) {
-        const data = await response.json();
-        throw new Error(data.error || 'Failed to create backup');
+        // Check if response is JSON before parsing
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('application/json')) {
+          const data = await response.json();
+          throw new Error(data.error || 'Failed to create backup');
+        } else {
+          const text = await response.text();
+          throw new Error(text || 'Failed to create backup');
+        }
       }
 
       // Get the backup data
@@ -133,7 +140,15 @@ export default function BackupRestorePage() {
         `/api/admin/restore/validate?backupData=${encodeURIComponent(JSON.stringify(backupData))}`
       );
 
-      const result = await response.json();
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get('content-type');
+      let result;
+      if (contentType && contentType.includes('application/json')) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        throw new Error(text || 'Backup validation failed');
+      }
 
       if (!response.ok || !result.valid) {
         throw new Error(result.error || 'Backup validation failed');
@@ -189,7 +204,15 @@ export default function BackupRestorePage() {
         }),
       });
 
-      const result = await response.json();
+      // Check if response is JSON before parsing
+      const contentType = response.headers.get('content-type');
+      let result;
+      if (contentType && contentType.includes('application/json')) {
+        result = await response.json();
+      } else {
+        const text = await response.text();
+        throw new Error(text || 'Failed to restore backup');
+      }
 
       if (!response.ok) {
         throw new Error(result.error || 'Failed to restore backup');
