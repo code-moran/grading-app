@@ -436,17 +436,30 @@ export async function POST(request: NextRequest) {
             instructorId: 'instructors',
           });
           
-          if (courseInstructorsWithRemapping.length > 0) {
+          // Filter out course instructors where required foreign keys are null
+          const validCourseInstructors = courseInstructorsWithRemapping.filter(({ data }) => {
+            // courseId and instructorId are required
+            return data.courseId !== null && data.instructorId !== null;
+          });
+          
+          if (validCourseInstructors.length > 0) {
             restoreOperations.push({
               key: 'courseInstructors',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of courseInstructorsWithRemapping) {
+                for (const { data } of validCourseInstructors) {
                   try {
                     await tx.courseInstructor.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating courseInstructor:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        courseId: data.courseId,
+                        instructorId: data.instructorId,
+                      });
                       throw error;
                     }
                   }
@@ -707,17 +720,31 @@ export async function POST(request: NextRequest) {
             courseId: 'courses',
           });
           
-          if (courseSubscriptionsWithRemapping.length > 0) {
+          // Filter out subscriptions where required foreign keys are null
+          const validSubscriptions = courseSubscriptionsWithRemapping.filter(({ data }) => {
+            // studentId and courseId are required
+            return data.studentId !== null && data.courseId !== null;
+          });
+          
+          if (validSubscriptions.length > 0) {
             restoreOperations.push({
               key: 'courseSubscriptions',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of courseSubscriptionsWithRemapping) {
+                for (const { data } of validSubscriptions) {
                   try {
                     await tx.courseSubscription.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating courseSubscription:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        studentId: data.studentId,
+                        courseId: data.courseId,
+                        userId: data.userId,
+                      });
                       throw error;
                     }
                   }
@@ -735,17 +762,30 @@ export async function POST(request: NextRequest) {
             exerciseId: 'exercises',
           });
           
-          if (exerciseSubmissionsWithRemapping.length > 0) {
+          // Filter out submissions where required foreign keys are null
+          const validSubmissions = exerciseSubmissionsWithRemapping.filter(({ data }) => {
+            // studentId and exerciseId are required
+            return data.studentId !== null && data.exerciseId !== null;
+          });
+          
+          if (validSubmissions.length > 0) {
             restoreOperations.push({
               key: 'exerciseSubmissions',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of exerciseSubmissionsWithRemapping) {
+                for (const { data } of validSubmissions) {
                   try {
                     await tx.exerciseSubmission.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating exerciseSubmission:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        studentId: data.studentId,
+                        exerciseId: data.exerciseId,
+                      });
                       throw error;
                     }
                   }
@@ -767,17 +807,31 @@ export async function POST(request: NextRequest) {
             moderatedBy: 'instructors',
           });
           
-          if (gradesWithRemapping.length > 0) {
+          // Filter out grades where required foreign keys are null
+          const validGrades = gradesWithRemapping.filter(({ data }) => {
+            // studentId, lessonId, and exerciseId are required
+            return data.studentId !== null && data.lessonId !== null && data.exerciseId !== null;
+          });
+          
+          if (validGrades.length > 0) {
             restoreOperations.push({
               key: 'grades',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of gradesWithRemapping) {
+                for (const { data } of validGrades) {
                   try {
                     await tx.grade.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating grade:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        studentId: data.studentId,
+                        lessonId: data.lessonId,
+                        exerciseId: data.exerciseId,
+                      });
                       throw error;
                     }
                   }
@@ -796,17 +850,31 @@ export async function POST(request: NextRequest) {
             levelId: 'rubricLevels',
           });
           
-          if (gradeCriteriaWithRemapping.length > 0) {
+          // Filter out grade criteria where required foreign keys are null
+          const validGradeCriteria = gradeCriteriaWithRemapping.filter(({ data }) => {
+            // gradeId, criteriaId, and levelId are required
+            return data.gradeId !== null && data.criteriaId !== null && data.levelId !== null;
+          });
+          
+          if (validGradeCriteria.length > 0) {
             restoreOperations.push({
               key: 'gradeCriteria',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of gradeCriteriaWithRemapping) {
+                for (const { data } of validGradeCriteria) {
                   try {
                     await tx.gradeCriteria.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating gradeCriteria:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        gradeId: data.gradeId,
+                        criteriaId: data.criteriaId,
+                        levelId: data.levelId,
+                      });
                       throw error;
                     }
                   }
@@ -824,17 +892,30 @@ export async function POST(request: NextRequest) {
             lessonId: 'lessons',
           });
           
-          if (quizAttemptsWithRemapping.length > 0) {
+          // Filter out quiz attempts where required foreign keys are null
+          const validAttempts = quizAttemptsWithRemapping.filter(({ data }) => {
+            // studentId and lessonId are required
+            return data.studentId !== null && data.lessonId !== null;
+          });
+          
+          if (validAttempts.length > 0) {
             restoreOperations.push({
               key: 'quizAttempts',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of quizAttemptsWithRemapping) {
+                for (const { data } of validAttempts) {
                   try {
                     await tx.quizAttempt.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating quizAttempt:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        studentId: data.studentId,
+                        lessonId: data.lessonId,
+                      });
                       throw error;
                     }
                   }
@@ -851,17 +932,29 @@ export async function POST(request: NextRequest) {
             gradeId: 'grades',
           });
           
-          if (auditLogsWithRemapping.length > 0) {
+          // Filter out audit logs where required foreign keys are null
+          const validAuditLogs = auditLogsWithRemapping.filter(({ data }) => {
+            // gradeId is required
+            return data.gradeId !== null;
+          });
+          
+          if (validAuditLogs.length > 0) {
             restoreOperations.push({
               key: 'assessmentAuditLogs',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of auditLogsWithRemapping) {
+                for (const { data } of validAuditLogs) {
                   try {
                     await tx.assessmentAuditLog.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
                     if (error.code !== 'P2002') {
+                      console.error(`Error creating assessmentAuditLog:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        gradeId: data.gradeId,
+                      });
                       throw error;
                     }
                   }
