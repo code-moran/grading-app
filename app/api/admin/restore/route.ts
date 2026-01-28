@@ -243,12 +243,18 @@ export async function POST(request: NextRequest) {
             
             // Remap foreign keys
             for (const [fkField, mapKey] of Object.entries(foreignKeyMappings)) {
-              if (remapped.data[fkField] && idMaps[mapKey]) {
-                const newId = idMaps[mapKey].get(remapped.data[fkField]);
-                if (newId) {
-                  remapped.data[fkField] = newId;
+              if (remapped.data[fkField]) {
+                // Check if the mapping exists
+                if (idMaps[mapKey]) {
+                  const newId = idMaps[mapKey].get(remapped.data[fkField]);
+                  if (newId) {
+                    remapped.data[fkField] = newId;
+                  } else {
+                    // If foreign key doesn't exist in mapping, set to null to prevent FK violations
+                    remapped.data[fkField] = null;
+                  }
                 } else {
-                  // If cohort doesn't exist, set to null
+                  // If the map doesn't exist yet (e.g., users skipped), set to null
                   remapped.data[fkField] = null;
                 }
               }
@@ -400,13 +406,19 @@ export async function POST(request: NextRequest) {
                 const insertedRecords = [];
                 for (const { oldId, data } of coursesWithRemapping) {
                   try {
+                    // Check if course already exists BEFORE creating
+                    // Courses don't have a unique field, so we'll try to create and catch duplicates
                     const created = await tx.course.create({ data });
                     insertedRecords.push(created);
                     if (oldId) {
                       idMaps.courses.set(oldId, created.id);
                     }
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    // Only catch duplicate errors
+                    if (error.code === 'P2002') {
+                      // Continue to next record
+                    } else {
+                      // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
                   }
