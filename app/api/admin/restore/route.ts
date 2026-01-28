@@ -874,7 +874,23 @@ export async function POST(request: NextRequest) {
 
         // Execute all restore operations
         for (const op of restoreOperations) {
-          await op.restoreFn();
+          try {
+            await op.restoreFn();
+          } catch (error: any) {
+            // Log the error with context
+            console.error(`Error restoring ${op.key}:`, error);
+            console.error(`Error code: ${error.code}, Error message: ${error.message}`);
+            
+            // If it's a transaction abort error, we can't continue
+            if (error.message && error.message.includes('transaction is aborted')) {
+              // This means an earlier error aborted the transaction
+              // We need to find what caused it
+              throw new Error(`Transaction aborted. Previous error occurred before restoring ${op.key}. Check logs for details. Original error: ${error.message}`);
+            }
+            
+            // Re-throw the error to abort the transaction
+            throw error;
+          }
         }
 
         return {
