@@ -148,11 +148,12 @@ export async function POST(request: NextRequest) {
         }> = [];
 
         // Helper function to create restore operation with ID mapping
-        const createRestoreOp = <T extends { create: (args: any) => Promise<any> }>(
+        const createRestoreOp = <T extends { create: (args: any) => Promise<any>; findUnique: (args: any) => Promise<any> }>(
           key: string,
           model: T,
           skip: boolean,
-          idMapKey?: string // Key to store ID mappings (e.g., 'cohorts', 'users')
+          idMapKey?: string, // Key to store ID mappings (e.g., 'cohorts', 'users')
+          uniqueField?: string // Field to check for uniqueness (e.g., 'email', 'registrationNumber', 'name')
         ) => {
           if (skip || !backupData.data[key] || backupData.data[key]!.length === 0) {
             return;
@@ -172,37 +173,55 @@ export async function POST(request: NextRequest) {
                 const insertedRecords = [];
                 for (const { oldId, data } of recordsToInsert) {
                   try {
-                    const created = await model.create({
-                      data,
-                    });
-                    insertedRecords.push(created);
-                    // Store ID mapping if idMapKey is provided
-                    if (idMapKey && oldId) {
-                      idMaps[idMapKey].set(oldId, created.id);
-                    }
-                  } catch (error: any) {
-                    // If duplicate, try to find existing record
-                    if (error.code === 'P2002') {
-                      // Unique constraint violation - record already exists
-                      // Try to find the existing record by unique fields
-                      let existing = null;
+                    // Check if record already exists before creating
+                    let existing = null;
+                    if (uniqueField && data[uniqueField]) {
                       try {
-                        // Try common unique fields
-                        if (data.email) {
-                          existing = await (model as any).findUnique({ where: { email: data.email } });
-                        } else if (data.registrationNumber) {
-                          existing = await (model as any).findUnique({ where: { registrationNumber: data.registrationNumber } });
-                        } else if (data.name && idMapKey === 'cohorts') {
-                          existing = await (model as any).findUnique({ where: { name: data.name } });
-                        }
-                        
-                        if (existing && idMapKey && oldId) {
-                          idMaps[idMapKey].set(oldId, existing.id);
-                        }
+                        existing = await model.findUnique({
+                          where: { [uniqueField]: data[uniqueField] },
+                        });
                       } catch (findError) {
-                        // Ignore find errors
+                        // Ignore find errors, proceed with create
+                      }
+                    }
+                    
+                    if (existing) {
+                      // Record exists, use it for ID mapping
+                      if (idMapKey && oldId) {
+                        idMaps[idMapKey].set(oldId, existing.id);
                       }
                     } else {
+                      // Create new record
+                      const created = await model.create({
+                        data,
+                      });
+                      insertedRecords.push(created);
+                      // Store ID mapping if idMapKey is provided
+                      if (idMapKey && oldId) {
+                        idMaps[idMapKey].set(oldId, created.id);
+                      }
+                    }
+                  } catch (error: any) {
+                    // Only catch duplicate errors, let other errors propagate
+                    if (error.code === 'P2002') {
+                      // Unique constraint violation - try to find existing record
+                      let existing = null;
+                      if (uniqueField && data[uniqueField]) {
+                        try {
+                          existing = await model.findUnique({
+                            where: { [uniqueField]: data[uniqueField] },
+                          });
+                        } catch (findError) {
+                          // Ignore find errors
+                        }
+                      }
+                      
+                      if (existing && idMapKey && oldId) {
+                        idMaps[idMapKey].set(oldId, existing.id);
+                      }
+                      // Continue to next record
+                    } else {
+                      // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
                   }
@@ -240,8 +259,8 @@ export async function POST(request: NextRequest) {
         };
 
         // Create restore operations in order with ID mapping
-        createRestoreOp('users', tx.user, skipUsers, 'users');
-        createRestoreOp('cohorts', tx.cohort, false, 'cohorts');
+        createRestoreOp('users', tx.user, skipUsers, 'users', 'email');
+        createRestoreOp('cohorts', tx.cohort, false, 'cohorts', 'name');
         
         // Students need cohortId remapping
         if (!skipUsers && backupData.data.students && backupData.data.students.length > 0) {
@@ -257,12 +276,33 @@ export async function POST(request: NextRequest) {
                 const insertedRecords = [];
                 for (const { oldId, data } of studentsWithRemappedCohorts) {
                   try {
-                    const created = await tx.student.create({ data });
-                    insertedRecords.push(created);
-                    if (oldId) {
-                      idMaps.students.set(oldId, created.id);
+                    // Check if student already exists BEFORE creating
+                    let existing = null;
+                    if (data.registrationNumber) {
+                      try {
+                        existing = await tx.student.findUnique({
+                          where: { registrationNumber: data.registrationNumber },
+                        });
+                      } catch (findError) {
+                        // Ignore find errors, proceed with create
+                      }
+                    }
+                    
+                    if (existing) {
+                      // Student exists, use it for ID mapping
+                      if (oldId) {
+                        idMaps.students.set(oldId, existing.id);
+                      }
+                    } else {
+                      // Create new student
+                      const created = await tx.student.create({ data });
+                      insertedRecords.push(created);
+                      if (oldId) {
+                        idMaps.students.set(oldId, created.id);
+                      }
                     }
                   } catch (error: any) {
+                    // Only catch duplicate errors as a fallback
                     if (error.code === 'P2002') {
                       // Try to find existing by registrationNumber
                       try {
@@ -273,9 +313,11 @@ export async function POST(request: NextRequest) {
                           idMaps.students.set(oldId, existing.id);
                         }
                       } catch (findError) {
-                        // Ignore
+                        // Ignore find errors
                       }
+                      // Continue to next record
                     } else {
+                      // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
                   }
@@ -286,7 +328,7 @@ export async function POST(request: NextRequest) {
           }
         }
         
-        createRestoreOp('instructors', tx.instructor, skipUsers, 'instructors');
+        createRestoreOp('instructors', tx.instructor, skipUsers, 'instructors', 'userId');
         // AssessorAccreditations need instructorId remapping
         if (!skipUsers && backupData.data.assessorAccreditations && backupData.data.assessorAccreditations.length > 0) {
           const accreditationsWithRemapping = remapForeignKeys(backupData.data.assessorAccreditations, {
@@ -416,12 +458,36 @@ export async function POST(request: NextRequest) {
                 const insertedRecords = [];
                 for (const { oldId, data } of lessonsWithRemapping) {
                   try {
-                    const created = await tx.lesson.create({ data });
-                    insertedRecords.push(created);
-                    if (oldId) {
-                      idMaps.lessons.set(oldId, created.id);
+                    // Check if lesson already exists BEFORE creating
+                    let existing = null;
+                    if (data.number !== undefined && data.courseId) {
+                      try {
+                        existing = await tx.lesson.findFirst({
+                          where: {
+                            number: data.number,
+                            courseId: data.courseId,
+                          },
+                        });
+                      } catch (findError) {
+                        // Ignore find errors, proceed with create
+                      }
+                    }
+                    
+                    if (existing) {
+                      // Lesson exists, use it for ID mapping
+                      if (oldId) {
+                        idMaps.lessons.set(oldId, existing.id);
+                      }
+                    } else {
+                      // Create new lesson
+                      const created = await tx.lesson.create({ data });
+                      insertedRecords.push(created);
+                      if (oldId) {
+                        idMaps.lessons.set(oldId, created.id);
+                      }
                     }
                   } catch (error: any) {
+                    // Only catch duplicate errors as a fallback
                     if (error.code === 'P2002') {
                       // Try to find existing by number and courseId
                       try {
@@ -435,9 +501,11 @@ export async function POST(request: NextRequest) {
                           idMaps.lessons.set(oldId, existing.id);
                         }
                       } catch (findError) {
-                        // Ignore
+                        // Ignore find errors
                       }
+                      // Continue to next record
                     } else {
+                      // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
                   }
