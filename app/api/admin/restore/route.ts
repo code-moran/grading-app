@@ -597,12 +597,18 @@ export async function POST(request: NextRequest) {
             competencyUnitId: 'competencyUnits',
           });
           
-          if (exercisesWithRemapping.length > 0) {
+          // Filter out exercises where required foreign keys are null
+          const validExercises = exercisesWithRemapping.filter(({ data }) => {
+            // lessonId and rubricId are required
+            return data.lessonId !== null && data.rubricId !== null;
+          });
+          
+          if (validExercises.length > 0) {
             restoreOperations.push({
               key: 'exercises',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { oldId, data } of exercisesWithRemapping) {
+                for (const { oldId, data } of validExercises) {
                   try {
                     const created = await tx.exercise.create({ data });
                     insertedRecords.push(created);
@@ -610,7 +616,19 @@ export async function POST(request: NextRequest) {
                       idMaps.exercises.set(oldId, created.id);
                     }
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    if (error.code === 'P2002') {
+                      // Duplicate error, continue
+                    } else {
+                      // Log the error before re-throwing
+                      console.error(`Error creating exercise record:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        lessonId: data.lessonId,
+                        rubricId: data.rubricId,
+                        oldId,
+                      });
+                      // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
                   }
