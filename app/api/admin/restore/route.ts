@@ -221,6 +221,16 @@ export async function POST(request: NextRequest) {
                       }
                       // Continue to next record
                     } else {
+                      // Log the error before re-throwing
+                      console.error(`Error creating ${key} record:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        data: JSON.stringify(data, null, 2),
+                        oldId,
+                        uniqueField,
+                        uniqueFieldValue: uniqueField ? data[uniqueField] : undefined,
+                      });
                       // Re-throw non-duplicate errors to abort transaction
                       throw error;
                     }
@@ -341,17 +351,32 @@ export async function POST(request: NextRequest) {
             instructorId: 'instructors',
           });
           
-          if (accreditationsWithRemapping.length > 0) {
+          // Filter out accreditations where required foreign keys are null
+          const validAccreditations = accreditationsWithRemapping.filter(({ data }) => {
+            // instructorId is required
+            return data.instructorId !== null;
+          });
+          
+          if (validAccreditations.length > 0) {
             restoreOperations.push({
               key: 'assessorAccreditations',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { data } of accreditationsWithRemapping) {
+                for (const { data } of validAccreditations) {
                   try {
                     await tx.assessorAccreditation.create({ data });
                     insertedRecords.push(data);
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    if (error.code === 'P2002') {
+                      // Duplicate error, continue
+                    } else {
+                      // Log the error before re-throwing
+                      console.error(`Error creating assessorAccreditation record:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        instructorId: data.instructorId,
+                      });
                       throw error;
                     }
                   }
@@ -370,12 +395,18 @@ export async function POST(request: NextRequest) {
             unitStandardId: 'unitStandards',
           });
           
-          if (competencyUnitsWithRemapping.length > 0) {
+          // Filter out competency units where required foreign keys are null
+          const validCompetencyUnits = competencyUnitsWithRemapping.filter(({ data }) => {
+            // unitStandardId is required
+            return data.unitStandardId !== null;
+          });
+          
+          if (validCompetencyUnits.length > 0) {
             restoreOperations.push({
               key: 'competencyUnits',
               restoreFn: async () => {
                 const insertedRecords = [];
-                for (const { oldId, data } of competencyUnitsWithRemapping) {
+                for (const { oldId, data } of validCompetencyUnits) {
                   try {
                     const created = await tx.competencyUnit.create({ data });
                     insertedRecords.push(created);
@@ -383,7 +414,18 @@ export async function POST(request: NextRequest) {
                       idMaps.competencyUnits.set(oldId, created.id);
                     }
                   } catch (error: any) {
-                    if (error.code !== 'P2002') {
+                    if (error.code === 'P2002') {
+                      // Duplicate error, continue
+                    } else {
+                      // Log the error before re-throwing
+                      console.error(`Error creating competencyUnit record:`, {
+                        errorCode: error.code,
+                        errorMessage: error.message,
+                        errorMeta: error.meta,
+                        unitStandardId: data.unitStandardId,
+                        code: data.code,
+                        oldId,
+                      });
                       throw error;
                     }
                   }
