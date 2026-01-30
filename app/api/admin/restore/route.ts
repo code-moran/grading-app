@@ -78,6 +78,7 @@ export async function POST(request: NextRequest) {
       skipUsers = false,
       skipGrades = false,
       skipQuizAttempts = false,
+      restoreToCourseId = '', // Course ID to restore content to (course-specific restore)
     } = options || {};
 
     // Validate backup version
@@ -86,6 +87,19 @@ export async function POST(request: NextRequest) {
         { error: `Unsupported backup version: ${backupData.metadata.version}` },
         { status: 400 }
       );
+    }
+
+    // Validate restoreToCourseId if provided
+    if (restoreToCourseId) {
+      const targetCourse = await prisma.course.findUnique({
+        where: { id: restoreToCourseId },
+      });
+      if (!targetCourse) {
+        return NextResponse.json(
+          { error: `Target course with ID ${restoreToCourseId} not found` },
+          { status: 400 }
+        );
+      }
     }
 
     // Use transaction for atomic restore
@@ -522,7 +536,8 @@ export async function POST(request: NextRequest) {
           }
         }
         // Courses need unitStandardId remapping
-        if (backupData.data.courses && backupData.data.courses.length > 0) {
+        // Skip courses restoration if restoreToCourseId is set (course-specific restore)
+        if (!restoreToCourseId && backupData.data.courses && backupData.data.courses.length > 0) {
           const coursesWithRemapping = remapForeignKeys(backupData.data.courses, {
             unitStandardId: 'unitStandards',
           });
@@ -555,10 +570,21 @@ export async function POST(request: NextRequest) {
               },
             });
           }
+        } else if (restoreToCourseId) {
+          // For course-specific restore, map all old course IDs to the target course
+          // This allows lessons from any course in the backup to be restored to the target course
+          if (backupData.data.courses && backupData.data.courses.length > 0) {
+            for (const course of backupData.data.courses) {
+              if (course.id) {
+                idMaps.courses.set(course.id, restoreToCourseId);
+              }
+            }
+          }
         }
         
         // CourseInstructors need remapping
-        if (backupData.data.courseInstructors && backupData.data.courseInstructors.length > 0) {
+        // Skip course instructors for course-specific restore
+        if (!restoreToCourseId && backupData.data.courseInstructors && backupData.data.courseInstructors.length > 0) {
           const courseInstructorsWithRemapping = remapForeignKeys(backupData.data.courseInstructors, {
             courseId: 'courses',
             instructorId: 'instructors',
@@ -600,7 +626,22 @@ export async function POST(request: NextRequest) {
         
         // Lessons need courseId remapping
         if (backupData.data.lessons && backupData.data.lessons.length > 0) {
-          const lessonsWithRemapping = remapForeignKeys(backupData.data.lessons, {
+          let lessonsToRestore = backupData.data.lessons;
+          
+          // For course-specific restore, filter lessons to only those from courses in the backup
+          // (all lessons will be mapped to the target course)
+          if (restoreToCourseId) {
+            // Get all course IDs from the backup
+            const backupCourseIds = new Set(
+              (backupData.data.courses || []).map((c: any) => c.id).filter(Boolean)
+            );
+            // Filter lessons to only those belonging to courses in the backup
+            lessonsToRestore = lessonsToRestore.filter((lesson: any) => 
+              lesson.courseId && backupCourseIds.has(lesson.courseId)
+            );
+          }
+          
+          const lessonsWithRemapping = remapForeignKeys(lessonsToRestore, {
             courseId: 'courses',
           });
           
@@ -931,7 +972,8 @@ export async function POST(request: NextRequest) {
         }
         
         // CourseSubscriptions need remapping
-        if (backupData.data.courseSubscriptions && backupData.data.courseSubscriptions.length > 0) {
+        // Skip course subscriptions for course-specific restore
+        if (!restoreToCourseId && backupData.data.courseSubscriptions && backupData.data.courseSubscriptions.length > 0) {
           const courseSubscriptionsWithRemapping = remapForeignKeys(backupData.data.courseSubscriptions, {
             userId: 'users',
             studentId: 'students',
@@ -974,7 +1016,8 @@ export async function POST(request: NextRequest) {
         }
         
         // ExerciseSubmissions need remapping
-        if (backupData.data.exerciseSubmissions && backupData.data.exerciseSubmissions.length > 0) {
+        // Skip exercise submissions for course-specific restore
+        if (!restoreToCourseId && backupData.data.exerciseSubmissions && backupData.data.exerciseSubmissions.length > 0) {
           const exerciseSubmissionsWithRemapping = remapForeignKeys(backupData.data.exerciseSubmissions, {
             studentId: 'students',
             exerciseId: 'exercises',

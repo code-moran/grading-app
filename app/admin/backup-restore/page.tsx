@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useSession } from 'next-auth/react';
 import ProtectedRoute from '@/components/ProtectedRoute';
 import Navigation from '@/components/Navigation';
@@ -31,6 +31,13 @@ interface BackupMetadata {
   recordCounts: Record<string, number>;
 }
 
+interface Course {
+  id: string;
+  title: string;
+  description: string | null;
+  isActive: boolean;
+}
+
 export default function BackupRestorePage() {
   const { data: session } = useSession();
   const [loading, setLoading] = useState(false);
@@ -44,9 +51,33 @@ export default function BackupRestorePage() {
     skipUsers: false,
     skipGrades: false,
     skipQuizAttempts: false,
+    restoreToCourseId: '', // New option for course-specific restore
   });
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loadingCourses, setLoadingCourses] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+  // Fetch courses on mount
+  useEffect(() => {
+    fetchCourses();
+  }, []);
+
+  const fetchCourses = async () => {
+    try {
+      setLoadingCourses(true);
+      const response = await fetch('/api/courses');
+      if (!response.ok) {
+        throw new Error('Failed to fetch courses');
+      }
+      const data = await response.json();
+      setCourses(data.courses || []);
+    } catch (error: any) {
+      console.error('Error fetching courses:', error);
+    } finally {
+      setLoadingCourses(false);
+    }
+  };
 
   const handleBackup = async () => {
     try {
@@ -448,20 +479,55 @@ export default function BackupRestorePage() {
           {selectedFile && (
             <div className="mt-6 bg-white dark:bg-gray-800 rounded-xl shadow-md p-6 border border-gray-100 dark:border-gray-700">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-4">Restore Options</h3>
-              <div className="space-y-3">
-                <label className="flex items-center">
-                  <input
-                    type="checkbox"
-                    checked={restoreOptions.clearExisting}
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                    Restore Course Content Only (Optional)
+                  </label>
+                  <select
+                    value={restoreOptions.restoreToCourseId}
                     onChange={(e) =>
-                      setRestoreOptions({ ...restoreOptions, clearExisting: e.target.checked })
+                      setRestoreOptions({ ...restoreOptions, restoreToCourseId: e.target.value })
                     }
-                    className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
-                  />
-                  <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
-                    Clear all existing data before restore
-                  </span>
-                </label>
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                  >
+                    <option value="">Restore all courses (default)</option>
+                    {loadingCourses ? (
+                      <option disabled>Loading courses...</option>
+                    ) : (
+                      courses.map((course) => (
+                        <option key={course.id} value={course.id}>
+                          {course.title} {!course.isActive && '(Inactive)'}
+                        </option>
+                      ))
+                    )}
+                  </select>
+                  {restoreOptions.restoreToCourseId && (
+                    <p className="mt-2 text-sm text-blue-600 dark:text-blue-400 flex items-start">
+                      <Info className="h-4 w-4 mr-2 flex-shrink-0 mt-0.5" />
+                      <span>
+                        Only course content (lessons, exercises, quizzes, notes) will be restored to the selected course. 
+                        Users, grades, and other data will be skipped unless explicitly enabled below.
+                      </span>
+                    </p>
+                  )}
+                </div>
+                <div className="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-4">
+                  <label className="flex items-center">
+                    <input
+                      type="checkbox"
+                      checked={restoreOptions.clearExisting}
+                      onChange={(e) =>
+                        setRestoreOptions({ ...restoreOptions, clearExisting: e.target.checked })
+                      }
+                      className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                      disabled={!!restoreOptions.restoreToCourseId}
+                    />
+                    <span className={`ml-2 text-sm ${restoreOptions.restoreToCourseId ? 'text-gray-400 dark:text-gray-600' : 'text-gray-700 dark:text-gray-300'}`}>
+                      Clear all existing data before restore
+                      {restoreOptions.restoreToCourseId && ' (disabled for course-specific restore)'}
+                    </span>
+                  </label>
                 <label className="flex items-center">
                   <input
                     type="checkbox"
@@ -501,6 +567,7 @@ export default function BackupRestorePage() {
                     Skip quiz attempts (keep existing attempts)
                   </span>
                 </label>
+                </div>
               </div>
             </div>
           )}
