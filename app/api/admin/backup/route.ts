@@ -26,9 +26,25 @@ interface BackupMetadata {
   };
 }
 
+interface LessonData {
+  lesson: any;
+  exercises: any[];
+  quizQuestions: any[];
+  lessonNotes: any[];
+  pdfResources: any[];
+}
+
+interface CourseData {
+  course: any;
+  lessons: LessonData[];
+}
+
 interface BackupData {
   metadata: BackupMetadata;
   data: {
+    // Nested course structure (primary)
+    coursesNested?: CourseData[];
+    // Flat structure (for backward compatibility and non-course data)
     users: any[];
     students: any[];
     instructors: any[];
@@ -54,7 +70,7 @@ interface BackupData {
     competencyUnits: any[];
     assessorAccreditations: any[];
     assessmentAuditLogs: any[];
-    [key: string]: any[];
+    [key: string]: any[] | CourseData[] | undefined;
   };
 }
 
@@ -183,6 +199,33 @@ export async function GET(request: NextRequest) {
       }),
     ]);
 
+    // Create nested course structure
+    const coursesNested: CourseData[] = courses.map((course) => {
+      // Get all lessons for this course
+      const courseLessons = lessons.filter((lesson) => lesson.courseId === course.id);
+      
+      // For each lesson, get its related data
+      const lessonsData: LessonData[] = courseLessons.map((lesson) => {
+        const lessonExercises = exercises.filter((exercise) => exercise.lessonId === lesson.id);
+        const lessonQuizQuestions = quizQuestions.filter((qq) => qq.lessonId === lesson.id);
+        const lessonNotesData = lessonNotes.filter((ln) => ln.lessonId === lesson.id);
+        const lessonPdfResources = pdfResources.filter((pdf) => pdf.lessonId === lesson.id);
+        
+        return {
+          lesson,
+          exercises: lessonExercises,
+          quizQuestions: lessonQuizQuestions,
+          lessonNotes: lessonNotesData,
+          pdfResources: lessonPdfResources,
+        };
+      });
+      
+      return {
+        course,
+        lessons: lessonsData,
+      };
+    });
+
     // Create metadata
     const metadata: BackupMetadata = {
       version: '1.0.0',
@@ -219,10 +262,13 @@ export async function GET(request: NextRequest) {
       },
     };
 
-    // Create backup data structure
+    // Create backup data structure with both nested and flat structures
     const backupData: BackupData = {
       metadata,
       data: {
+        // Nested structure (primary)
+        coursesNested,
+        // Flat structure (for backward compatibility and non-course data)
         users,
         students,
         instructors,

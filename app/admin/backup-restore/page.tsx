@@ -51,9 +51,15 @@ export default function BackupRestorePage() {
     skipUsers: false,
     skipGrades: false,
     skipQuizAttempts: false,
-    restoreToCourseId: '', // New option for course-specific restore
+    restoreToCourseId: '', // Destination course ID
+    sourceCourseId: '', // Source course ID from backup
+    skipExercises: false,
+    skipQuizQuestions: false,
+    skipLessonNotes: false,
+    skipPdfResources: false,
   });
   const [courses, setCourses] = useState<Course[]>([]);
+  const [backupCourses, setBackupCourses] = useState<Course[]>([]);
   const [loadingCourses, setLoadingCourses] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
@@ -138,6 +144,8 @@ export default function BackupRestorePage() {
     setSelectedFile(file);
     setError(null);
     setBackupMetadata(null);
+    setBackupCourses([]);
+    setRestoreOptions(prev => ({ ...prev, sourceCourseId: '' }));
 
     // Read and validate file
     try {
@@ -151,6 +159,16 @@ export default function BackupRestorePage() {
       }
 
       setBackupMetadata(backupData.metadata);
+      
+      // Extract courses from backup
+      if (backupData.data.courses && Array.isArray(backupData.data.courses)) {
+        setBackupCourses(backupData.data.courses.map((course: any) => ({
+          id: course.id,
+          title: course.title,
+          description: course.description,
+          isActive: course.isActive ?? true,
+        })));
+      }
     } catch (err: any) {
       setError('Failed to read backup file: ' + err.message);
       setSelectedFile(null);
@@ -210,10 +228,21 @@ export default function BackupRestorePage() {
       return;
     }
 
+    // Validate course-specific restore options
+    if (restoreOptions.restoreToCourseId && !restoreOptions.sourceCourseId) {
+      setError('Please select a source course from the backup when restoring to a specific course');
+      return;
+    }
+
     const totalRecords = Object.values(backupMetadata.recordCounts).reduce((a: number, b: number) => a + b, 0);
+    const restoreMessage = restoreOptions.restoreToCourseId
+      ? `Restore course content from "${backupCourses.find(c => c.id === restoreOptions.sourceCourseId)?.title || 'source course'}" to "${courses.find(c => c.id === restoreOptions.restoreToCourseId)?.title || 'destination course'}"?`
+      : `Restore all data from backup?`;
+    
     if (!confirm(
       `Are you sure you want to restore this backup?\n\n` +
-      `This will ${restoreOptions.clearExisting ? 'clear all existing data and ' : ''}` +
+      restoreMessage + '\n\n' +
+      (restoreOptions.clearExisting ? 'This will clear all existing data and ' : '') +
       `restore ${totalRecords} records.\n\n` +
       `This action cannot be undone!`
     )) {
@@ -484,32 +513,127 @@ export default function BackupRestorePage() {
                   <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                     Restore Course Content Only (Optional)
                   </label>
-                  <select
-                    value={restoreOptions.restoreToCourseId}
-                    onChange={(e) =>
-                      setRestoreOptions({ ...restoreOptions, restoreToCourseId: e.target.value })
-                    }
-                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
-                  >
-                    <option value="">Restore all courses (default)</option>
-                    {loadingCourses ? (
-                      <option disabled>Loading courses...</option>
-                    ) : (
-                      courses.map((course) => (
-                        <option key={course.id} value={course.id}>
-                          {course.title} {!course.isActive && '(Inactive)'}
-                        </option>
-                      ))
+                  <div className="space-y-3">
+                    <div>
+                      <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                        Destination Course (where to restore)
+                      </label>
+                      <select
+                        value={restoreOptions.restoreToCourseId}
+                        onChange={(e) =>
+                          setRestoreOptions({ ...restoreOptions, restoreToCourseId: e.target.value, sourceCourseId: e.target.value ? restoreOptions.sourceCourseId : '' })
+                        }
+                        className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                      >
+                        <option value="">Restore all courses (default)</option>
+                        {loadingCourses ? (
+                          <option disabled>Loading courses...</option>
+                        ) : (
+                          courses.map((course) => (
+                            <option key={course.id} value={course.id}>
+                              {course.title} {!course.isActive && '(Inactive)'}
+                            </option>
+                          ))
+                        )}
+                      </select>
+                    </div>
+                    {restoreOptions.restoreToCourseId && (
+                      <div>
+                        <label className="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1">
+                          Source Course (from backup)
+                        </label>
+                        <select
+                          value={restoreOptions.sourceCourseId}
+                          onChange={(e) =>
+                            setRestoreOptions({ ...restoreOptions, sourceCourseId: e.target.value })
+                          }
+                          className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white text-sm"
+                          required
+                        >
+                          <option value="">Select source course from backup...</option>
+                          {backupCourses.map((course) => (
+                            <option key={course.id} value={course.id}>
+                              {course.title}
+                            </option>
+                          ))}
+                        </select>
+                        {backupCourses.length === 0 && (
+                          <p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+                            No courses found in backup file
+                          </p>
+                        )}
+                      </div>
                     )}
-                  </select>
+                  </div>
                   {restoreOptions.restoreToCourseId && (
-                    <p className="mt-2 text-sm text-blue-600 dark:text-blue-400 flex items-start">
-                      <Info className="h-4 w-4 mr-2 flex-shrink-0 mt-0.5" />
-                      <span>
-                        Only course content (lessons, exercises, quizzes, notes) will be restored to the selected course. 
-                        Users, grades, and other data will be skipped unless explicitly enabled below.
-                      </span>
-                    </p>
+                    <>
+                      <p className="mt-2 text-sm text-blue-600 dark:text-blue-400 flex items-start">
+                        <Info className="h-4 w-4 mr-2 flex-shrink-0 mt-0.5" />
+                        <span>
+                          Course content (lessons, exercises, quiz questions, lesson notes, PDF resources) from the source course will be restored to the destination course. 
+                          Users, grades, and other data will be skipped unless explicitly enabled below.
+                        </span>
+                      </p>
+                      <div className="mt-4 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-lg border border-gray-200 dark:border-gray-600">
+                        <h4 className="text-sm font-semibold text-gray-900 dark:text-white mb-3">
+                          Skip Lesson Components (Optional)
+                        </h4>
+                        <div className="space-y-2">
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={restoreOptions.skipExercises}
+                              onChange={(e) =>
+                                setRestoreOptions({ ...restoreOptions, skipExercises: e.target.checked })
+                              }
+                              className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                            />
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                              Skip exercises
+                            </span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={restoreOptions.skipQuizQuestions}
+                              onChange={(e) =>
+                                setRestoreOptions({ ...restoreOptions, skipQuizQuestions: e.target.checked })
+                              }
+                              className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                            />
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                              Skip quiz questions
+                            </span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={restoreOptions.skipLessonNotes}
+                              onChange={(e) =>
+                                setRestoreOptions({ ...restoreOptions, skipLessonNotes: e.target.checked })
+                              }
+                              className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                            />
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                              Skip lesson notes
+                            </span>
+                          </label>
+                          <label className="flex items-center">
+                            <input
+                              type="checkbox"
+                              checked={restoreOptions.skipPdfResources}
+                              onChange={(e) =>
+                                setRestoreOptions({ ...restoreOptions, skipPdfResources: e.target.checked })
+                              }
+                              className="rounded border-gray-300 dark:border-gray-600 text-blue-600 focus:ring-blue-500 dark:bg-gray-700"
+                            />
+                            <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                              Skip PDF resources
+                            </span>
+                          </label>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
                 <div className="space-y-3 border-t border-gray-200 dark:border-gray-700 pt-4">
